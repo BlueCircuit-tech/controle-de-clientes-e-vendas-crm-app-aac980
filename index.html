@@ -923,6 +923,423 @@ painel_principal_renderPedidos();
       </script>
     </section>
 
+    <section data-tela="novo-orcamento" class="hidden">
+    <div id="no-content"></div>
+
+    <!-- Cabeçalho Verde Escuro com Steps -->
+    <div class="bg-marca-800 px-4 pt-4 pb-5 rounded-b-2xl shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+            <div>
+                <h1 class="font-display text-white text-xl font-bold">Novo Orçamento</h1>
+                <p class="text-marca-300 text-xs mt-0.5">Crie e envie um orçamento para o cliente</p>
+            </div>
+            <button onclick="mostrarTela('painel-principal')" class="w-9 h-9 flex items-center justify-center rounded-full bg-marca-700 active:scale-90 transition-all">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="flex items-center gap-1" id="steps-bar">
+            <button onclick="novo_orcamento_goStep(1)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-marca-600 text-white" data-step="1">
+                <span class="w-5 h-5 rounded-full bg-white text-marca-800 text-xs font-bold flex items-center justify-center">1</span>
+                <span class="hidden sm:inline">Cliente</span>
+            </button>
+            <div class="w-6 h-px bg-marca-500" data-connector="1"></div>
+            <button onclick="novo_orcamento_goStep(2)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-marca-700 text-marca-400" data-step="2">
+                <span class="w-5 h-5 rounded-full bg-marca-600 text-marca-300 text-xs font-bold flex items-center justify-center">2</span>
+                <span class="hidden sm:inline">Itens</span>
+            </button>
+            <div class="w-6 h-px bg-marca-700" data-connector="2"></div>
+            <button onclick="novo_orcamento_goStep(3)" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-marca-700 text-marca-400" data-step="3">
+                <span class="w-5 h-5 rounded-full bg-marca-600 text-marca-300 text-xs font-bold flex items-center justify-center">3</span>
+                <span class="hidden sm:inline">Enviar</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 1: Cliente -->
+    <div id="step-1" class="px-4 py-4">
+        <h2 class="font-display text-marca-900 text-base font-bold mb-1">Selecione o Cliente</h2>
+        <p class="text-gray-500 text-xs mb-3">Busque um cliente cadastrado ou cadastre um novo</p>
+
+        <!-- Busca de cliente -->
+        <div class="relative mb-3">
+            <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="busca-cliente" placeholder="Buscar por nome ou CPF..." oninput="novo_orcamento_buscarCliente(this.value)" class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition-all">
+        </div>
+
+        <!-- Resultados da busca -->
+        <div id="lista-clientes" class="space-y-2 mb-3"></div>
+
+        <!-- Cliente selecionado -->
+        <div id="cliente-selecionado" class="hidden bg-marca-50 border border-marca-200 rounded-xl p-3 mb-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div id="cliente-avatar" class="w-10 h-10 rounded-full bg-marca-700 text-white flex items-center justify-center text-sm font-bold"></div>
+                    <div>
+                        <p id="cliente-nome" class="font-display text-marca-900 text-sm font-bold"></p>
+                        <p id="cliente-cpf" class="text-gray-500 text-xs"></p>
+                    </div>
+                </div>
+                <button onclick="novo_orcamento_limparCliente()" class="text-gray-400 hover:text-red-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Cadastrar novo -->
+        <button onclick="novo_orcamento_abrirCadastro()" class="w-full py-2.5 border-2 border-dashed border-gray-300 rounded-xl text-gray-500 text-sm font-medium flex items-center justify-center gap-2 hover:border-marca-400 hover:text-marca-700 active:scale-[0.98] transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Cadastrar Novo Cliente
+        </button>
+
+        <button onclick="novo_orcamento_goStep(2)" id="btn-step1-next" class="btn w-full mt-4 bg-marca-700 text-white py-3 rounded-xl font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+            Continuar para Itens
+        </button>
+    </div>
+
+    <!-- STEP 2: Itens -->
+    <div id="step-2" class="hidden px-4 py-4">
+        <h2 class="font-display text-marca-900 text-base font-bold mb-1">Serviços e Peças</h2>
+        <p class="text-gray-500 text-xs mb-3">Selecione os itens para o orçamento</p>
+
+        <!-- Categorias -->
+        <div class="flex gap-2 mb-4 overflow-x-auto pb-1 scrollbar-hide">
+            <button onclick="novo_orcamento_filtrarCategoria('todos')" class="cat-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-marca-700 text-white transition-all" data-cat="todos">Todos</button>
+            <button onclick="novo_orcamento_filtrarCategoria('servicos')" class="cat-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 transition-all" data-cat="servicos">Serviços</button>
+            <button onclick="novo_orcamento_filtrarCategoria('pecas')" class="cat-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 transition-all" data-cat="pecas">Peças</button>
+            <button onclick="novo_orcamento_filtrarCategoria('revisao')" class="cat-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 transition-all" data-cat="revisao">Revisão</button>
+        </div>
+
+        <!-- Busca de itens -->
+        <div class="relative mb-3">
+            <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input type="text" id="busca-item" placeholder="Buscar serviço ou peça..." oninput="novo_orcamento_buscarItem(this.value)" class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition-all">
+        </div>
+
+        <!-- Lista de itens -->
+        <div id="lista-itens" class="space-y-2"></div>
+
+        <button onclick="novo_orcamento_goStep(3)" id="btn-step2-next" class="btn w-full mt-4 bg-marca-700 text-white py-3 rounded-xl font-bold text-sm disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+            Continuar para Enviar
+        </button>
+    </div>
+
+    <!-- STEP 3: Enviar -->
+    <div id="step-3" class="hidden">
+        <div class="px-4 py-4">
+            <h2 class="font-display text-marca-900 text-base font-bold mb-1">Revisar e Enviar</h2>
+            <p class="text-gray-500 text-xs mb-3">Confira os dados antes de enviar ao cliente</p>
+
+            <!-- Card: Cliente -->
+            <div class="bg-white border border-gray-100 rounded-xl p-3 mb-3 shadow-sm">
+                <p class="text-xs text-gray-400 font-medium mb-1.5">CLIENTE</p>
+                <div id="review-cliente" class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold">--</div>
+                    <div>
+                        <p class="text-sm font-bold text-gray-400">Nenhum cliente selecionado</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card: Itens -->
+            <div class="bg-white border border-gray-100 rounded-xl p-3 mb-3 shadow-sm">
+                <p class="text-xs text-gray-400 font-medium mb-2">ITENS DO ORÇAMENTO</p>
+                <div id="review-itens" class="space-y-2">
+                    <p class="text-sm text-gray-400">Nenhum item adicionado</p>
+                </div>
+            </div>
+
+            <!-- Forma de Pagamento -->
+            <div class="bg-white border border-gray-100 rounded-xl p-3 mb-3 shadow-sm">
+                <p class="text-xs text-gray-400 font-medium mb-2">FORMA DE PAGAMENTO</p>
+                <div class="grid grid-cols-3 gap-2" id="pgto-opcoes">
+                    <button onclick="novo_orcamento_selPagto('pix')" class="pgto-btn flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 border-marca-500 bg-marca-50 transition-all" data-pgto="pix">
+                        <svg class="w-6 h-6 text-marca-700" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 10.6L13.4 2.5a1.5 1.5 0 00-2.1 0L2.5 11.3a1.5 1.5 0 000 2.1l8.1 8.1a1.5 1.5 0 002.1 0l8.8-8.8a1.5 1.5 0 000-2.1zM12 17.5L6.5 12l1.4-1.4L12 14.7l4.1-4.1 1.4 1.4L12 17.5z"/></svg>
+                        <span class="text-xs font-bold text-marca-800">PIX</span>
+                    </button>
+                    <button onclick="novo_orcamento_selPagto('cartao')" class="pgto-btn flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 border-gray-200 bg-gray-50 transition-all" data-pgto="cartao">
+                        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" stroke-width="2"/><path stroke-linecap="round" stroke-width="2" d="M2 9h20"/></svg>
+                        <span class="text-xs font-bold text-gray-600">Cartão</span>
+                    </button>
+                    <button onclick="novo_orcamento_selPagto('boleto')" class="pgto-btn flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 border-gray-200 bg-gray-50 transition-all" data-pgto="boleto">
+                        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <span class="text-xs font-bold text-gray-600">Boleto</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vencimento -->
+            <div class="bg-white border border-gray-100 rounded-xl p-3 mb-3 shadow-sm">
+                <p class="text-xs text-gray-400 font-medium mb-2">VENCIMENTO DO ORÇAMENTO</p>
+                <input type="date" id="data-vencimento" class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition-all">
+            </div>
+
+            <!-- Observações -->
+            <div class="bg-white border border-gray-100 rounded-xl p-3 mb-3 shadow-sm">
+                <p class="text-xs text-gray-400 font-medium mb-2">OBSERVAÇÕES (OPCIONAL)</p>
+                <textarea id="obs-orcamento" rows="3" placeholder="Informações adicionais para o cliente..." class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500 focus:border-transparent transition-all resize-none"></textarea>
+            </div>
+
+            <!-- Resumo Final -->
+            <div class="bg-marca-800 rounded-xl p-4 mb-3 shadow-lg">
+                <p class="text-marca-300 text-xs font-medium mb-3">RESUMO FINANCEIRO</p>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between text-marca-200">
+                        <span>Subtotal</span>
+                        <span id="res-subtotal" class="font-medium">R$ 0,00</span>
+                    </div>
+                    <div class="flex justify-between text-marca-200">
+                        <span>Desconto</span>
+                        <span id="res-desconto" class="font-medium">R$ 0,00</span>
+                    </div>
+                    <div class="border-t border-marca-600 pt-2 flex justify-between text-white font-bold text-lg">
+                        <span>Total</span>
+                        <span id="res-total">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botões de ação -->
+            <button onclick="novo_orcamento_enviar()" class="btn w-full bg-marca-700 text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.97] transition-all shadow-md">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Enviar Orçamento via WhatsApp
+            </button>
+            <button onclick="novo_orcamento_salvarRascunho()" class="btn w-full mt-2.5 border-2 border-marca-700 text-marca-700 bg-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 active:scale-[0.97] transition-all">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
+                Salvar Rascunho
+            </button>
+        </div>
+    </div>
+</section>
+
+<script>
+(function(){
+    var step = 1;
+    var clienteSel = null;
+    var carrinho = {};
+    var pgtoSel = 'pix';
+    var desconto = 0;
+    var catAtiva = 'todos';
+
+    window.novo_orcamento_goStep = function(n) {
+        if (n === 2 && !clienteSel) { toast('Selecione um cliente primeiro', 'erro'); return; }
+        if (n === 3 && Object.keys(carrinho).length === 0) { toast('Adicione pelo menos um item', 'erro'); return; }
+        step = n;
+        document.getElementById('step-1').classList.toggle('hidden', n !== 1);
+        document.getElementById('step-2').classList.toggle('hidden', n !== 2);
+        document.getElementById('step-3').classList.toggle('hidden', n !== 3);
+        var steps = document.querySelectorAll('#steps-bar button');
+        steps.forEach(function(b, i) {
+            var sn = i + 1;
+            if (sn <= n) {
+                b.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-marca-600 text-white';
+                b.querySelector('span:first-child').className = 'w-5 h-5 rounded-full bg-white text-marca-800 text-xs font-bold flex items-center justify-center';
+            } else {
+                b.className = 'flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all bg-marca-700 text-marca-400';
+                b.querySelector('span:first-child').className = 'w-5 h-5 rounded-full bg-marca-600 text-marca-300 text-xs font-bold flex items-center justify-center';
+            }
+        });
+        if (n === 2) renderItens();
+        if (n === 3) renderReview();
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    };
+
+    var clientes = [
+        {id:1, nome:'Maria Silva Santos', cpf:'123.456.789-00', tel:'(11) 98765-4321', veiculo:'Fiat Argo 2021', placa:'ABC1D23', email:'maria.silva@email.com', endereco:'Rua das Flores, 234 - Jardins, SP'},
+        {id:2, nome:'João Pedro Oliveira', cpf:'987.654.321-00', tel:'(11) 91234-5678', veiculo:'VW Gol G7 2020', placa:'DEF4G56', email:'joao.oliveira@email.com', endereco:'Av. Paulista, 1500 - Bela Vista, SP'},
+        {id:3, nome:'Ana Carolina Ferreira', cpf:'456.789.123-00', tel:'(11) 99876-5432', veiculo:'Toyota Corolla 2022', placa:'GHI7J89', email:'ana.ferreira@email.com', endereco:'Rua Augusta, 890 - Consolação, SP'},
+        {id:4, nome:'Roberto Carlos Mendes', cpf:'321.654.987-00', tel:'(11) 97654-3210', veiculo:'Honda Civic 2023', placa:'JKL0M12', email:'roberto.mendes@email.com', endereco:'Rua Oscar Freire, 450 - Jardins, SP'},
+        {id:5, nome:'Fernanda Costa Lima', cpf:'654.987.321-00', tel:'(11) 96543-2109', veiculo:'Hyundai HB20 2021', placa:'NOP3Q45', email:'fernanda.lima@email.com', endereco:'Rua Pamplona, 1200 - Jardins, SP'},
+        {id:6, nome:'Carlos Eduardo Souza', cpf:'789.123.456-00', tel:'(11) 95432-1098', veiculo:'Chevrolet Onix 2022', placa:'QRS6T78', email:'carlos.souza@email.com', endereco:'Av. Rebouças, 3000 - Pinheiros, SP'},
+        {id:7, nome:'Patricia Almeida Rocha', cpf:'147.258.369-00', tel:'(11) 94321-0987', veiculo:'Jeep Compass 2023', placa:'TUV9W01', email:'patricia.rocha@email.com', endereco:'Rua Haddock Lobo, 700 - Cerqueira César, SP'},
+        {id:8, nome:'Marcos Vinícius Pinto', cpf:'258.369.147-00', tel:'(11) 93210-9876', veiculo:'Fiat Toro 2022', placa:'WXY2Z34', email:'marcos.pinto@email.com', endereco:'Rua Bela Cintra, 520 - Consolação, SP'}
+    ];
+
+    var itens = [
+        {id:1, nome:'Troca de Óleo + Filtro', cat:'servicos', preco:189.90, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>'},
+        {id:2, nome:'Revisão dos Freios', cat:'servicos', preco:320.00, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke-width="1.5"/></svg>'},
+        {id:3, nome:'Alinhamento e Balanceamento', cat:'servicos', preco:150.00, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>'},
+        {id:4, nome:'Troca de Velas de Ignição', cat:'servicos', preco:240.00, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>'},
+        {id:5, nome:'Diagnóstico Eletrônico (Scanner)', cat:'servicos', preco:120.00, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>'},
+        {id:6, nome:'Revisão Completa 20 itens', cat:'revisao', preco:450.00, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>'},
+        {id:7, nome:'Filtro de Óleo Original', cat:'pecas', preco:45.90, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>'},
+        {id:8, nome:'Pastilha de Freio Dianteira', cat:'pecas', preco:280.00, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" stroke-width="1.5"/><circle cx="12" cy="12" r="7" stroke-width="1.5"/><circle cx="12" cy="12" r="10" stroke-width="1.5"/></svg>'},
+        {id:9, nome:'Correia Dentada Completa', cat:'pecas', preco:520.00, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>'},
+        {id:10, nome:'Amortecedor Dianteiro', cat:'pecas', preco:380.00, icon:'<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>'}
+    ];
+
+    window.novo_orcamento_buscarCliente = function(term) {
+        var el = document.getElementById('lista-clientes');
+        if (!term.trim()) { el.innerHTML = ''; return; }
+        var found = clientes.filter(function(c) {
+            return c.nome.toLowerCase().indexOf(term.toLowerCase()) > -1 || c.cpf.indexOf(term.replace(/\D/g,'')) > -1;
+        });
+        if (found.length === 0) {
+            el.innerHTML = '<div class="text-center py-4 text-gray-400 text-xs"><p>Nenhum cliente encontrado</p><p class="mt-1">Clique em "Cadastrar Novo Cliente" abaixo</p></div>';
+        } else {
+            el.innerHTML = found.map(function(c) {
+                var ini = c.nome.split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase();
+                return '<div onclick="novo_orcamento_selCliente('+c.id+')" class="card bg-white border border-gray-100 p-3 flex items-center gap-3 cursor-pointer active:scale-[0.98] transition-all hover:border-marca-300"><div class="w-10 h-10 rounded-full bg-marca-700 text-white flex items-center justify-center text-sm font-bold">'+ini+'</div><div class="flex-1 min-w-0"><p class="font-display text-sm font-bold text-marca-900 truncate">'+c.nome+'</p><p class="text-xs text-gray-500">'+c.cpf+' · '+c.veiculo+'</p></div><svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div>';
+            }).join('');
+        }
+    };
+
+    window.novo_orcamento_selCliente = function(id) {
+        var c = clientes.find(function(x){return x.id === id;});
+        if (!c) return;
+        clienteSel = c;
+        var ini = c.nome.split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase();
+        document.getElementById('cliente-avatar').textContent = ini;
+        document.getElementById('cliente-nome').textContent = c.nome;
+        document.getElementById('cliente-cpf').textContent = c.cpf + ' · ' + c.veiculo;
+        document.getElementById('cliente-selecionado').classList.remove('hidden');
+        document.getElementById('lista-clientes').innerHTML = '';
+        document.getElementById('busca-cliente').value = '';
+        document.getElementById('btn-step1-next').disabled = false;
+        toast('Cliente selecionado', 'ok');
+    };
+
+    window.novo_orcamento_limparCliente = function() {
+        clienteSel = null;
+        document.getElementById('cliente-selecionado').classList.add('hidden');
+        document.getElementById('btn-step1-next').disabled = true;
+    };
+
+    window.novo_orcamento_abrirCadastro = function() {
+        var html = '<div class="space-y-3"><div><label class="block text-xs font-medium text-gray-600 mb-1">Nome Completo</label><input type="text" id="nc-nome" placeholder="Nome do cliente" class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"></div><div class="grid grid-cols-2 gap-3"><div><label class="block text-xs font-medium text-gray-600 mb-1">CPF</label><input type="text" id="nc-cpf" placeholder="000.000.000-00" class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"></div><div><label class="block text-xs font-medium text-gray-600 mb-1">Telefone</label><input type="text" id="nc-tel" placeholder="(00) 00000-0000" class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"></div></div><div><label class="block text-xs font-medium text-gray-600 mb-1">Veículo (Modelo / Ano)</label><input type="text" id="nc-veiculo" placeholder="Ex: VW Gol 2020" class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"></div><div><label class="block text-xs font-medium text-gray-600 mb-1">Endereço</label><input type="text" id="nc-endereco" placeholder="Rua, número, bairro - Cidade" class="w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-marca-500"></div></div>';
+        html += '<button onclick="novo_orcamento_salvarCadastro()" class="btn w-full bg-marca-700 text-white py-3 rounded-xl font-bold text-sm mt-4">Cadastrar Cliente</button>';
+        abrirModal(html, 'Novo Cliente');
+    };
+
+    window.novo_orcamento_salvarCadastro = function() {
+        var nome = document.getElementById('nc-nome').value.trim();
+        if (!nome) { toast('Informe o nome do cliente', 'erro'); return; }
+        var novo = {id: Date.now(), nome: nome, cpf: document.getElementById('nc-cpf').value || '---', tel: document.getElementById('nc-tel').value || '---', veiculo: document.getElementById('nc-veiculo').value || '---', placa: '---', email: '---', endereco: document.getElementById('nc-endereco').value || '---'};
+        clientes.push(novo);
+        fecharModal();
+        novo_orcamento_selCliente(novo.id);
+    };
+
+    var catIcons = {
+        servicos: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
+        pecas: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>',
+        revisao: '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>'
+    };
+
+    function renderItens(term) {
+        var el = document.getElementById('lista-itens');
+        var filtered = itens.filter(function(item) {
+            if (catAtiva !== 'todos' && item.cat !== catAtiva) return false;
+            if (term && item.nome.toLowerCase().indexOf(term.toLowerCase()) === -1) return false;
+            return true;
+        });
+        if (filtered.length === 0) {
+            el.innerHTML = '<div class="text-center py-6 text-gray-400 text-xs"><svg class="w-8 h-8 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p>Nenhum item encontrado</p></div>';
+        } else {
+            el.innerHTML = filtered.map(function(item) {
+                var qtd = carrinho[item.id] ? carrinho[item.id].qtd : 0;
+                var catLabel = item.cat === 'servicos' ? 'Serviço' : item.cat === 'pecas' ? 'Peça' : 'Revisão';
+                var catBadge = item.cat === 'servicos' ? 'badge-blue' : item.cat === 'pecas' ? 'badge-yellow' : 'badge-green';
+                var bgClass = qtd > 0 ? 'border-marca-300 bg-marca-50' : 'border-gray-100 bg-white';
+                return '<div class="card '+bgClass+' border p-3 flex items-center gap-3 transition-all">' +
+                    '<div class="w-10 h-10 rounded-xl bg-marca-100 text-marca-700 flex items-center justify-center flex-shrink-0">' + item.icon + '</div>' +
+                    '<div class="flex-1 min-w-0"><p class="font-display text-sm font-bold text-marca-900 truncate">'+item.nome+'</p>' +
+                    '<div class="flex items-center gap-2 mt-0.5"><span class="'+catBadge+' text-[10px] px-1.5 py-0.5 rounded-full">'+catLabel+'</span>' +
+                    '<span class="text-xs font-bold text-marca-700">'+brl(item.preco)+'</span></div></div>' +
+                    '<div class="flex items-center gap-1 flex-shrink-0">' +
+                    '<button onclick="novo_orcamento_setQtd('+item.id+', '+Math.max(0,(qtd||0)-1)+')" class="w-7 h-7 rounded-lg bg-gray-100 text-gray-600 flex items-center justify-center text-sm font-bold active:scale-90 transition-all hover:bg-gray-200">−</button>' +
+                    '<span class="w-8 text-center text-sm font-bold '+(qtd > 0 ? 'text-marca-800' : 'text-gray-400')+'">'+(qtd||0)+'</span>' +
+                    '<button onclick="novo_orcamento_setQtd('+item.id+', '+(qtd||0)+1+')" class="w-7 h-7 rounded-lg bg-marca-700 text-white flex items-center justify-center text-sm font-bold active:scale-90 transition-all hover:bg-marca-800">+</button></div></div>';
+            }).join('');
+        }
+        updateStep2Btn();
+    }
+
+    window.novo_orcamento_buscarItem = function(term) { renderItens(term); };
+    window.novo_orcamento_filtrarCategoria = function(cat) {
+        catAtiva = cat;
+        document.querySelectorAll('.cat-btn').forEach(function(b) {
+            if (b.dataset.cat === cat) {
+                b.className = 'cat-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-marca-700 text-white transition-all';
+            } else {
+                b.className = 'cat-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 transition-all';
+            }
+        });
+        renderItens(document.getElementById('busca-item').value);
+    };
+
+    window.novo_orcamento_setQtd = function(id, qtd) {
+        if (qtd <= 0) { delete carrinho[id]; }
+        else { if (!carrinho[id]) { var it = itens.find(function(x){return x.id===id;}); carrinho[id] = {item: it, qtd: 0};} carrinho[id].qtd = qtd; }
+        renderItens(document.getElementById('busca-item').value);
+    };
+
+    function updateStep2Btn() {
+        var btn = document.getElementById('btn-step2-next');
+        if (btn) btn.disabled = Object.keys(carrinho).length === 0;
+    }
+
+    window.novo_orcamento_selPagto = function(p) {
+        pgtoSel = p;
+        document.querySelectorAll('.pgto-btn').forEach(function(b) {
+            if (b.dataset.pgto === p) {
+                b.className = 'pgto-btn flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 border-marca-500 bg-marca-50 transition-all';
+            } else {
+                b.className = 'pgto-btn flex flex-col items-center gap-1 p-2.5 rounded-xl border-2 border-gray-200 bg-gray-50 transition-all';
+            }
+        });
+    };
+
+    function calcularTotais() {
+        var sub = 0;
+        Object.values(carrinho).forEach(function(c) { sub += c.item.preco * c.qtd; });
+        return {subtotal: sub, desconto: desconto, total: sub - desconto};
+    }
+
+    function renderReview() {
+        if (!clienteSel) return;
+        var ini = clienteSel.nome.split(' ').map(function(w){return w[0]}).join('').slice(0,2).toUpperCase();
+        document.getElementById('review-cliente').innerHTML = '<div class="w-9 h-9 rounded-full bg-marca-700 text-white flex items-center justify-center text-xs font-bold">'+ini+'</div><div><p class="text-sm font-bold text-marca-900">'+clienteSel.nome+'</p><p class="text-xs text-gray-500">'+clienteSel.veiculo+'</p></div>';
+
+        var itensHtml = '';
+        Object.values(carrinho).forEach(function(c) {
+            itensHtml += '<div class="flex items-center justify-between py-1.5 border-b border-gray-50 last:border-0"><div class="flex items-center gap-2"><div class="w-7 h-7 rounded-lg bg-marca-100 text-marca-700 flex items-center justify-center">'+c.item.icon+'</div><div><p class="text-xs font-bold text-gray-800">'+c.item.nome+'</p><p class="text-[10px] text-gray-400">'+c.qtd+'x · '+brl(c.item.preco)+'</p></div></div><span class="text-xs font-bold text-marca-800">'+brl(c.item.preco*c.qtd)+'</span></div>';
+        });
+        document.getElementById('review-itens').innerHTML = itensHtml || '<p class="text-sm text-gray-400">Nenhum item</p>';
+
+        var t = calcularTotais();
+        document.getElementById('res-subtotal').textContent = brl(t.subtotal);
+        document.getElementById('res-desconto').textContent = '- ' + brl(t.desconto);
+        document.getElementById('res-total').textContent = brl(t.total);
+
+        var hoje = new Date();
+        var venc = new Date(hoje.getTime() + 7*24*60*60*1000);
+        document.getElementById('data-vencimento').value = venc.toISOString().split('T')[0];
+    }
+
+    window.novo_orcamento_enviar = function() {
+        if (!clienteSel) { toast('Selecione um cliente', 'erro'); return; }
+        if (Object.keys(carrinho).length === 0) { toast('Adicione itens ao orçamento', 'erro'); return; }
+        var t = calcularTotais();
+        var numOrc = '#HELP-' + String(Date.now()).slice(-6);
+        var itensText = Object.values(carrinho).map(function(c) { return c.qtd+'x '+c.item.nome+' = '+brl(c.item.preco*c.qtd); }).join('\n');
+        var msg = 'Olá '+clienteSel.nome.split(' ')[0]+'! Segue seu orçamento HELPCAR:\n\n📋 '+numOrc+'\n\n' + itensText + '\n\n💰 Total: '+brl(t.total)+'\n📅 Válido até: '+dataBR(document.getElementById('data-vencimento').value)+'\n\nDúvidas? Estamos à disposição! 🚗';
+        var wUrl = 'https://wa.me/55'+clienteSel.tel.replace(/\D/g,'')+'?text='+encodeURIComponent(msg);
+        toast('Abrindo WhatsApp...', 'ok');
+        setTimeout(function() {
+            window.open(wUrl, '_blank');
+            toast('Orçamento enviado com sucesso!', 'ok');
+        }, 500);
+    };
+
+    window.novo_orcamento_salvarRascunho = function() {
+        var t = calcularTotais();
+        toast('Rascunho salvo! Valor: ' + brl(t.total), 'ok');
+    };
+
+    renderItens('');
+})();
+</script>
+
     <!-- TELAS -->
 
     </main>
