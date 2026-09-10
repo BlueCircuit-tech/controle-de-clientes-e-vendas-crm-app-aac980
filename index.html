@@ -2655,6 +2655,354 @@ painel_principal_renderPedidos();
   </div>
 </section>
 
+    <section data-tela="mapa-de-clientes" class="hidden">
+      <div class="flex flex-col h-[620px]">
+        <div class="flex items-center justify-between px-4 pt-3 pb-1 flex-shrink-0">
+          <div>
+            <h1 class="text-lg font-display font-bold text-marca-900">Mapa de Clientes</h1>
+            <p class="text-xs text-gray-500 font-body">Localização e distribuição</p>
+          </div>
+          <button onclick="mostrarTela('notificacoes')" class="relative w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center active:scale-95 transition-transform" aria-label="Notificações">
+            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+            <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 rounded-full text-white text-[9px] font-bold flex items-center justify-center">3</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-1.5 px-4 py-1.5 flex-shrink-0 overflow-x-auto no-scrollbar">
+          <button onclick="mapa_de_clientes_definirFiltroRaio(1)" id="filtro-raio-1" class="filter-raio-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all">1 km</button>
+          <button onclick="mapa_de_clientes_definirFiltroRaio(5)" id="filtro-raio-5" class="filter-raio-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all">5 km</button>
+          <button onclick="mapa_de_clientes_definirFiltroRaio(10)" id="filtro-raio-10" class="filter-raio-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all">10 km</button>
+          <button onclick="mapa_de_clientes_definirFiltroRaio(20)" id="filtro-raio-20" class="filter-raio-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all">20 km</button>
+          <div class="w-px h-5 bg-gray-200 mx-1 flex-shrink-0"></div>
+          <button onclick="mapa_de_clientes_definirFiltroTipo('todos')" id="filtro-tipo-todos" class="filter-tipo-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all">Todos</button>
+          <button onclick="mapa_de_clientes_definirFiltroTipo('vip')" id="filtro-tipo-vip" class="filter-tipo-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all">VIP</button>
+          <button onclick="mapa_de_clientes_definirFiltroTipo('padrao')" id="filtro-tipo-padrao" class="filter-tipo-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all">Padrão</button>
+        </div>
+
+        <div id="estatistica-mapa" class="px-4 pb-1.5 flex-shrink-0">
+          <p class="text-xs font-semibold text-marca-800 bg-marca-50 rounded-lg px-3 py-1.5 inline-flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+            <span id="texto-estatistica">32 clientes em um raio de 5 km</span>
+          </p>
+        </div>
+
+        <div class="relative flex-1 min-h-0 mx-3 rounded-2xl overflow-hidden bg-slate-100 shadow-inner" id="mapa-container">
+          <div id="mapa-visual" class="absolute inset-0">
+            <svg class="w-full h-full" viewBox="0 0 400 340" xmlns="http://www.w3.org/2000/svg">
+              <rect width="400" height="340" fill="#f1f5f9"/>
+              <rect x="0" y="0" width="400" height="340" fill="url(#mapGrad)" opacity="0.3"/>
+              <defs>
+                <linearGradient id="mapGrad" x1="0" y1="0" x2="400" y2="340"><stop offset="0%" stop-color="#14532d" stop-opacity="0.04"/><stop offset="100%" stop-color="#22c55e" stop-opacity="0.06"/></linearGradient>
+                <radialGradient id="vipGlow" cx="50%" cy="40%" r="50%"><stop offset="0%" stop-color="#22c55e" stop-opacity="0.25"/><stop offset="100%" stop-color="#22c55e" stop-opacity="0"/></radialGradient>
+              </defs>
+              <rect x="40" y="40" width="140" height="90" rx="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.5"/>
+              <rect x="220" y="30" width="130" height="70" rx="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.5"/>
+              <rect x="100" y="170" width="180" height="70" rx="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.5"/>
+              <rect x="30" y="240" width="150" height="65" rx="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.5"/>
+              <rect x="230" y="200" width="140" height="90" rx="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.5"/>
+              <rect x="310" y="70" width="75" height="50" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="0.5"/>
+              <text x="80" y="90" fill="#64748b" font-size="8" font-family="system-ui">Av. Paulista</text>
+              <text x="250" y="75" fill="#64748b" font-size="8" font-family="system-ui">R. Augusta</text>
+              <text x="130" y="215" fill="#64748b" font-size="8" font-family="system-ui">Av. Rebouças</text>
+              <text x="55" y="280" fill="#64748b" font-size="8" font-family="system-ui">R. Oscar Freire</text>
+              <text x="255" y="250" fill="#64748b" font-size="8" font-family="system-ui">Av. Brasil</text>
+              <circle cx="200" cy="170" r="6" fill="none" stroke="#14532d" stroke-width="1.5" opacity="0.5"/>
+              <circle cx="200" cy="170" r="14" fill="none" stroke="#14532d" stroke-width="0.5" opacity="0.2" id="raio-visual"/>
+              <circle cx="200" cy="170" r="28" fill="none" stroke="#14532d" stroke-width="0.5" opacity="0.1" id="raio-visual-2"/>
+            </svg>
+            <div id="pinos-mapa" class="absolute inset-0"></div>
+            <div id="card-flutuante" class="absolute hidden z-20 bg-white rounded-xl shadow-xl border border-gray-100 p-3 w-52 transform -translate-x-1/2 -translate-y-full mb-2 transition-all duration-200" style="left:50%;top:25%;">
+              <div class="flex items-start gap-2.5">
+                <div id="cf-avatar" class="w-9 h-9 rounded-full bg-marca-100 flex items-center justify-center text-marca-700 text-xs font-bold flex-shrink-0">AB</div>
+                <div class="flex-1 min-w-0">
+                  <p id="cf-nome" class="text-xs font-bold text-gray-900 truncate"></p>
+                  <p id="cf-endereco" class="text-[10px] text-gray-500 leading-tight mt-0.5"></p>
+                  <div class="flex items-center justify-between mt-1.5">
+                    <span id="cf-valor" class="text-sm font-bold text-marca-700"></span>
+                    <button id="cf-navegar" class="text-[10px] bg-marca-600 text-white px-2 py-0.5 rounded-md font-semibold active:scale-95 transition-transform">Navegar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 shadow-sm">
+            <p class="text-[10px] text-gray-400">Sua localização</p>
+            <p class="text-[11px] font-semibold text-marca-800 flex items-center gap-1"><svg class="w-2.5 h-2.5 text-marca-500" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/></svg>Av. Paulista, 1000</p>
+          </div>
+          <button onclick="mapa_de_clientes_centralizar()" class="absolute bottom-2.5 right-2.5 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center active:scale-90 transition-all border border-gray-100 z-10" aria-label="Centralizar na minha localização">
+            <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
+          </button>
+        </div>
+
+        <div class="bg-white rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex-shrink-0 flex flex-col" style="height:180px;">
+          <div class="flex items-center justify-between px-4 pt-2.5 pb-1">
+            <div>
+              <h2 class="text-sm font-display font-bold text-marca-900">Clientes Próximos</h2>
+              <p id="subtitulo-proximos" class="text-[10px] text-gray-500">Ordenados por proximidade</p>
+            </div>
+            <button onclick="mostrarTela('meus-clientes')" class="text-xs text-marca-600 font-semibold hover:text-marca-800 transition-colors">Ver todos →</button>
+          </div>
+          <div id="lista-proximos" class="flex-1 overflow-y-auto px-3 pb-2 space-y-1.5 no-scrollbar"></div>
+        </div>
+      </div>
+    </section>
+    <script>
+      const mapa_de_clientes_clientes = [
+        { id:1, nome:"Ana Beatriz Silva", endereco:"Av. Paulista, 1578 — Bela Vista", valor:12840.00, distancia:0.8, tipo:"vip", iniciais:"AB", cor:"bg-rose-100 text-rose-700", lat:42, lng:48, telefone:"(11) 98765-4321", email:"ana.silva@email.com", veiculo:"Toyota Corolla XEi 2023", ultimaVisita:"2024-12-18", servicos:12 },
+        { id:2, nome:"Carlos Eduardo Mendes", endereco:"R. Augusta, 420 — Consolação", valor:3210.50, distancia:1.2, tipo:"padrao", iniciais:"CM", cor:"bg-blue-100 text-blue-700", lat:56, lng:62, telefone:"(11) 97654-3210", email:"carlos.mendes@email.com", veiculo:"Honda Civic Sport 2022", ultimaVisita:"2024-11-30", servicos:3 },
+        { id:3, nome:"Fernanda Oliveira Lima", endereco:"Av. Rebouças, 3100 — Pinheiros", valor:8750.00, distancia:1.5, tipo:"vip", iniciais:"FO", cor:"bg-violet-100 text-violet-700", lat:38, lng:55, telefone:"(11) 96543-2109", email:"fernanda.ol@email.com", veiculo:"Volkswagen T-Cross Highline 2024", ultimaVisita:"2024-12-22", servicos:8 },
+        { id:4, nome:"Roberto Almeida Souza", endereco:"R. Oscar Freire, 200 — Jardins", valor:5640.00, distancia:2.1, tipo:"padrao", iniciais:"RA", cor:"bg-amber-100 text-amber-700", lat:64, lng:44, telefone:"(11) 95432-1098", email:"roberto.souza@email.com", veiculo:"Fiat Pulse Impetus 2023", ultimaVisita:"2024-12-10", servicos:5 },
+        { id:5, nome:"Mariana Costa Ferreira", endereco:"Av. Brasil, 2450 — Jardim América", valor:15300.00, distancia:2.8, tipo:"vip", iniciais:"MC", cor:"bg-emerald-100 text-emerald-700", lat:70, lng:58, telefone:"(11) 94321-0987", email:"mariana.cf@email.com", veiculo:"BMW 320i M Sport 2024", ultimaVisita:"2024-12-25", servicos:15 },
+        { id:6, nome:"João Pedro Barbosa", endereco:"Al. Santos, 900 — Paraíso", valor:2100.00, distancia:3.2, tipo:"padrao", iniciais:"JB", cor:"bg-cyan-100 text-cyan-700", lat:35, lng:68, telefone:"(11) 93210-9876", email:"joao.barbosa@email.com", veiculo:"Chevrolet Onix Premier 2023", ultimaVisita:"2024-12-05", servicos:2 },
+        { id:7, nome:"Patrícia Gomes Nascimento", endereco:"R. Haddock Lobo, 350 — Cerqueira César", valor:6700.00, distancia:3.6, tipo:"padrao", iniciais:"PG", cor:"bg-pink-100 text-pink-700", lat:72, lng:40, telefone:"(11) 92109-8765", email:"patricia.gn@email.com", veiculo:"Hyundai HB20 Platinum 2022", ultimaVisita:"2024-11-20", servicos:6 },
+        { id:8, nome:"Lucas Andrade Ribeiro", endereco:"Av. 9 de Julho, 4100 — Jardim Europa", valor:980.00, distancia:4.1, tipo:"padrao", iniciais:"LA", cor:"bg-orange-100 text-orange-700", lat:25, lng:72, telefone:"(11) 91098-7654", email:"lucas.ribeiro@email.com", veiculo:"Renault Kwid Zen 2021", ultimaVisita:"2024-10-15", servicos:1 },
+        { id:9, nome:"Camila Rocha Martins", endereco:"R. Pamplona, 1400 — Jardim Paulista", valor:11500.00, distancia:4.5, tipo:"vip", iniciais:"CR", cor:"bg-teal-100 text-teal-700", lat:78, lng:50, telefone:"(11) 90987-6543", email:"camila.rm@email.com", veiculo:"Jeep Compass Limited 2024", ultimaVisita:"2024-12-28", servicos:11 },
+        { id:10, nome:"Thiago Pereira Lopes", endereco:"Av. Angélica, 2500 — Consolação", valor:4380.00, distancia:5.3, tipo:"padrao", iniciais:"TP", cor:"bg-indigo-100 text-indigo-700", lat:30, lng:38, telefone:"(11) 89876-5432", email:"thiago.lopes@email.com", veiculo:"Nissan Kicks SV 2023", ultimaVisita:"2024-12-01", servicos:4 },
+        { id:11, nome:"Daniela Cardoso Viera", endereco:"R. da Consolação, 2800 — Consolação", valor:750.00, distancia:6.0, tipo:"padrao", iniciais:"DC", cor:"bg-sky-100 text-sky-700", lat:48, lng:75, telefone:"(11) 88765-4321", email:"daniela.v@email.com", veiculo:"Fiat Argo Drive 2022", ultimaVisita:"2024-09-28", servicos:1 },
+        { id:12, nome:"Eduardo Tavares Pinto", endereco:"Av. Cidade Jardim, 400 — Jardim Paulistano", valor:22100.00, distancia:7.2, tipo:"vip", iniciais:"ET", cor:"bg-fuchsia-100 text-fuchsia-700", lat:80, lng:65, telefone:"(11) 87654-3210", email:"eduardo.tp@email.com", veiculo:"Mercedes-Benz C200 AMG 2024", ultimaVisita:"2024-12-30", servicos:20 }
+      ];
+
+      let mapa_de_clientes_filtroRaio = 5;
+      let mapa_de_clientes_filtroTipo = 'todos';
+      let mapa_de_clientes_pinoSelecionado = null;
+      let mapa_de_clientes_timeoutCard = null;
+
+      function mapa_de_clientes_inicializar() {
+        mapa_de_clientes_aplicarFiltrosVisuais();
+        mapa_de_clientes_renderizarPinos();
+        mapa_de_clientes_renderizarListaProximos();
+        mapa_de_clientes_timeoutCard = null;
+      }
+
+      function mapa_de_clientes_aplicarFiltrosVisuais() {
+        ['1','5','10','20'].forEach(function(r) {
+          var btn = document.getElementById('filtro-raio-'+r);
+          if (parseInt(r) === mapa_de_clientes_filtroRaio) {
+            btn.className = 'filter-raio-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all bg-marca-800 text-white shadow-md';
+          } else {
+            btn.className = 'filter-raio-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all bg-gray-100 text-gray-600 hover:bg-gray-200';
+          }
+        });
+        ['todos','vip','padrao'].forEach(function(t) {
+          var btn = document.getElementById('filtro-tipo-'+t);
+          if (t === mapa_de_clientes_filtroTipo) {
+            btn.className = 'filter-tipo-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all bg-marca-800 text-white shadow-md';
+          } else {
+            btn.className = 'filter-tipo-btn flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold transition-all bg-gray-100 text-gray-600 hover:bg-gray-200';
+          }
+        });
+      }
+
+      function mapa_de_clientes_obterFiltrados() {
+        return mapa_de_clientes_clientes.filter(function(c) {
+          var okRaio = c.distancia <= mapa_de_clientes_filtroRaio;
+          var okTipo = mapa_de_clientes_filtroTipo === 'todos' || c.tipo === mapa_de_clientes_filtroTipo;
+          return okRaio && okTipo;
+        }).sort(function(a,b){ return a.distancia - b.distancia; });
+      }
+
+      function mapa_de_clientes_definirFiltroRaio(raio) {
+        mapa_de_clientes_filtroRaio = raio;
+        mapa_de_clientes_aplicarFiltrosVisuais();
+        mapa_de_clientes_renderizarPinos();
+        mapa_de_clientes_renderizarListaProximos();
+        var count = mapa_de_clientes_obterFiltrados().length;
+        var stat = document.getElementById('texto-estatistica');
+        stat.textContent = count + ' cliente' + (count !== 1 ? 's' : '') + ' em um raio de ' + raio + ' km';
+        var subt = document.getElementById('subtitulo-proximos');
+        subt.textContent = count + ' encontrado' + (count !== 1 ? 's' : '') + ' · Ordenados por proximidade';
+        if (count === 0) {
+          toast('Nenhum cliente encontrado nesse raio', 'info');
+        }
+      }
+
+      function mapa_de_clientes_definirFiltroTipo(tipo) {
+        mapa_de_clientes_filtroTipo = tipo;
+        mapa_de_clientes_aplicarFiltrosVisuais();
+        mapa_de_clientes_renderizarPinos();
+        mapa_de_clientes_renderizarListaProximos();
+        var count = mapa_de_clientes_obterFiltrados().length;
+        var stat = document.getElementById('texto-estatistica');
+        var tipoLabel = tipo === 'todos' ? '' : tipo === 'vip' ? ' VIP' : ' padrão';
+        stat.textContent = count + ' cliente' + (count !== 1 ? 's' : '') + tipoLabel + ' em ' + mapa_de_clientes_filtroRaio + ' km';
+        var subt = document.getElementById('subtitulo-proximos');
+        subt.textContent = count + ' encontrado' + (count !== 1 ? 's' : '') + ' · Ordenados por proximidade';
+      }
+
+      function mapa_de_clientes_renderizarPinos() {
+        var container = document.getElementById('pinos-mapa');
+        var filtrados = mapa_de_clientes_obterFiltrados();
+        var idsFiltrados = {};
+        filtrados.forEach(function(c){ idsFiltrados[c.id] = true; });
+        container.innerHTML = '';
+        mapa_de_clientes_clientes.forEach(function(c) {
+          if (!idsFiltrados[c.id]) return;
+          var isVip = c.tipo === 'vip';
+          var pinSize = isVip ? 34 : 24;
+          var dotSize = isVip ? 14 : 9;
+          var dotOffset = isVip ? 4 : 3;
+          var shadowOpacity = isVip ? '0.35' : '0.2';
+          var pinDiv = document.createElement('div');
+          pinDiv.className = 'absolute cursor-pointer transition-transform duration-150 active:scale-125';
+          pinDiv.style.left = c.lng + '%';
+          pinDiv.style.top = c.lat + '%';
+          pinDiv.style.transform = 'translate(-50%, -100%)';
+          pinDiv.setAttribute('data-id', c.id);
+          if (isVip) {
+            pinDiv.innerHTML = '<div class="relative"><div class="absolute inset-0 rounded-full bg-marca-400" style="width:'+pinSize+'px;height:'+pinSize+'px;opacity:'+shadowOpacity+';filter:blur(4px);transform:scale(1.3);"></div><svg width="'+pinSize+'" height="'+(pinSize+8)+'" viewBox="0 0 34 42"><path d="M17 0C8.16 0 1 7.16 1 16c0 10 16 26 16 26s16-16 16-26C33 7.16 25.84 0 17 0z" fill="#14532d"/><circle cx="17" cy="14" r="'+(dotSize-1)+'" fill="#22c55e"/></svg><span class="absolute -top-0.5 -right-1 w-3.5 h-3.5 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center"><svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span></div>';
+          } else {
+            pinDiv.innerHTML = '<svg width="'+pinSize+'" height="'+(pinSize+6)+'" viewBox="0 0 24 30"><path d="M12 0C5.92 0 1 4.92 1 11c0 6.75 11 19 11 19s11-12.25 11-19C23 4.92 18.08 0 12 0z" fill="#22c55e" opacity="0.9"/><circle cx="12" cy="11" r="4.5" fill="white"/></svg>';
+          }
+          pinDiv.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mapa_de_clientes_abrirCardPino(c, pinDiv);
+          });
+          container.appendChild(pinDiv);
+        });
+      }
+
+      function mapa_de_clientes_abrirCardPino(cliente, pinEl) {
+        if (mapa_de_clientes_timeoutCard) clearTimeout(mapa_de_clientes_timeoutCard);
+        mapa_de_clientes_pinoSelecionado = cliente.id;
+        var card = document.getElementById('card-flutuante');
+        document.getElementById('cf-avatar').textContent = cliente.iniciais;
+        document.getElementById('cf-avatar').className = 'w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ' + cliente.cor;
+        document.getElementById('cf-nome').textContent = cliente.nome;
+        document.getElementById('cf-endereco').textContent = cliente.endereco;
+        document.getElementById('cf-valor').textContent = 'R$ ' + cliente.valor.toLocaleString('pt-BR',{minimumFractionDigits:2});
+        var navBtn = document.getElementById('cf-navegar');
+        navBtn.onclick = function(e) {
+          e.stopPropagation();
+          mapa_de_clientes_abrirNavegacao(cliente);
+        };
+        var pctLeft = cliente.lng;
+        var pctTop = cliente.lat;
+        if (pctTop > 65) {
+          card.style.top = pctTop + '%';
+          card.style.transform = 'translate(-50%, 0) translateY(8px)';
+        } else {
+          card.style.top = pctTop + '%';
+          card.style.transform = 'translate(-50%, -100%) translateY(-8px)';
+        }
+        card.style.left = pctLeft + '%';
+        card.classList.remove('hidden');
+        card.style.opacity = '0';
+        card.style.transform += ' scale(0.95)';
+        requestAnimationFrame(function(){
+          card.style.transition = 'all 0.2s ease-out';
+          card.style.opacity = '1';
+          if (pctTop > 65) {
+            card.style.transform = 'translate(-50%, 0) translateY(8px) scale(1)';
+          } else {
+            card.style.transform = 'translate(-50%, -100%) translateY(-8px) scale(1)';
+          }
+        });
+        mapa_de_clientes_timeoutCard = setTimeout(function() {
+          mapa_de_clientes_fecharCard();
+        }, 5000);
+      }
+
+      function mapa_de_clientes_fecharCard() {
+        var card = document.getElementById('card-flutuante');
+        card.style.opacity = '0';
+        card.style.transform += ' scale(0.95)';
+        setTimeout(function(){ card.classList.add('hidden'); }, 200);
+        mapa_de_clientes_pinoSelecionado = null;
+        if (mapa_de_clientes_timeoutCard) clearTimeout(mapa_de_clientes_timeoutCard);
+      }
+
+      function mapa_de_clientes_abrirNavegacao(cliente) {
+        var endereco = encodeURIComponent(cliente.endereco);
+        toast('Abrindo navegação para ' + cliente.nome, 'ok');
+        setTimeout(function(){
+          window.open('https://www.google.com/maps/dir/?api=1&destination=' + endereco, '_blank');
+        }, 400);
+      }
+
+      function mapa_de_clientes_renderizarListaProximos() {
+        var container = document.getElementById('lista-proximos');
+        var filtrados = mapa_de_clientes_obterFiltrados();
+        if (filtrados.length === 0) {
+          container.innerHTML = '<div class="flex flex-col items-center justify-center py-6 text-center"><div class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-2"><svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg></div><p class="text-xs text-gray-500">Nenhum cliente encontrado</p><p class="text-[10px] text-gray-400 mt-0.5">Tente aumentar o raio ou alterar o filtro</p></div>';
+          return;
+        }
+        var html = '';
+        filtrados.forEach(function(c) {
+          var isVip = c.tipo === 'vip';
+          html += '<div class="flex items-center gap-2.5 p-2 rounded-xl bg-gray-50 hover:bg-marca-50 transition-colors cursor-pointer active:scale-[0.98] transition-transform" onclick="mapa_de_clientes_abrirDetalheCliente(' + c.id + ')">';
+          html += '<div class="relative flex-shrink-0">';
+          html += '<div class="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold ' + c.cor + '">' + c.iniciais + '</div>';
+          if (isVip) { html += '<span class="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-amber-400 rounded-full border-2 border-white flex items-center justify-center"><svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>'; }
+          html += '</div>';
+          html += '<div class="flex-1 min-w-0">';
+          html += '<div class="flex items-center gap-1.5">';
+          html += '<p class="text-xs font-semibold text-gray-900 truncate">' + c.nome + '</p>';
+          if (isVip) { html += '<span class="badge bg-amber-100 text-amber-700 text-[9px] px-1.5 py-0.5 rounded-full font-bold flex-shrink-0">VIP</span>'; }
+          html += '</div>';
+          html += '<p class="text-[10px] text-gray-500 truncate">' + c.endereco + '</p>';
+          html += '<div class="flex items-center justify-between mt-1">';
+          html += '<span class="text-[10px] text-gray-400 flex items-center gap-0.5"><svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>' + c.distancia + ' km</span>';
+          html += '<span class="text-xs font-bold text-marca-700">R$ ' + c.valor.toLocaleString('pt-BR',{minimumFractionDigits:2}) + '</span>';
+          html += '</div></div>';
+          html += '<svg class="w-4 h-4 text-gray-300 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>';
+          html += '</div>';
+        });
+        container.innerHTML = html;
+      }
+
+      function mapa_de_clientes_abrirDetalheCliente(id) {
+        var c = mapa_de_clientes_clientes.find(function(x){ return x.id === id; });
+        if (!c) return;
+        mapa_de_clientes_fecharCard();
+        var isVip = c.tipo === 'vip';
+        var html = '<div class="space-y-4">';
+        html += '<div class="flex items-center gap-3">';
+        html += '<div class="w-14 h-14 rounded-full flex items-center justify-center text-lg font-bold ' + c.cor + '">' + c.iniciais + '</div>';
+        html += '<div class="flex-1">';
+        html += '<p class="text-base font-bold text-gray-900">' + c.nome + '</p>';
+        html += '<p class="text-xs text-gray-500 mt-0.5">' + c.veiculo + '</p>';
+        html += '<div class="flex items-center gap-1.5 mt-1">';
+        if (isVip) { html += '<span class="badge bg-amber-100 text-amber-700 text-[10px] px-2 py-0.5 rounded-full font-bold">⭐ Cliente VIP</span>'; }
+        else { html += '<span class="badge bg-gray-100 text-gray-600 text-[10px] px-2 py-0.5 rounded-full font-bold">Cliente Padrão</span>'; }
+        html += '</div></div></div>';
+        html += '<div class="bg-marca-50 rounded-xl p-3 flex items-center justify-between">';
+        html += '<div><p class="text-[10px] text-marca-600 font-medium">Total em compras</p><p class="text-xl font-bold text-marca-800">R$ ' + c.valor.toLocaleString('pt-BR',{minimumFractionDigits:2}) + '</p></div>';
+        html += '<div class="text-right"><p class="text-[10px] text-marca-600 font-medium">Serviços realizados</p><p class="text-xl font-bold text-marca-800">' + c.servicos + '</p></div>';
+        html += '</div>';
+        html += '<div class="space-y-2.5">';
+        html += '<div class="flex items-start gap-2"><svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg><div><p class="text-[10px] text-gray-400">Endereço</p><p class="text-xs text-gray-800 font-medium">' + c.endereco + '</p></div></div>';
+        html += '<div class="flex items-start gap-2"><svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.04 12.04 0 01-7.143-7.143c-.162-.441.004-.928.38-1.211l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg><div><p class="text-[10px] text-gray-400">Telefone</p><p class="text-xs text-gray-800 font-medium">' + c.telefone + '</p></div></div>';
+        html += '<div class="flex items-start gap-2"><svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg><div><p class="text-[10px] text-gray-400">E-mail</p><p class="text-xs text-gray-800 font-medium">' + c.email + '</p></div></div>';
+        html += '<div class="flex items-start gap-2"><svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg><div><p class="text-[10px] text-gray-400">Última visita</p><p class="text-xs text-gray-800 font-medium">' + dataBR(c.ultimaVisita) + '</p></div></div>';
+        html += '<div class="flex items-start gap-2"><svg class="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg><div><p class="text-[10px] text-gray-400">Veículo</p><p class="text-xs text-gray-800 font-medium">' + c.veiculo + '</p></div></div>';
+        html += '</div>';
+        html += '<div class="flex gap-2 pt-1">';
+        html += '<button onclick="fecharModal();mostrarTela(\'chat-com-cliente\');toast('Abrindo conversa com ' + c.nome.split(' ')[0], 'info')" class="flex-1 bg-marca-50 text-marca-800 py-2.5 rounded-xl text-xs font-bold active:scale-95 transition-transform flex items-center justify-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-3.86 8.25-8.625 8.25S3.75 16.556 3.75 12 7.61 3.75 12 3.75s8.625 3.69 8.625 8.25z"/></svg>Mensagem</button>';
+        html += '<button onclick="fecharModal();mostrarTela(\'novo-orcamento\');toast('Orçamento aberto para ' + c.nome.split(' ')[0], 'ok')" class="flex-1 bg-marca-600 text-white py-2.5 rounded-xl text-xs font-bold active:scale-95 transition-transform flex items-center justify-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h.75m3 0h3.75m-3.75 0h3.75m-9 6h12.75"/></svg>Orçamento</button>';
+        html += '<button onclick="fecharModal();mapa_de_clientes_abrirNavegacao(mapa_de_clientes_clientes.find(function(x){return x.id===' + c.id + '}))" class="flex-1 bg-gray-100 text-gray-700 py-2.5 rounded-xl text-xs font-bold active:scale-95 transition-transform flex items-center justify-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>Navegar</button>';
+        html += '</div></div>';
+        abrirModal(html, 'Detalhes do Cliente');
+      }
+
+      function mapa_de_clientes_centralizar() {
+        toast('Localização centralizada', 'ok');
+        var container = document.getElementById('mapa-container');
+        container.style.transition = 'box-shadow 0.3s';
+        container.style.boxShadow = '0 0 0 3px rgba(34,197,94,0.3)';
+        setTimeout(function(){ container.style.boxShadow = 'inset 0 2px 8px rgba(0,0,0,0.06)'; }, 800);
+        mapa_de_clientes_fecharCard();
+      }
+
+      document.addEventListener('click', function(e) {
+        var card = document.getElementById('card-flutuante');
+        if (!card.classList.contains('hidden') && !card.contains(e.target) && !e.target.closest('[data-id]')) {
+          mapa_de_clientes_fecharCard();
+        }
+      });
+
+      setTimeout(mapa_de_clientes_inicializar, 100);
+    </script>
+
     <!-- TELAS -->
 
     </main>
