@@ -669,6 +669,260 @@ painel_principal_renderPedidos();
 </script>
 </section>
 
+    <section data-tela="meus-clientes" class="hidden">
+      <div class="px-4 pt-4 pb-2">
+        <div class="flex items-start justify-between mb-1">
+          <div>
+            <h1 class="font-display text-xl font-bold text-marca-900">Meus Clientes</h1>
+            <p class="text-xs text-gray-500 mt-0.5">Gerencie sua carteira de clientes</p>
+          </div>
+          <div class="relative">
+            <button onclick="abrirModal(clienteFormHTML(), 'Novo Cliente')" class="active:scale-95 transition-transform w-10 h-10 bg-marca-700 rounded-xl flex items-center justify-center shadow-lg shadow-marca-900/20 hover:bg-marca-800">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            </button>
+            <span id="badge-novos" class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-emerald-400 text-marca-900 text-[10px] font-bold rounded-full flex items-center justify-center">3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 pb-2">
+        <div class="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
+          <div class="flex-shrink-0 bg-marca-700 rounded-xl p-3 w-[140px] shadow-sm">
+            <div class="flex items-center gap-1.5 mb-1">
+              <svg class="w-4 h-4 text-marca-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              <span class="text-[10px] font-medium text-marca-200 uppercase tracking-wide">Total</span>
+            </div>
+            <p class="text-lg font-bold text-white">156</p>
+            <p class="text-[10px] text-emerald-300 font-medium">↑ 12% este mês</p>
+          </div>
+          <div class="flex-shrink-0 bg-white rounded-xl p-3 w-[140px] shadow-sm border border-gray-100">
+            <div class="flex items-center gap-1.5 mb-1">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+              <span class="text-[10px] font-medium text-gray-500 uppercase tracking-wide">VIP</span>
+            </div>
+            <p class="text-lg font-bold text-marca-800">42</p>
+            <p class="text-[10px] text-emerald-600 font-medium">+3 novos</p>
+          </div>
+          <div class="flex-shrink-0 bg-white rounded-xl p-3 w-[140px] shadow-sm border border-gray-100">
+            <div class="flex items-center gap-1.5 mb-1">
+              <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span class="text-[10px] font-medium text-gray-500 uppercase tracking-wide">Pendentes</span>
+            </div>
+            <p class="text-lg font-bold text-amber-600">8</p>
+            <p class="text-[10px] text-red-500 font-medium">↓ 2 desde ontem</p>
+          </div>
+          <div class="flex-shrink-0 bg-white rounded-xl p-3 w-[140px] shadow-sm border border-gray-100">
+            <div class="flex items-center gap-1.5 mb-1">
+              <svg class="w-4 h-4 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span class="text-[10px] font-medium text-gray-500 uppercase tracking-wide">Ticket Médio</span>
+            </div>
+            <p class="text-lg font-bold text-marca-800">R$ 2.340</p>
+            <p class="text-[10px] text-emerald-600 font-medium">↑ 8% vs mês anterior</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 pb-2">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-3">
+          <div class="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2.5">
+            <svg class="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <input id="input-busca" type="text" placeholder="Buscar cliente por nome ou CPF" oninput="meus_clientes_filtrar()" class="bg-transparent text-sm text-gray-700 placeholder-gray-400 w-full outline-none font-body">
+          </div>
+          <div class="flex gap-2 mt-3">
+            <button onclick="meus_clientes_setFiltro('todos')" data-filtro="todos" class="meus_clientes_filtro-btn active-filter text-xs font-semibold px-3.5 py-1.5 rounded-lg transition-all">Todos</button>
+            <button onclick="meus_clientes_setFiltro('vip')" data-filtro="vip" class="meus_clientes_filtro-btn text-xs font-semibold px-3.5 py-1.5 rounded-lg transition-all">⭐ VIP</button>
+            <button onclick="meus_clientes_setFiltro('pendente')" data-filtro="pendente" class="meus_clientes_filtro-btn text-xs font-semibold px-3.5 py-1.5 rounded-lg transition-all">⏳ Pendente</button>
+            <button onclick="meus_clientes_setFiltro('inativo')" data-filtro="inativo" class="meus_clientes_filtro-btn text-xs font-semibold px-3.5 py-1.5 rounded-lg transition-all">😴 Inativo</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="clientes-lista" class="px-4 pb-28 space-y-3"></div>
+      <div id="clientes-vazio" class="hidden px-4 pb-28">
+        <div class="flex flex-col items-center justify-center py-12 text-center">
+          <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+            <svg class="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <p class="text-sm font-semibold text-gray-500 mb-1">Nenhum cliente encontrado</p>
+          <p class="text-xs text-gray-400">Tente ajustar os filtros ou a busca</p>
+        </div>
+      </div>
+
+      <script>
+      (function(){
+        var clientes=[
+          {id:1,nome:"Ana Carolina Ferreira",cpf:"123.456.789-00",telefone:"(11) 98765-4321",email:"ana.ferreira@email.com",status:"vip",totalCompras:3450.00,ultimoPedido:{data:"2026-01-18",status:"concluido",valor:890.00,servico:"Troca de óleo + filtros"},cidade:"São Paulo, SP",veiculo:"Honda Civic 2022",cadastro:"2024-03-15",avaliacao:5},
+          {id:2,nome:"Roberto Silva Santos",cpf:"987.654.321-00",telefone:"(21) 97654-3210",email:"roberto.santos@email.com",status:"pendente",totalCompras:890.00,ultimoPedido:{data:"2026-01-20",status:"em_andamento",valor:450.00,servico:"Revisão dos freios"},cidade:"Rio de Janeiro, RJ",veiculo:"Fiat Argo 2023",cadastro:"2025-08-22",avaliacao:4},
+          {id:3,nome:"Juliana Mendes Oliveira",cpf:"456.789.123-00",telefone:"(31) 96543-2109",email:"juliana.mendes@email.com",status:"vip",totalCompras:5200.00,ultimoPedido:{data:"2026-01-15",status:"concluido",valor:1200.00,servico:"Alinhamento + balanceamento + rodízio"},cidade:"Belo Horizonte, MG",veiculo:"Volkswagen Nivus 2024",cadastro:"2024-01-10",avaliacao:5},
+          {id:4,nome:"Carlos Eduardo Lima",cpf:"321.654.987-00",telefone:"(41) 95432-1098",email:"carlos.lima@email.com",status:"inativo",totalCompras:340.00,ultimoPedido:{data:"2025-06-30",status:"concluido",valor:340.00,servico:"Troca de pastilhas de freio"},cidade:"Curitiba, PR",veiculo:"Toyota Corolla 2020",cadastro:"2024-07-05",avaliacao:3},
+          {id:5,nome:"Fernanda Costa Rocha",cpf:"654.987.321-00",telefone:"(51) 94321-0987",email:"fernanda.rocha@email.com",status:"vip",totalCompras:2100.00,ultimoPedido:{data:"2026-01-19",status:"concluido",valor:650.00,servico:"Diagnóstico eletrônico + troca de velas"},cidade:"Porto Alegre, RS",veiculo:"Chevrolet Onix 2023",cadastro:"2024-09-18",avaliacao:5},
+          {id:6,nome:"Marcelo Andrade Souza",cpf:"789.123.456-00",telefone:"(11) 93210-9876",email:"marcelo.souza@email.com",status:"pendente",totalCompras:1750.00,ultimoPedido:{data:"2026-01-21",status:"aguardando_orcamento",valor:0,servico:"Suspensão dianteira — avaliação"},cidade:"São Paulo, SP",veiculo:"Hyundai HB20 2021",cadastro:"2025-01-30",avaliacao:4},
+          {id:7,nome:"Patrícia Gomes Nascimento",cpf:"147.258.369-00",telefone:"(21) 92109-8765",email:"patricia.gn@email.com",status:"vip",totalCompras:4600.00,ultimoPedido:{data:"2026-01-17",status:"concluido",valor:1800.00,servico:"Troca de embreagem + revisão completa"},cidade:"Niterói, RJ",veiculo:"Jeep Compass 2022",cadastro:"2024-05-20",avaliacao:5},
+          {id:8,nome:"Ricardo Barros Pinto",cpf:"369.258.147-00",telefone:"(31) 91098-7654",email:"ricardo.pinto@email.com",status:"inativo",totalCompras:0,ultimoPedido:{data:"2025-09-12",status:"cancelado",valor:0,servico:"Orçamento para ar condicionado"},cidade:"Belo Horizonte, MG",veiculo:"Ford Ka 2019",cadastro:"2025-02-14",avaliacao:0}
+        ];
+
+        var filtroAtual='todos';
+
+        var statusLabel={concluido:{text:"Concluído",cls:"bg-emerald-50 text-emerald-700 border-emerald-200"},em_andamento:{text:"Em andamento",cls:"bg-blue-50 text-blue-700 border-blue-200"},aguardando_orcamento:{text:"Aguardando orçamento",cls:"bg-amber-50 text-amber-700 border-amber-200"},cancelado:{text:"Cancelado",cls:"bg-red-50 text-red-600 border-red-200"}};
+        var statusIcon={concluido:"M5 13l4 4L19 7",em_andamento:"M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",aguardando_orcamento:"M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2",cancelado:"M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"};
+        var coresAvatar=["bg-emerald-100 text-marca-800","bg-sky-100 text-sky-800","bg-amber-100 text-amber-800","bg-violet-100 text-violet-800","bg-rose-100 text-rose-800","bg-teal-100 text-teal-800","bg-orange-100 text-orange-800","bg-indigo-100 text-indigo-800"];
+
+        function initials(n){var p=n.split(' ');return(p[0][0]+(p.length>1?p[p.length-1][0]:'')).toUpperCase();}
+        function formatTel(t){return t;}
+        function avColors(i){return coresAvatar[i%coresAvatar.length];}
+
+        function clienteCardHTML(c,i){
+          var sl=statusLabel[c.ultimoPedido.status]||statusLabel.concluido;
+          var si=statusIcon[c.ultimoPedido.status]||statusIcon.concluido;
+          var cor=avColors(i);
+          var ini=initials(c.nome);
+          var vipBadge=c.status==='vip'?'<span class="inline-flex items-center px-1.5 py-0.5 rounded-md bg-amber-50 text-amber-700 text-[10px] font-bold border border-amber-200 ml-1.5">VIP</span>':'';
+          var statusBorder=c.status==='pendente'?'border-l-amber-400':c.status==='inativo'?'border-l-gray-300':'border-l-emerald-400';
+          return '<div onclick="meus_clientes_abrirDetalhe('+c.id+')" class="bg-white rounded-2xl shadow-sm border border-gray-100 border-l-[3px] '+statusBorder+' p-3.5 active:scale-[0.98] transition-all cursor-pointer hover:shadow-md">'+
+            '<div class="flex items-start gap-3">'+
+              '<div class="w-11 h-11 rounded-full '+cor+' flex items-center justify-center text-sm font-bold flex-shrink-0">'+ini+'</div>'+
+              '<div class="flex-1 min-w-0">'+
+                '<div class="flex items-center">'+
+                  '<h3 class="font-display font-bold text-sm text-gray-900 truncate">'+c.nome+'</h3>'+
+                  vipBadge+
+                '</div>'+
+                '<p class="text-xs text-gray-500 mt-0.5 flex items-center gap-1"><svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>'+formatTel(c.telefone)+'</p>'+
+                '<p class="text-[10px] text-gray-400 mt-0.5 truncate">'+c.ultimoPedido.servico+'</p>'+
+              '</div>'+
+              '<button onclick="event.stopPropagation();meus_clientes_contatar('+c.id+')" class="w-9 h-9 bg-marca-50 hover:bg-marca-100 rounded-xl flex items-center justify-center flex-shrink-0 active:scale-90 transition-all" title="Contatar cliente">'+
+                '<svg class="w-4 h-4 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>'+
+              '</button>'+
+            '</div>'+
+            '<div class="flex items-center justify-between mt-3 pt-2.5 border-t border-gray-50">'+
+              '<div class="flex items-center gap-2">'+
+                '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-semibold border '+sl.cls+'"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="'+si+'"/></svg>'+sl.text+'</span>'+
+                '<span class="text-[10px] text-gray-400">'+c.ultimoPedido.data+'</span>'+
+              '</div>'+
+              '<div class="text-right">'+
+                '<p class="text-xs text-gray-400">Total em compras</p>'+
+                '<p class="text-sm font-bold text-marca-800">R$ '+c.totalCompras.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</p>'+
+              '</div>'+
+            '</div>'+
+          '</div>';
+        }
+
+        function renderizar(){
+          var busca=document.getElementById('input-busca').value.toLowerCase().trim();
+          var lista=document.getElementById('clientes-lista');
+          var vazio=document.getElementById('clientes-vazio');
+          var html='';
+          var count=0;
+          for(var i=0;i<clientes.length;i++){
+            var c=clientes[i];
+            if(filtroAtual!=='todos'&&c.status!==filtroAtual) continue;
+            if(busca){
+              if(c.nome.toLowerCase().indexOf(busca)===-1&&c.cpf.indexOf(busca)===-1) continue;
+            }
+            html+=clienteCardHTML(c,i);
+            count++;
+          }
+          if(count===0){lista.innerHTML='';vazio.classList.remove('hidden');}
+          else{lista.innerHTML=html;vazio.classList.add('hidden');}
+        }
+
+        window.meus_clientes_filtrar=function(){
+          renderizar();
+        };
+
+        window.meus_clientes_setFiltro=function(f){
+          filtroAtual=f;
+          document.querySelectorAll('.meus_clientes_filtro-btn').forEach(function(b){
+            if(b.dataset.filtro===f){
+              b.className='meus_clientes_filtro-btn active-filter text-xs font-semibold px-3.5 py-1.5 rounded-lg transition-all bg-marca-700 text-white shadow-sm';
+            }else{
+              b.className='meus_clientes_filtro-btn text-xs font-semibold px-3.5 py-1.5 rounded-lg transition-all bg-gray-100 text-gray-500 hover:bg-gray-200';
+            }
+          });
+          renderizar();
+        };
+
+        window.meus_clientes_abrirDetalhe=function(id){
+          var c=clientes.find(function(x){return x.id===id;});
+          if(!c) return;
+          var sl=statusLabel[c.ultimoPedido.status]||statusLabel.concluido;
+          var si=statusIcon[c.ultimoPedido.status]||statusIcon.concluido;
+          var cor=avColors(clientes.indexOf(c));
+          var ini=initials(c.nome);
+          var estrelas='';
+          for(var s=0;s<5;s++){
+            estrelas+='<svg class="w-4 h-4 '+(s<c.avaliacao?'text-amber-400':'text-gray-200')+'" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>';
+          }
+          var html='<div class="space-y-4">'+
+            '<div class="flex items-center gap-3.5">'+
+              '<div class="w-14 h-14 rounded-full '+cor+' flex items-center justify-center text-lg font-bold">'+ini+'</div>'+
+              '<div class="flex-1"><h3 class="font-display font-bold text-base text-gray-900">'+c.nome+'</h3>'+
+                '<p class="text-xs text-gray-500 mt-0.5">Cliente desde '+c.cadastro+'</p>'+
+                '<div class="flex items-center gap-0.5 mt-1">'+estrelas+'<span class="text-xs text-gray-400 ml-1.5">('+c.avaliacao+'.0)</span></div>'+
+              '</div>'+
+            '</div>'+
+            '<div class="grid grid-cols-2 gap-2.5">'+
+              '<div class="bg-gray-50 rounded-xl p-2.5"><p class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">Telefone</p><p class="text-xs font-semibold text-gray-800">'+c.telefone+'</p></div>'+
+              '<div class="bg-gray-50 rounded-xl p-2.5"><p class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">CPF</p><p class="text-xs font-semibold text-gray-800">'+c.cpf+'</p></div>'+
+              '<div class="bg-gray-50 rounded-xl p-2.5"><p class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">Email</p><p class="text-xs font-semibold text-gray-800 truncate">'+c.email+'</p></div>'+
+              '<div class="bg-gray-50 rounded-xl p-2.5"><p class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">Cidade</p><p class="text-xs font-semibold text-gray-800">'+c.cidade+'</p></div>'+
+              '<div class="bg-gray-50 rounded-xl p-2.5 col-span-2"><p class="text-[10px] text-gray-400 uppercase tracking-wide mb-0.5">Veículo</p><p class="text-xs font-semibold text-gray-800">'+c.veiculo+'</p></div>'+
+            '</div>'+
+            '<div class="bg-marca-50 rounded-xl p-3 border border-marca-100">'+
+              '<div class="flex items-center justify-between">'+
+                '<span class="text-xs font-medium text-marca-700">Total em compras</span>'+
+                '<span class="text-lg font-bold text-marca-800">R$ '+c.totalCompras.toLocaleString('pt-BR',{minimumFractionDigits:2})+'</span>'+
+              '</div>'+
+            '</div>'+
+            '<div>'+
+              '<h4 class="text-xs font-bold text-gray-700 uppercase tracking-wide mb-2">Último Pedido</h4>'+
+              '<div class="bg-white border border-gray-100 rounded-xl p-3">'+
+                '<p class="text-sm font-semibold text-gray-800">'+c.ultimoPedido.servico+'</p>'+
+                '<div class="flex items-center justify-between mt-2">'+
+                  '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-semibold border '+sl.cls+'"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="'+si+'"/></svg>'+sl.text+'</span>'+
+                  '<span class="text-[10px] text-gray-400">'+c.ultimoPedido.data+'</span>'+
+                '</div>'+
+              '</div>'+
+            '</div>'+
+            '<div class="flex gap-2 pt-1">'+
+              '<button onclick="fecharModal();setTimeout(function(){mostrarTela(\'novo-orcamento\');},200)" class="flex-1 bg-marca-700 text-white text-sm font-semibold py-2.5 rounded-xl active:scale-95 transition-all shadow-sm">Novo Orçamento</button>'+
+              '<button onclick="fecharModal();setTimeout(function(){mostrarTela(\'chat-com-cliente\');},200)" class="flex-1 bg-white border border-gray-200 text-gray-700 text-sm font-semibold py-2.5 rounded-xl active:scale-95 transition-all">Enviar Mensagem</button>'+
+            '</div>'+
+          '</div>';
+          abrirModal(html,'Detalhes do Cliente');
+        };
+
+        window.meus_clientes_contatar=function(id){
+          toast('Abrindo conversa com o cliente...','info');
+          setTimeout(function(){mostrarTela('chat-com-cliente');},600);
+        };
+
+        function clienteFormHTML(){
+          return '<div class="space-y-3">'+
+            '<div><label class="text-xs font-semibold text-gray-600 mb-1 block">Nome completo</label><input type="text" placeholder="Ex: Maria da Silva" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-marca-500 focus:ring-2 focus:ring-marca-100 transition-all"></div>'+
+            '<div><label class="text-xs font-semibold text-gray-600 mb-1 block">CPF</label><input type="text" placeholder="000.000.000-00" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-marca-500 focus:ring-2 focus:ring-marca-100 transition-all"></div>'+
+            '<div><label class="text-xs font-semibold text-gray-600 mb-1 block">Telefone / WhatsApp</label><input type="text" placeholder="(00) 00000-0000" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-marca-500 focus:ring-2 focus:ring-marca-100 transition-all"></div>'+
+            '<div><label class="text-xs font-semibold text-gray-600 mb-1 block">Email</label><input type="email" placeholder="cliente@email.com" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-marca-500 focus:ring-2 focus:ring-marca-100 transition-all"></div>'+
+            '<div><label class="text-xs font-semibold text-gray-600 mb-1 block">Veículo</label><input type="text" placeholder="Ex: Honda Civic 2022" class="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm outline-none focus:border-marca-500 focus:ring-2 focus:ring-marca-100 transition-all"></div>'+
+            '<div class="flex gap-2 pt-1">'+
+              '<button onclick="meus_clientes_salvarNovo()" class="flex-1 bg-marca-700 text-white text-sm font-semibold py-2.5 rounded-xl active:scale-95 transition-all shadow-sm">Salvar Cliente</button>'+
+              '<button onclick="fecharModal()" class="px-4 bg-gray-100 text-gray-600 text-sm font-semibold py-2.5 rounded-xl active:scale-95 transition-all">Cancelar</button>'+
+            '</div>'+
+          '</div>';
+        }
+
+        window.meus_clientes_salvarNovo=function(){
+          fecharModal();
+          toast('Cliente cadastrado com sucesso!','ok');
+          var badge=document.getElementById('badge-novos');
+          if(badge){var n=parseInt(badge.textContent)+1;badge.textContent=n;}
+        };
+
+        window.meus_clientes_setFiltro('todos');
+        renderizar();
+      })();
+      </script>
+    </section>
+
     <!-- TELAS -->
 
     </main>
