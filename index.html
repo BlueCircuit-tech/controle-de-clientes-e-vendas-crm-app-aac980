@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>HELPCAR — Serviços Automotivos</title>
+  <meta name="theme-color" content="#14532D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marca: {
+              50:  '#F0FDF4',
+              100: '#DCFCE7',
+              200: '#BBF7D0',
+              300: '#86EFAC',
+              400: '#4ADE80',
+              500: '#22C55E',
+              600: '#16A34A',
+              700: '#15803D',
+              800: '#166534',
+              900: '#14532D',
+              950: '#052E16',
+            },
+            destaque: '#22C55E',
+            'destaque-escuro': '#16A34A',
+          },
+          fontFamily: {
+            display: ['"Bricolage Grotesque"', 'sans-serif'],
+            body:    ['"Source Sans 3"', 'sans-serif'],
+          },
+          boxShadow: {
+            'marca':   '0 4px 20px rgba(20, 83, 45, 0.12)',
+            'marca-lg':'0 8px 30px rgba(20, 83, 45, 0.18)',
+            'destaque':'0 4px 16px rgba(34, 197, 94, 0.25)',
+            'card':    '0 2px 12px rgba(0, 0, 0, 0.06)',
+          },
+          borderRadius: {
+            'app': '24px',
+            'card': '14px',
+            'btn':  '12px',
+          },
+          animation: {
+            'fade-in': 'fadeIn .28s ease-out both',
+            'slide-up': 'slideUp .32s ease-out both',
+            'toast-in':  'toastIn .35s ease-out both',
+            'toast-out': 'toastOut .3s ease-in both',
+            'pulse-soft': 'pulseSoft 2.2s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%':   { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%':   { opacity: '0', transform: 'translateY(14px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            toastIn: {
+              '0%':   { opacity: '0', transform: 'translateY(-20px) scale(0.95)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+            },
+            toastOut: {
+              '0%':   { opacity: '1', transform: 'translateY(0) scale(1)' },
+              '100%': { opacity: '0', transform: 'translateY(-20px) scale(0.92)' },
+            },
+            pulseSoft: {
+              '0%, 100%': { opacity: '1' },
+              '50%':      { opacity: '.7' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      background: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+    }
+
+    /* Phone frame */
+    .phone-frame {
+      width: 390px; height: 844px;
+      background: #F0FDF4;
+      border-radius: 44px;
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 0 0 3px #1E293B,
+        0 0 0 7px #0F172A,
+        0 30px 80px rgba(0,0,0,.45);
+      display: flex; flex-direction: column;
+    }
+    @media (max-width: 430px) {
+      .phone-frame {
+        width: 100vw; height: 100dvh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+
+    /* Status bar */
+    .status-bar {
+      height: 48px; padding: 14px 28px 0;
+      background: #14532D;
+      display: flex; justify-content: space-between; align-items: center;
+      color: #F0FDF4; font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px; font-weight: 600; flex-shrink: 0;
+      position: relative; z-index: 60;
+    }
+    .status-bar .time { letter-spacing: 0.3px; }
+    .status-icons { display: flex; align-items: center; gap: 6px; }
+
+    /* Screen transitions */
+    [data-tela] {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      display: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+    [data-tela]:not(.hidden) {
+      display: block;
+      animation: fadeIn .28s ease-out both, slideUp .32s ease-out both;
+    }
+
+    /* Bottom nav */
+    .bottom-nav {
+      display: flex; justify-content: space-around; align-items: center;
+      height: 72px; background: #FFFFFF;
+      border-top: 1px solid rgba(20,83,45,0.08);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+      flex-shrink: 0; position: relative; z-index: 50;
+    }
+    .nav-btn {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 3px; height: 100%; cursor: pointer;
+      color: #94A3B8; transition: color .2s ease;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none; background: none; border: none;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 10px; font-weight: 600;
+    }
+    .nav-btn svg { transition: transform .2s ease; }
+    .nav-btn.ativo {
+      color: #14532D;
+    }
+    .nav-btn.ativo svg { transform: scale(1.08); }
+    .nav-btn::before {
+      content: ''; position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%) scaleX(0); width: 32px; height: 3px;
+      background: #22C55E; border-radius: 0 0 3px 3px;
+      transition: transform .25s ease;
+    }
+    .nav-btn.ativo::before { transform: translateX(-50%) scaleX(1); }
+
+    /* Scrollbar */
+    [data-tela]::-webkit-scrollbar { width: 3px; }
+    [data-tela]::-webkit-scrollbar-track { background: transparent; }
+    [data-tela]::-webkit-scrollbar-thumb {
+      background: rgba(20,83,45,0.15); border-radius: 3px;
+    }
+
+    /* Focus */
+    :focus-visible {
+      outline: 2px solid #22C55E;
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    /* Reusable components */
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 2px 10px; border-radius: 9999px;
+      font-size: 12px; font-weight: 600;
+      line-height: 1.6; white-space: nowrap;
+    }
+    .badge-verde   { background: #DCFCE7; color: #14532D; }
+    .badge-amarelo { background: #FEF9C3; color: #713F12; }
+    .badge-vermelho{ background: #FEE2E2; color: #7F1D1D; }
+    .badge-cinza   { background: #F1F5F9; color: #475569; }
+    .badge-azul    { background: #DBEAFE; color: #1E3A8A; }
+
+    .card {
+      background: #FFFFFF; border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .card-interativo {
+      cursor: pointer;
+    }
+    .card-interativo:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,.1);
+    }
+    .card-interativo:active {
+      transform: scale(0.985);
+      transition: transform .1s ease;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 12px 24px; border-radius: 12px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer; border: none; text-decoration: none;
+      transition: transform .15s ease, box-shadow .2s ease, opacity .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-primario {
+      background: #22C55E; color: #052E16;
+      box-shadow: 0 4px 16px rgba(34,197,94,.3);
+    }
+    .btn-primario:hover { background: #16A34A; }
+    .btn-secundario {
+      background: #F0FDF4; color: #14532D;
+      border: 1.5px solid #BBF7D0;
+    }
+    .btn-secundario:hover { background: #DCFCE7; }
+    .btn-perigo {
+      background: #FEE2E2; color: #991B1B;
+    }
+    .btn-ghost {
+      background: transparent; color: #14532D;
+      padding: 8px 16px;
+    }
+    .btn-ghost:hover { background: #F0FDF4; }
+    .btn:disabled {
+      opacity: .5; cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Toast */
+    #toast-container {
+      position: fixed; top: 16px; left: 50%;
+      transform: translateX(-50%); z-index: 9999;
+      display: flex; flex-direction: column; gap: 8px;
+      width: calc(100% - 32px); max-width: 350px;
+      pointer-events: none;
+    }
+    .toast {
+      padding: 14px 18px; border-radius: 12px;
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 14px; font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,.15);
+      pointer-events: auto;
+    }
+    .toast-ok      { background: #14532D; color: #F0FDF4; }
+    .toast-erro    { background: #991B1B; color: #FFF1F2; }
+    .toast-info    { background: #FFFFFF; color: #14532D; border: 1px solid #BBF7D0; }
+    .toast.saindo  { animation: toastOut .3s ease-in forwards; }
+
+    /* Modal */
+    #modal-overlay {
+      position: fixed; inset: 0; z-index: 8000;
+      background: rgba(5, 46, 22, 0.55);
+      display: none; align-items: flex-end; justify-content: center;
+      backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+    }
+    #modal-overlay.aberto { display: flex; }
+    @media (min-width: 431px) {
+      #modal-overlay { align-items: center; }
+    }
+    #modal-cartao {
+      background: #FFFFFF; width: 100%; max-width: 390px;
+      border-radius: 24px 24px 0 0;
+      max-height: 80%; overflow-y: auto;
+      animation: slideUp .3s ease-out both;
+    }
+    @media (min-width: 431px) {
+      #modal-cartao {
+        border-radius: 20px; max-height: 75%;
+        animation: fadeIn .25s ease-out both;
+      }
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px 12px; border-bottom: 1px solid #F1F5F9;
+      position: sticky; top: 0; background: #FFFFFF; z-index: 1;
+    }
+    .modal-body { padding: 16px 24px 24px; }
+    .modal-fechar {
+      width: 32px; height: 32px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: none; background: #F1F5F9;
+      color: #475569; transition: background .15s;
+    }
+    .modal-fechar:hover { background: #E2E8F0; }
+
+    /* Section titles */
+    .section-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700; color: #14532D;
+      font-size: 18px; line-height: 1.3;
+    }
+    .section-subtitle {
+      font-size: 14px; color: #64748B;
+      margin-top: 2px;
+    }
+
+    /* Input */
+    .input-marca {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid #E2E8F0; border-radius: 12px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 15px; color: #14532D;
+      background: #FFFFFF;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .input-marca:focus {
+      border-color: #22C55E;
+      box-shadow: 0 0 0 3px rgba(34,197,94,.15);
+    }
+    .input-marca::placeholder { color: #94A3B8; }
+
+    /* Avatar */
+    .avatar {
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700; color: #FFFFFF;
+      flex-shrink: 0;
+    }
+
+    /* Screen header area */
+    .screen-header {
+      padding: 16px 20px 0;
+    }
+    .screen-body {
+      padding: 12px 20px 100px;
+    }
+
+    /* Ripple touch */
+    @media (hover: none) {
+      .btn:active { opacity: .85; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone-frame" id="app-frame">
+
+    <!-- Status bar -->
+    <div class="status-bar">
+      <span class="time" id="status-time">09:41</span>
+      <div class="status-icons">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M1 8.5C1.7 8.5 2.3 8.2 2.8 7.8L3.6 8.6C3.1 9.1 2.3 9.5 1.5 9.5V8.5H1ZM14.2 6.9L15 6.1C15.4 6.6 15.6 7.3 15.6 8V9.5H14.1V8.2C14.1 7.6 14.2 7.1 14.2 6.9ZM2.8 3.5C3.3 3 3.9 2.6 4.6 2.3L5.2 3.3C4.6 3.6 4.1 4 3.6 4.5L2.8 3.5ZM10.2 4.5C9.7 4 9.1 3.6 8.4 3.3L9 2.3C9.7 2.6 10.3 3 10.8 3.5L10.2 4.5ZM6.4 5.8L5.6 5C6.2 4.6 6.9 4.3 7.6 4.2L7.9 5.2C7.4 5.3 6.9 5.5 6.4 5.8ZM8.6 5.8C8.1 5.5 7.6 5.3 7.1 5.2L7.4 4.2C8.1 4.3 8.8 4.6 9.4 5L8.6 5.8ZM4.4 6.1L3.6 5.3C4.2 4.9 4.9 4.6 5.6 4.5L5.9 5.5C5.4 5.6 4.9 5.8 4.4 6.1ZM10 6.1C9.5 5.8 9 5.6 8.5 5.5L8.8 4.5C9.5 4.6 10.2 4.9 10.8 5.3L10 6.1ZM7.6 6.5L7 5.5C7.5 5.4 8.1 5.4 8.6 5.5L9.2 6.5C8.5 6.4 7.8 6.4 7.6 6.5ZM1 4.5H0.5V9.5H1V4.5ZM15.6 4.5V9.5H16.1V4.5H15.6ZM1 11.5H15.6V10.5H1V11.5Z"/></svg>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 2.5C7.8 2.5 9.5 3.2 10.8 4.4L11.8 3.4C10.2 1.9 8.2 1 6 1S1.8 1.9 0.2 3.4L1.2 4.4C2.5 3.2 4.2 2.5 6 2.5ZM3.7 5.2L4.7 4.2C5.2 4.7 5.7 5.3 6 5.9S6.8 7.3 7 7.8L6 8.8C5.7 8.3 5.2 7.7 4.7 7.2L3.7 8.2C4.4 8.9 5.1 9.5 6 9.9C6.9 9.5 7.6 8.9 8.3 8.2L9.3 7.2C8.8 7.7 8.3 8.3 8 8.8L7 7.8C7.3 7.3 7.8 6.7 8.2 6.1L9.2 5.1C8.6 4.5 7.9 4 7.1 3.6L6.5 4.6C6.2 4.2 5.7 3.8 5.1 3.5L5.5 2.5C5.1 2.7 4.7 2.9 4.3 3.2L3.7 5.2Z"/></svg>
+        <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="1" width="15" height="10" rx="2" stroke="currentColor" stroke-width="1" fill="none" opacity=".4"/><rect x="15.5" y="4" width="2" height="4" rx="1" fill="currentColor" opacity=".4"/><rect x="2" y="3.5" width="9" height="5" rx="1"/></svg>
+      </div>
+    </div>
+
+    <!-- Logo / Brand strip -->
+    <div style="background:#14532D; padding:10px 20px 14px; display:flex; align-items:center; gap:10px; flex-shrink:0;">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <rect width="34" height="34" rx="10" fill="#22C55E"/>
+        <path d="M17 8L24 14V26H10V14L17 8Z" stroke="#052E16" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+        <circle cx="17" cy="18" r="3" fill="#052E16"/>
+        <path d="M13 26H21" stroke="#052E16" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <span style="font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:19px; color:#F0FDF4; line-height:1;">HELPCAR</span>
+        <span style="display:block; font-size:10px; color:#86EFAC; font-weight:600; letter-spacing:1.5px; margin-top:1px;">SERVIÇOS AUTOMOTIVOS</span>
+      </div>
+    </div>
+
+    <!-- Main content area -->
+    <main id="main-content" style="flex:1; overflow:hidden; position:relative;">
+
+      <!-- TELAS -->
+
+    </main>
+
+    <!-- Bottom navigation -->
+    <nav class="bottom-nav" id="bottom-nav" aria-label="Navegação principal">
+      <button class="nav-btn" data-nav="painel-principal" onclick="mostrarTela('painel-principal')" aria-label="Painel Principal">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span>Painel</span>
+      </button>
+      <button class="nav-btn" data-nav="meus-clientes" onclick="mostrarTela('meus-clientes')" aria-label="Meus Clientes">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <span>Clientes</span>
+      </button>
+      <button class="nav-btn" data-nav="novo-orcamento" onclick="mostrarTela('novo-orcamento')" aria-label="Novo Orçamento">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>Orçamento</span>
+      </button>
+      <button class="nav-btn" data-nav="agenda" onclick="mostrarTela('agenda')" aria-label="Agenda">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Agenda</span>
+      </button>
+      <button class="nav-btn" data-nav="relatorios" onclick="mostrarTela('relatorios')" aria-label="Relatórios">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Relatórios</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- Modal genérico -->
+  <div id="modal-overlay" role="dialog" aria-modal="true">
+    <div id="modal-cartao">
+      <div class="modal-header">
+        <h3 id="modal-titulo" style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:17px; color:#14532D; margin:0;">Título</h3>
+        <button class="modal-fechar" onclick="fecharModal()" aria-label="Fechar">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-corpo"></div>
+    </div>
+  </div>
+
+  <script>
+    // ── Status bar clock ──
+    (function atualizarRelogio() {
+      var agora = new Date();
+      var h = String(agora.getHours()).padStart(2, '0');
+      var m = String(agora.getMinutes()).padStart(2, '0');
+      var el = document.getElementById('status-time');
+      if (el) el.textContent = h + ':' + m;
+    })();
+
+    // ── Toast system ──
+    function toast(mensagem, tipo) {
+      var container = document.getElementById('toast-container');
+      var el = document.createElement('div');
+      el.className = 'toast toast-' + (tipo || 'info') + ' animate-toast-in';
+
+      var icone = '';
+      if (tipo === 'ok') {
+        icone = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+      } else if (tipo === 'erro') {
+        icone = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
+      } else {
+        icone = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+      }
+      el.innerHTML = icone + '<span>' + mensagem + '</span>';
+      el.style.animation = 'toastIn .35s ease-out both';
+      container.appendChild(el);
+
+      setTimeout(function () {
+        el.classList.add('saindo');
+        el.addEventListener('animationend', function () { el.remove(); });
+      }, 3000);
+    }
+
+    // ── Modal system ──
+    function abrirModal(html, titulo) {
+      var overlay = document.getElementById('modal-overlay');
+      document.getElementById('modal-titulo').textContent = titulo || '';
+      document.getElementById('modal-corpo').innerHTML = html;
+      overlay.classList.add('aberto');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function fecharModal() {
+      document.getElementById('modal-overlay').classList.remove('aberto');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('modal-overlay').addEventListener('click', function (e) {
+      if (e.target === this) fecharModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') fecharModal();
+    });
+
+    // ── Formatters ──
+    function brl(valor) {
+      return new Intl.NumberFormat('pt-BR', {
+        style: 'currency', currency: 'BRL'
+      }).format(valor);
+    }
+
+    function dataBR(iso) {
+      if (!iso) return '—';
+      var d = new Date(iso + 'T03:00:00');
+      var dd = String(d.getDate()).padStart(2, '0');
+      var mm = String(d.getMonth() + 1).padStart(2, '0');
+      var aa = d.getFullYear();
+      return dd + '/' + mm + '/' + aa;
+    }
+
+    // ── Helpers ──
+    var CORES_AVATAR = ['#14532D','#15803D','#166534','#22C55E','#16A34A','#0F766E','#1E40AF','#7C3AED'];
+    function avatarCor(nome) {
+      var h = 0;
+      for (var i = 0; i < nome.length; i++) h = (h * 31 + nome.charCodeAt(i)) | 0;
+      return CORES_AVATAR[Math.abs(h) % CORES_AVATAR.length];
+    }
+    function iniciais(nome) {
+      var p = nome.trim().split(/\s+/);
+      return (p[0][0] + (p.length > 1 ? p[p.length - 1][0] : '')).toUpperCase();
+    }
+
+    // ── Router ──
+    function mostrarTela(id) {
+      document.querySelectorAll('[data-tela]').forEach(function (s) {
+        s.classList.toggle('hidden', s.dataset.tela !== id);
+      });
+      document.querySelectorAll('[data-nav]').forEach(function (b) {
+        b.classList.toggle('ativo', b.dataset.nav === id);
+      });
+      window.scrollTo({ top: 0 });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      mostrarTela('painel-principal');
+    });
+  </script>
+</body>
+</html>
