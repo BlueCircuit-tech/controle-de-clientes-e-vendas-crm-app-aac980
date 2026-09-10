@@ -1675,6 +1675,571 @@ painel_principal_renderPedidos();
     </script>
 </section>
 
+    <section data-tela="agenda" class="hidden">
+      <div class="flex-1 overflow-y-auto pb-24">
+        <!-- Stats cards -->
+        <div id="agenda-stats" class="grid grid-cols-2 gap-3 px-5 pt-5">
+          <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+            <div class="w-9 h-9 rounded-xl bg-marca-100 flex items-center justify-center mb-2">
+              <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 font-display">3</p>
+            <p class="text-xs text-gray-500 font-body mt-0.5">Atendimentos hoje</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+            <div class="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center mb-2">
+              <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 font-display">1</p>
+            <p class="text-xs text-gray-500 font-body mt-0.5">Pendente confirmação</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+            <div class="w-9 h-9 rounded-xl bg-marca-100 flex items-center justify-center mb-2">
+              <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 font-display">2</p>
+            <p class="text-xs text-gray-500 font-body mt-0.5">Confirmados</p>
+          </div>
+          <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm">
+            <div class="w-9 h-9 rounded-xl bg-blue-50 flex items-center justify-center mb-2">
+              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            </div>
+            <p class="text-2xl font-bold text-gray-900 font-display">R$ 1.240</p>
+            <p class="text-xs text-gray-500 font-body mt-0.5">Faturamento mês</p>
+          </div>
+        </div>
+
+        <!-- Today highlight card -->
+        <div class="px-5 mt-5">
+          <div class="bg-marca-700 rounded-2xl p-5 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-marca-600 rounded-full -translate-y-1/2 translate-x-1/4 opacity-50"></div>
+            <div class="relative">
+              <div class="flex items-center gap-2 mb-1">
+                <svg class="w-4 h-4 text-marca-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                <span class="text-marca-100 text-xs font-medium uppercase tracking-wider font-body">Hoje</span>
+                <span class="text-marca-200 text-xs font-body">— 14 de Abril, 2026</span>
+              </div>
+              <p class="text-white text-lg font-bold font-display">3 atendimentos agendados</p>
+              <div class="flex gap-3 mt-3">
+                <div class="bg-marca-600/60 rounded-lg px-3 py-1.5 flex items-center gap-1.5">
+                  <div class="w-2 h-2 rounded-full bg-green-400"></div>
+                  <span class="text-marca-100 text-xs font-body">2 confirmados</span>
+                </div>
+                <div class="bg-marca-600/60 rounded-lg px-3 py-1.5 flex items-center gap-1.5">
+                  <div class="w-2 h-2 rounded-full bg-amber-400"></div>
+                  <span class="text-marca-100 text-xs font-body">1 pendente</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar / List toggle + navigation -->
+        <div class="px-5 mt-5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1 bg-gray-100 rounded-xl p-1">
+              <button onclick="agenda_setView('calendario')" id="btn-view-calendario" class="px-4 py-1.5 rounded-lg text-xs font-semibold font-body transition-all bg-white text-marca-700 shadow-sm">Calendário</button>
+              <button onclick="agenda_setView('lista')" id="btn-view-lista" class="px-4 py-1.5 rounded-lg text-xs font-semibold font-body transition-all text-gray-500 hover:text-gray-700">Lista</button>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="agenda_prevPeriod()" class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center active:scale-90 transition-all">
+                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+              </button>
+              <span id="agenda-period-label" class="text-sm font-bold text-gray-800 font-display min-w-[120px] text-center">Abril 2026</span>
+              <button onclick="agenda_nextPeriod()" class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center active:scale-90 transition-all">
+                <svg class="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calendar view -->
+        <div id="agenda-view-calendario" class="px-5 mt-4">
+          <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+            <div class="grid grid-cols-7 gap-1 mb-2">
+              <span class="text-center text-xs font-semibold text-gray-400 py-1 font-body">DOM</span>
+              <span class="text-center text-xs font-semibold text-gray-400 py-1 font-body">SEG</span>
+              <span class="text-center text-xs font-semibold text-gray-400 py-1 font-body">TER</span>
+              <span class="text-center text-xs font-semibold text-gray-400 py-1 font-body">QUA</span>
+              <span class="text-center text-xs font-semibold text-gray-400 py-1 font-body">QUI</span>
+              <span class="text-center text-xs font-semibold text-gray-400 py-1 font-body">SEX</span>
+              <span class="text-center text-xs font-semibold text-gray-400 py-1 font-body">SÁB</span>
+            </div>
+            <div id="agenda-calendar-grid" class="grid grid-cols-7 gap-1"></div>
+          </div>
+        </div>
+
+        <!-- List view (day/week) -->
+        <div id="agenda-view-lista" class="hidden px-5 mt-4">
+          <div id="agenda-day-list"></div>
+        </div>
+
+        <!-- Service filter -->
+        <div class="mt-5 px-5">
+          <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide" id="agenda-filter-chips">
+            <button onclick="agenda_setFilter('todos')" data-filter="todos" class="agenda-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all bg-marca-700 text-white">Todos</button>
+            <button onclick="agenda_setFilter('troca de óleo')" data-filter="troca de óleo" class="agenda-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">Troca de óleo</button>
+            <button onclick="agenda_setFilter('revisão')" data-filter="revisão" class="agenda-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">Revisão</button>
+            <button onclick="agenda_setFilter('freios')" data-filter="freios" class="agenda-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">Freios</button>
+            <button onclick="agenda_setFilter('alinhamento')" data-filter="alinhamento" class="agenda-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">Alinhamento</button>
+            <button onclick="agenda_setFilter('bateria')" data-filter="bateria" class="agenda-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all bg-gray-100 text-gray-600 hover:bg-gray-200">Bateria</button>
+          </div>
+        </div>
+
+        <!-- Appointments list -->
+        <div class="px-5 mt-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 id="agenda-date-title" class="text-base font-bold text-gray-900 font-display">Hoje — 14 de Abril</h3>
+            <span id="agenda-count-badge" class="bg-marca-100 text-marca-800 text-xs font-bold font-body px-2.5 py-0.5 rounded-full">3 agendamentos</span>
+          </div>
+          <div id="agenda-appointments-list" class="space-y-3"></div>
+          <div id="agenda-empty-state" class="hidden text-center py-10">
+            <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-gray-400 text-sm font-body">Nenhum agendamento encontrado</p>
+            <button onclick="agenda_setFilter('todos')" class="mt-2 text-marca-700 text-sm font-semibold font-body hover:underline">Limpar filtros</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating action button -->
+      <button onclick="agenda_novoAgendamento()" class="fixed bottom-24 right-5 w-14 h-14 bg-marca-600 hover:bg-marca-700 active:scale-90 rounded-full shadow-lg shadow-marca-700/30 flex items-center justify-center transition-all z-40">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+      </button>
+
+      <!-- New appointment modal -->
+      <div id="agenda-modal-overlay" class="hidden fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center">
+        <div id="agenda-modal-content" class="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
+          <div class="flex items-center justify-between mb-5">
+            <h3 class="text-lg font-bold text-gray-900 font-display">Novo Agendamento</h3>
+            <button onclick="agenda_fecharModal()" class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center active:scale-90 transition-all">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <form onsubmit="agenda_salvarAgendamento(event)" class="space-y-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 font-body mb-1.5">Nome do cliente</label>
+              <input type="text" id="agenda-inp-cliente" required placeholder="Ex: Maria Silva" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-body text-gray-900 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 font-body mb-1.5">Veículo</label>
+              <input type="text" id="agenda-inp-veiculo" required placeholder="Ex: Honda Civic 2020" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-body text-gray-900 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 font-body mb-1.5">Data</label>
+                <input type="date" id="agenda-inp-data" required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-body text-gray-900 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 font-body mb-1.5">Horário</label>
+                <select id="agenda-inp-horario" required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-body text-gray-900 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all">
+                  <option value="">Selecionar</option>
+                  <option>08:00</option><option>08:30</option><option>09:00</option><option>09:30</option>
+                  <option>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option>
+                  <option>13:00</option><option>13:30</option><option>14:00</option><option>14:30</option>
+                  <option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option>
+                  <option>17:00</option><option>17:30</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 font-body mb-1.5">Tipo de serviço</label>
+              <select id="agenda-inp-servico" required class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-body text-gray-900 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all">
+                <option value="">Selecionar</option>
+                <option>Troca de óleo</option><option>Revisão completa</option>
+                <option>Alinhamento e balanceamento</option><option>Freios</option>
+                <option>Bateria</option><option>Limpeza de bico injetor</option>
+                <option>Troca de pneu</option><option>Ar condicionado</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-700 font-body mb-1.5">Observações</label>
+              <textarea id="agenda-inp-obs" rows="2" placeholder="Detalhes adicionais..." class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm font-body text-gray-900 focus:border-marca-500 focus:ring-2 focus:ring-marca-200 outline-none transition-all resize-none"></textarea>
+            </div>
+            <button type="submit" class="w-full py-3.5 bg-marca-600 hover:bg-marca-700 active:scale-95 text-white rounded-xl font-bold text-sm font-body transition-all shadow-md shadow-marca-600/20">Agendar Serviço</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Appointment detail modal -->
+      <div id="agenda-detail-overlay" class="hidden fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center">
+        <div id="agenda-detail-content" class="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto"></div>
+      </div>
+
+      <script>
+        var agenda_appointments = [
+          {id:1, cliente:"Ana Carolina Mendes", veiculo:"Toyota Corolla XEI 2022", servico:"Troca de óleo", data:"2026-04-14", horario:"09:00", status:"confirmado", preco:280, observacoes:"Óleo 5W30 sintético, filtro incluso"},
+          {id:2, cliente:"Roberto Oliveira", veiculo:"Volkswagen Gol 1.0 2019", servico:"Revisão completa", data:"2026-04-14", horario:"10:00", status:"pendente", preco:890, observacoes:"Cliente solicitou orçamento prévio"},
+          {id:3, cliente:"Mariana Costa", veiculo:"Honda Civic EX 2021", servico:"Alinhamento e balanceamento", data:"2026-04-14", horario:"14:00", status:"confirmado", preco:200, observacoes:"Cliente mulher, atenção especial"},
+          {id:4, cliente:"Paulo Henrique Lima", veiculo:"Fiat Argo 2020", servico:"Troca de pastilhas de freio", data:"2026-04-15", horario:"09:00", status:"confirmado", preco:650, observacoes:"Freios dianteiros"},
+          {id:5, cliente:"Fernanda Souza", veiculo:"Chevrolet Onix LT 2023", servico:"Troca de bateria", data:"2026-04-15", horario:"11:00", status:"pendente", preco:420, observacoes:"Bateria de 60Ah, marca Moura"},
+          {id:6, cliente:"Carlos Eduardo Rocha", veiculo:"Hyundai HB20S 2018", servico:"Revisão dos freios", data:"2026-04-16", horario:"09:30", status:"confirmado", preco:350, observacoes:"Verificar Pastilhas e discos"},
+          {id:7, cliente:"Juliana Pereira", veiculo:"Renault Kwid 2022", servico:"Limpeza de bico injetor", data:"2026-04-16", horario:"14:00", status:"pendente", preco:300, observacoes:"Carro apresentando falhas"},
+          {id:8, cliente:"Lucas Ferreira", veiculo:"Jeep Compass 2021", servico:"Troca de pneu", data:"2026-04-17", horario:"10:00", status:"confirmado", preco:900, observacoes:"4 pneus Michelin 215/60 R17"},
+          {id:9, cliente:"Patrícia Almeida", veiculo:"Toyota Hilux 2020", servico:"Revisão completa", data:"2026-04-17", horario:"13:00", status:"confirmado", preco:1500, observacoes:"Revisão dos 60.000 km"},
+          {id:10, cliente:"Ricardo Santos", veiculo:"Ford Ka 2017", servico:"Troca de amortecedor", data:"2026-04-18", horario:"09:00", status:"pendente", preco:720, observacoes:"Dianteiro e traseiro"}
+        ];
+        var agenda_viewMode = 'calendario';
+        var agenda_selectedDate = '2026-04-14';
+        var agenda_currentFilter = 'todos';
+        var agenda_currentMonth = 3;
+
+        function agenda_getInitials(name) {
+          return name.split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase();
+        }
+        function agenda_getColor(name) {
+          var colors = ['bg-marca-600','bg-blue-600','bg-amber-600','bg-purple-600','bg-rose-600','bg-teal-600','bg-indigo-600','bg-emerald-600'];
+          var idx = 0; for(var i=0;i<name.length;i++) idx += name.charCodeAt(i);
+          return colors[idx % colors.length];
+        }
+        function agenda_formatDate(iso) {
+          var d = new Date(iso+'T12:00:00');
+          return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'});
+        }
+        function agenda_formatDateShort(iso) {
+          var d = new Date(iso+'T12:00:00');
+          return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+        }
+        function agenda_getServicoTipo(servico) {
+          var s = servico.toLowerCase();
+          if(s.includes('óleo') || s.includes('oleo')) return 'troca de óleo';
+          if(s.includes('revisão') || s.includes('revisao')) return 'revisão';
+          if(s.includes('freio') || s.includes('freios')) return 'freios';
+          if(s.includes('alinhamento') || s.includes('balanceamento')) return 'alinhamento';
+          if(s.includes('bateria')) return 'bateria';
+          if(s.includes('pneu')) return 'pneus';
+          if(s.includes('amortecedor') || s.includes('suspensão')) return 'suspensão';
+          if(s.includes('ar condicionado') || s.includes('ar-condicionado')) return 'ar condicionado';
+          return 'outros';
+        }
+        function agenda_getStatusInfo(status) {
+          if(status === 'confirmado') return {label:'Confirmado',color:'bg-green-100 text-green-700',dot:'bg-green-500',icon:'M5 13l4 4L19 7'};
+          if(status === 'pendente') return {label:'Pendente',color:'bg-amber-100 text-amber-700',dot:'bg-amber-500',icon:'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'};
+          return {label:'Em andamento',color:'bg-blue-100 text-blue-700',dot:'bg-blue-500',icon:'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'};
+        }
+
+        function agenda_renderCalendar() {
+          var grid = document.getElementById('agenda-calendar-grid');
+          var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Debro'];
+          document.getElementById('agenda-period-label').textContent = months[agenda_currentMonth] + ' 2026';
+          var firstDay = new Date(2026, agenda_currentMonth, 1).getDay();
+          var daysInMonth = new Date(2026, agenda_currentMonth + 1, 0).getDate();
+          var today = '2026-04-14';
+          var daysWithAppts = {};
+          agenda_appointments.forEach(function(a) {
+            var m = parseInt(a.data.split('-')[1]) - 1;
+            if(m === agenda_currentMonth) {
+              var d = parseInt(a.data.split('-')[2]);
+              if(!daysWithAppts[d]) daysWithAppts[d] = 0;
+              daysWithAppts[d]++;
+            }
+          });
+          var html = '';
+          for(var i=0;i<firstDay;i++) html += '<div></div>';
+          for(var d=1;d<=daysInMonth;d++) {
+            var dateStr = '2026-' + String(agenda_currentMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+            var isToday = dateStr === today;
+            var hasAppts = daysWithAppts[d] > 0;
+            var isSelected = dateStr === agenda_selectedDate;
+            var cls = 'w-full aspect-square rounded-xl flex flex-col items-center justify-center text-sm font-body cursor-pointer transition-all relative ';
+            if(isSelected) cls += 'bg-marca-600 text-white shadow-md shadow-marca-600/30 ';
+            else if(isToday) cls += 'bg-marca-100 text-marca-700 font-bold ';
+            else cls += 'text-gray-700 hover:bg-gray-100 ';
+            html += '<button onclick="agenda_selectDate(\''+dateStr+'\')" class="'+cls+'">';
+            html += '<span>'+d+'</span>';
+            if(hasAppts && !isSelected) html += '<div class="flex gap-0.5 mt-0.5">' + Array(Math.min(daysWithAppts[d],3)).fill('<div class="w-1 h-1 rounded-full bg-marca-500"></div>').join('') + '</div>';
+            if(isSelected && hasAppts) html += '<div class="flex gap-0.5 mt-0.5">' + Array(Math.min(daysWithAppts[d],3)).fill('<div class="w-1 h-1 rounded-full bg-marca-200"></div>').join('') + '</div>';
+            html += '</button>';
+          }
+          grid.innerHTML = html;
+        }
+
+        function agenda_renderListView() {
+          var container = document.getElementById('agenda-day-list');
+          var daysInMonth = new Date(2026, agenda_currentMonth + 1, 0).getDate();
+          var today = '2026-04-14';
+          var todayD = 14, todayM = 4;
+          var html = '';
+          for(var d=1;d<=daysInMonth;d++) {
+            var dateStr = '2026-' + String(agenda_currentMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+            var dayAppts = agenda_appointments.filter(function(a) { return a.data === dateStr && (agenda_currentFilter === 'todos' || agenda_getServicoTipo(a.servico) === agenda_currentFilter); });
+            var dayOfWeek = new Date(2026, agenda_currentMonth, d).toLocaleDateString('pt-BR',{weekday:'short'});
+            dayOfWeek = dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1).replace('.','');
+            var isToday = dateStr === today;
+            if(dayAppts.length === 0 && !isToday) continue;
+            html += '<div class="mb-4">';
+            html += '<div class="flex items-center gap-2 mb-2">';
+            if(isToday) html += '<span class="bg-marca-600 text-white text-xs font-bold font-body px-2.5 py-0.5 rounded-lg">HOJE</span>';
+            html += '<span class="text-sm font-bold text-gray-800 font-display">'+dayOfWeek+' '+d+' de '+(agenda_currentMonth===3?'Abril':agenda_currentMonth===4?'Maio':'Março')+'</span>';
+            html += '<span class="text-xs text-gray-400 font-body">'+dayAppts.length+' atend.</span>';
+            html += '</div>';
+            html += '<div class="space-y-2">';
+            dayAppts.forEach(function(appt) {
+              html += agenda_appointmentCardHTML(appt);
+            });
+            html += '</div></div>';
+          }
+          if(!html) html = '<div class="text-center py-10"><svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><p class="text-gray-400 text-sm font-body">Nenhum agendamento neste período</p></div>';
+          container.innerHTML = html;
+        }
+
+        function agenda_appointmentCardHTML(appt) {
+          var statusInfo = agenda_getStatusInfo(appt.status);
+          var color = agenda_getColor(appt.cliente);
+          var tipo = agenda_getServicoTipo(appt.servico);
+          var tipoIcon = '';
+          if(tipo === 'troca de óleo') tipoIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>';
+          else if(tipo === 'freios') tipoIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.408A12.008 12.008 0 0021 9.084M12 14v7"/></svg>';
+          else if(tipo === 'revisão') tipoIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>';
+          else if(tipo === 'alinhamento') tipoIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>';
+          else if(tipo === 'bateria') tipoIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>';
+          else tipoIcon = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>';
+
+          var pendenteBadge = appt.status === 'pendente' ? '<span class="bg-amber-100 text-amber-700 text-[10px] font-bold font-body px-1.5 py-0.5 rounded-md ml-2 whitespace-nowrap">⚠ Não confirmado</span>' : '';
+          var html = '<div onclick="agenda_verDetalhe('+appt.id+')" class="card bg-white rounded-2xl border border-gray-100 shadow-sm p-4 cursor-pointer active:scale-[0.98] transition-all">';
+          html += '<div class="flex items-start gap-3">';
+          html += '<div class="w-11 h-11 rounded-xl '+color+' flex items-center justify-center shrink-0"><span class="text-white text-sm font-bold">'+agenda_getInitials(appt.cliente)+'</span></div>';
+          html += '<div class="flex-1 min-w-0">';
+          html += '<div class="flex items-center flex-wrap gap-y-1">';
+          html += '<p class="text-sm font-bold text-gray-900 font-display truncate">'+appt.cliente+'</p>'+pendenteBadge+'</div>';
+          html += '<p class="text-xs text-gray-500 font-body mt-0.5">'+appt.servico+' · '+appt.veiculo+'</p>';
+          html += '<div class="flex items-center gap-3 mt-2">';
+          html += '<span class="flex items-center gap-1 text-xs text-gray-600 font-body"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'+appt.horario+'</span>';
+          html += '<span class="flex items-center gap-1 text-xs text-gray-600 font-body"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>R$ '+appt.preco.toLocaleString('pt-BR')+'</span>';
+          html += '</div></div></div>';
+          html += '<div class="flex items-center gap-1.5 mt-3 pt-3 border-t border-gray-50">';
+          html += '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold font-body '+statusInfo.color+'"><span class="w-1.5 h-1.5 rounded-full '+statusInfo.dot+'"></span>'+statusInfo.label+'</span>';
+          html += '</div></div>';
+          return html;
+        }
+
+        function agenda_renderAppointments() {
+          var container = document.getElementById('agenda-appointments-list');
+          var emptyState = document.getElementById('agenda-empty-state');
+          var filtered = agenda_appointments.filter(function(a) {
+            return a.data === agenda_selectedDate && (agenda_currentFilter === 'todos' || agenda_getServicoTipo(a.servico) === agenda_currentFilter);
+          });
+          filtered.sort(function(a,b) { return a.horario.localeCompare(b.horario); });
+          document.getElementById('agenda-count-badge').textContent = filtered.length + ' agendamento' + (filtered.length !== 1 ? 's' : '');
+          var dt = new Date(agenda_selectedDate+'T12:00:00');
+          var today = new Date('2026-04-14T12:00:00');
+          var diff = Math.round((dt - today) / 86400000);
+          var dateLabel;
+          if(diff === 0) dateLabel = 'Hoje — ' + dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'long'});
+          else if(diff === 1) dateLabel = 'Amanhã — ' + dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'long'});
+          else if(diff === -1) dateLabel = 'Ontem — ' + dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'long'});
+          else dateLabel = dt.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'long'}).charAt(0).toUpperCase() + dt.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'long'}).slice(1);
+          document.getElementById('agenda-date-title').textContent = dateLabel;
+          if(filtered.length === 0) {
+            container.innerHTML = '';
+            emptyState.classList.remove('hidden');
+            return;
+          }
+          emptyState.classList.add('hidden');
+          var html = '';
+          filtered.forEach(function(appt) { html += agenda_appointmentCardHTML(appt); });
+          container.innerHTML = html;
+        }
+
+        function agenda_selectDate(dateStr) {
+          agenda_selectedDate = dateStr;
+          agenda_renderCalendar();
+          agenda_renderAppointments();
+          if(agenda_viewMode === 'lista') agenda_renderListView();
+        }
+
+        function agenda_setView(mode) {
+          agenda_viewMode = mode;
+          var calEl = document.getElementById('agenda-view-calendario');
+          var listEl = document.getElementById('agenda-view-lista');
+          var btnCal = document.getElementById('btn-view-calendario');
+          var btnList = document.getElementById('btn-view-lista');
+          if(mode === 'calendario') {
+            calEl.classList.remove('hidden'); listEl.classList.add('hidden');
+            btnCal.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold font-body transition-all bg-white text-marca-700 shadow-sm';
+            btnList.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold font-body transition-all text-gray-500 hover:text-gray-700';
+            agenda_renderCalendar();
+          } else {
+            listEl.classList.remove('hidden'); calEl.classList.add('hidden');
+            btnList.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold font-body transition-all bg-white text-marca-700 shadow-sm';
+            btnCal.className = 'px-4 py-1.5 rounded-lg text-xs font-semibold font-body transition-all text-gray-500 hover:text-gray-700';
+            agenda_renderListView();
+          }
+        }
+
+        function agenda_setFilter(filter) {
+          agenda_currentFilter = filter;
+          document.querySelectorAll('.agenda-filter-btn').forEach(function(btn) {
+            var f = btn.getAttribute('data-filter');
+            if(f === filter) { btn.className = 'agenda-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all bg-marca-700 text-white'; }
+            else { btn.className = 'agenda-filter-btn shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all bg-gray-100 text-gray-600 hover:bg-gray-200'; }
+          });
+          agenda_renderAppointments();
+          if(agenda_viewMode === 'lista') agenda_renderListView();
+        }
+
+        function agenda_prevPeriod() {
+          if(agenda_viewMode === 'lista') {
+            agenda_selectedDate = new Date(new Date(agenda_selectedDate+'T12:00:00').getTime() - 86400000 * 7).toISOString().split('T')[0];
+            agenda_currentMonth = parseInt(agenda_selectedDate.split('-')[1]) - 1;
+          } else {
+            agenda_currentMonth--;
+            if(agenda_currentMonth < 0) agenda_currentMonth = 11;
+            agenda_selectedDate = '2026-' + String(agenda_currentMonth+1).padStart(2,'0') + '-14';
+          }
+          agenda_renderCalendar();
+          agenda_renderAppointments();
+          if(agenda_viewMode === 'lista') agenda_renderListView();
+        }
+
+        function agenda_nextPeriod() {
+          if(agenda_viewMode === 'lista') {
+            agenda_selectedDate = new Date(new Date(agenda_selectedDate+'T12:00:00').getTime() + 86400000 * 7).toISOString().split('T')[0];
+            agenda_currentMonth = parseInt(agenda_selectedDate.split('-')[1]) - 1;
+          } else {
+            agenda_currentMonth++;
+            if(agenda_currentMonth > 11) agenda_currentMonth = 0;
+            agenda_selectedDate = '2026-' + String(agenda_currentMonth+1).padStart(2,'0') + '-14';
+          }
+          agenda_renderCalendar();
+          agenda_renderAppointments();
+          if(agenda_viewMode === 'lista') agenda_renderListView();
+        }
+
+        function agenda_novoAgendamento() {
+          var d = new Date(agenda_selectedDate+'T12:00:00');
+          document.getElementById('agenda-inp-data').value = agenda_selectedDate;
+          document.getElementById('agenda-inp-cliente').value = '';
+          document.getElementById('agenda-inp-veiculo').value = '';
+          document.getElementById('agenda-inp-horario').value = '';
+          document.getElementById('agenda-inp-servico').value = '';
+          document.getElementById('agenda-inp-obs').value = '';
+          document.getElementById('agenda-modal-overlay').classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function agenda_fecharModal() {
+          document.getElementById('agenda-modal-overlay').classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+
+        function agenda_salvarAgendamento(e) {
+          e.preventDefault();
+          var cliente = document.getElementById('agenda-inp-cliente').value.trim();
+          var veiculo = document.getElementById('agenda-inp-veiculo').value.trim();
+          var data = document.getElementById('agenda-inp-data').value;
+          var horario = document.getElementById('agenda-inp-horario').value;
+          var servico = document.getElementById('agenda-inp-servico').value;
+          var obs = document.getElementById('agenda-inp-obs').value.trim();
+          if(!cliente || !veiculo || !data || !horario || !servico) { toast('Preencha todos os campos obrigatórios','erro'); return; }
+          var precos = {'Troca de óleo':280,'Revisão completa':890,'Alinhamento e balanceamento':200,'Troca de pastilhas de freio':650,'Troca de bateria':420,'Revisão dos freios':350,'Limpeza de bico injetor':300,'Troca de pneu':900,'Troca de amortecedor':720};
+          var preco = precos[servico] || 300;
+          var newAppt = {id: Date.now(), cliente:cliente, veiculo:veiculo, servico:servico, data:data, horario:horario, status:'pendente', preco:preco, observacoes:obs};
+          agenda_appointments.push(newAppt);
+          agenda_selectedDate = data;
+          agenda_currentMonth = parseInt(data.split('-')[1]) - 1;
+          agenda_fecharModal();
+          agenda_renderCalendar();
+          agenda_renderAppointments();
+          if(agenda_viewMode === 'lista') agenda_renderListView();
+          toast('Agendamento criado com sucesso!','ok');
+        }
+
+        function agenda_verDetalhe(id) {
+          var appt = agenda_appointments.find(function(a){return a.id===id;});
+          if(!appt) return;
+          var statusInfo = agenda_getStatusInfo(appt.status);
+          var color = agenda_getColor(appt.cliente);
+          var statusActions = '';
+          if(appt.status === 'pendente') {
+            statusActions = '<div class="grid grid-cols-2 gap-3 mt-4">';
+            statusActions += '<button onclick="agenda_confirmar('+appt.id+')" class="btn py-3 bg-marca-600 hover:bg-marca-700 active:scale-95 text-white rounded-xl font-bold text-sm font-body transition-all">Confirmar</button>';
+            statusActions += '<button onclick="agenda_recusar('+appt.id+')" class="btn py-3 bg-gray-100 hover:bg-gray-200 active:scale-95 text-gray-700 rounded-xl font-bold text-sm font-body transition-all">Recusar</button>';
+            statusActions += '</div>';
+          } else {
+            statusActions = '<button onclick="agenda_iniciarAtendimento('+appt.id+')" class="btn w-full py-3 bg-marca-600 hover:bg-marca-700 active:scale-95 text-white rounded-xl font-bold text-sm font-body transition-all mt-4 shadow-md shadow-marca-600/20">Iniciar Atendimento</button>';
+          }
+          var html = '<div>';
+          html += '<div class="flex items-center gap-3 mb-5">';
+          html += '<div class="w-14 h-14 rounded-2xl '+color+' flex items-center justify-center"><span class="text-white text-lg font-bold">'+agenda_getInitials(appt.cliente)+'</span></div>';
+          html += '<div><h3 class="text-base font-bold text-gray-900 font-display">'+appt.cliente+'</h3>';
+          html += '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[11px] font-bold font-body '+statusInfo.color+' mt-1"><span class="w-1.5 h-1.5 rounded-full '+statusInfo.dot+'"></span>'+statusInfo.label+'</span></div></div>';
+          html += '<div class="space-y-3">';
+          html += agenda_detailRow('Serviço', appt.servico, 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z');
+          html += agenda_detailRow('Veículo', appt.veiculo, 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4');
+          html += agenda_detailRow('Data', agenda_formatDate(appt.data), 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z');
+          html += agenda_detailRow('Horário', appt.horario, 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z');
+          html += agenda_detailRow('Valor', 'R$ ' + appt.preco.toLocaleString('pt-BR'), 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z');
+          html += '</div>';
+          if(appt.observacoes) {
+            html += '<div class="mt-4 bg-gray-50 rounded-xl p-3"><p class="text-xs text-gray-500 font-body mb-1">Observações</p><p class="text-sm text-gray-700 font-body">'+appt.observacoes+'</p></div>';
+          }
+          html += statusActions;
+          html += '<div class="flex gap-2 mt-4">';
+          html += '<button onclick="agenda_whatsappCliente(\''+appt.cliente+'\')" class="flex-1 py-2.5 bg-green-500 hover:bg-green-600 active:scale-95 text-white rounded-xl font-bold text-xs font-body transition-all flex items-center justify-center gap-1.5"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</button>';
+          html += '<button onclick="agenda_editarAppt('+appt.id+')" class="flex-1 py-2.5 bg-gray-100 hover:bg-gray-200 active:scale-95 text-gray-700 rounded-xl font-bold text-xs font-body transition-all flex items-center justify-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>Editar</button>';
+          html += '</div>';
+          html += '<button onclick="agenda_fecharDetalhe()" class="w-full py-3 mt-3 bg-gray-50 hover:bg-gray-100 active:scale-95 text-gray-500 rounded-xl font-semibold text-sm font-body transition-all">Fechar</button>';
+          html += '</div>';
+          document.getElementById('agenda-detail-content').innerHTML = html;
+          document.getElementById('agenda-detail-overlay').classList.remove('hidden');
+          document.body.style.overflow = 'hidden';
+        }
+
+        function agenda_detailRow(label, value, iconPath) {
+          return '<div class="flex items-center justify-between py-2 border-b border-gray-50 last:border-0"><div class="flex items-center gap-2"><svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="'+iconPath+'"/></svg><span class="text-xs text-gray-500 font-body">'+label+'</span></div><span class="text-sm font-semibold text-gray-800 font-body">'+value+'</span></div>';
+        }
+
+        function agenda_fecharDetalhe() {
+          document.getElementById('agenda-detail-overlay').classList.add('hidden');
+          document.body.style.overflow = '';
+        }
+
+        function agenda_confirmar(id) {
+          var appt = agenda_appointments.find(function(a){return a.id===id;});
+          if(appt) { appt.status = 'confirmado'; agenda_fecharDetalhe(); agenda_renderAppointments(); if(agenda_viewMode === 'lista') agenda_renderListView(); toast('Agendamento confirmado! Cliente notificado.','ok'); }
+        }
+
+        function agenda_recusar(id) {
+          var appt = agenda_appointments.find(function(a){return a.id===id;});
+          if(appt) { appt.status = 'cancelado'; agenda_fecharDetalhe(); agenda_renderAppointments(); if(agenda_viewMode === 'lista') agenda_renderListView(); toast('Agendamento recusado.','info'); }
+        }
+
+        function agenda_iniciarAtendimento(id) {
+          var appt = agenda_appointments.find(function(a){return a.id===id;});
+          if(appt) { appt.status = 'em_andamento'; agenda_fecharDetalhe(); agenda_renderAppointments(); if(agenda_viewMode === 'lista') agenda_renderListView(); toast('Atendimento iniciado para '+appt.cliente+'!','ok'); }
+        }
+
+        function agenda_whatsappCliente(nome) {
+          agenda_fecharDetalhe();
+          toast('Abrindo WhatsApp para '+nome+'...','info');
+        }
+
+        function agenda_editarAppt(id) {
+          agenda_fecharDetalhe();
+          toast('Editando agendamento...','info');
+        }
+
+        document.getElementById('agenda-modal-overlay').addEventListener('click', function(e) { if(e.target===this) agenda_fecharModal(); });
+        document.getElementById('agenda-detail-overlay').addEventListener('click', function(e) { if(e.target===this) agenda_fecharDetalhe(); });
+
+        var touchStartX = 0;
+        var agendaSwipeZone = null;
+        function agenda_initSwipe() {
+          agendaSwipeZone = document.getElementById('agenda-stats');
+          if(!agendaSwipeZone) {
+            setTimeout(agenda_initSwipe, 100);
+            return;
+          }
+          agendaSwipeZone.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].screenX; }, {passive:true});
+          agendaSwipeZone.addEventListener('touchend', function(e) { var dx = e.changedTouches[0].screenX - touchStartX; if(Math.abs(dx) > 60) { if(dx > 0) agenda_prevPeriod(); else agenda_nextPeriod(); } }, {passive:true});
+        }
+
+        agenda_initSwipe();
+        agenda_renderCalendar();
+        agenda_renderAppointments();
+      </script>
+    </section>
+
     <!-- TELAS -->
 
     </main>
