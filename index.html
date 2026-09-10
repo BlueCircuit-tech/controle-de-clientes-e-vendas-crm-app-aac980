@@ -2240,6 +2240,392 @@ painel_principal_renderPedidos();
       </script>
     </section>
 
+    <section data-tela="relatorios" class="hidden">
+      <div class="p-4 pb-24 fade-in">
+        <div class="flex items-start justify-between mb-4">
+          <div>
+            <h1 class="text-xl font-display font-bold text-cinza-900 leading-tight">Relatórios</h1>
+            <p class="text-xs text-cinza-500 mt-0.5">Visão geral do desempenho</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="relatorios_selecionarPeriodo()" class="flex items-center gap-1.5 bg-white border border-cinza-200 rounded-lg px-3 py-1.5 text-xs font-medium text-cinza-700 hover:border-marca-300 hover:text-marca-700 transition-colors active:scale-95">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+              <span id="relatorios_label-periodo">Este mês</span>
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+            </button>
+            <button onclick="relatorios_exportarPDF()" class="flex items-center gap-1.5 bg-marca-700 text-white rounded-lg px-3 py-1.5 text-xs font-semibold hover:bg-marca-800 transition-colors active:scale-95 shadow-sm">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+              Exportar
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-5">
+          <div class="bg-white rounded-xl p-3.5 border border-cinza-100 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-9 h-9 rounded-lg bg-verde-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <span class="flex items-center gap-0.5 text-xs font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
+                15%
+              </span>
+            </div>
+            <p class="text-lg font-display font-bold text-cinza-900">R$ 48.320</p>
+            <p class="text-[10px] text-cinza-500 mt-0.5 font-medium uppercase tracking-wide">Receita Mensal</p>
+          </div>
+          <div class="bg-white rounded-xl p-3.5 border border-cinza-100 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-9 h-9 rounded-lg bg-azul-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-azul-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.501 4.501 0 00-7.865-2.785M15 19.128v.003M15 19.128a48.36 48.36 0 01-4.125-3.06M15 19.128a48.37 48.37 0 01-2.256-1.44M18 14.25a2.999 2.999 0 00-3.364-2.364l-4.772 2.364m0 0A2.999 2.999 0 008.25 15.75l1.75.875M18 14.25l2.25-1.125M18 14.25l-2.25-1.125m0 0L13.5 10.5M18 14.25l-2.25-1.125m0 0A2.999 2.999 0 0111.25 8.25l-1.75-.875m0 0l-1.375-.688M8.25 7.5l-1.5.75M15 10.5l1.5-.75M12 7.5V3m0 0L9 6m3-3l3 3"/></svg>
+              </div>
+              <span class="flex items-center gap-0.5 text-xs font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
+                8%
+              </span>
+            </div>
+            <p class="text-lg font-display font-bold text-cinza-900">23</p>
+            <p class="text-[10px] text-cinza-500 mt-0.5 font-medium uppercase tracking-wide">Novos Clientes</p>
+          </div>
+          <div class="bg-white rounded-xl p-3.5 border border-cinza-100 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-9 h-9 rounded-lg bg-roxo-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-roxo-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 013 15.375v-2.25zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+              </div>
+              <span class="flex items-center gap-0.5 text-xs font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
+                5%
+              </span>
+            </div>
+            <p class="text-lg font-display font-bold text-cinza-900">73%</p>
+            <p class="text-[10px] text-cinza-500 mt-0.5 font-medium uppercase tracking-wide">Taxa de Conversão</p>
+          </div>
+          <div class="bg-white rounded-xl p-3.5 border border-cinza-100 shadow-sm">
+            <div class="flex items-center justify-between mb-2">
+              <div class="w-9 h-9 rounded-lg bg-laranja-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-laranja-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18.75c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18.75c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/></svg>
+              </div>
+              <span class="flex items-center gap-0.5 text-xs font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded-full">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
+                3%
+              </span>
+            </div>
+            <p class="text-lg font-display font-bold text-cinza-900">R$ 1.280</p>
+            <p class="text-[10px] text-cinza-500 mt-0.5 font-medium uppercase tracking-wide">Ticket Médio</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-cinza-100 shadow-sm mb-4 overflow-hidden">
+          <div class="flex items-center justify-between p-4 pb-3">
+            <h2 class="text-sm font-display font-bold text-cinza-900">Receita dos Últimos 6 Meses</h2>
+            <button onclick="relatorios_toggleGrafico()" class="text-xs text-marca-600 font-medium hover:text-marca-700 transition-colors" id="relatorios_btn-grafico-tipo">
+              <span id="relatorios_label-grafico-tipo">Barras</span>
+            </button>
+          </div>
+          <div class="px-4 pb-2">
+            <div id="relatorios_chart-barras" class="w-full">
+              <svg viewBox="0 0 340 180" class="w-full h-auto">
+                <defs>
+                  <linearGradient id="barGrad0" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient>
+                  <linearGradient id="barGrad1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient>
+                  <linearGradient id="barGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient>
+                  <linearGradient id="barGrad3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient>
+                  <linearGradient id="barGrad4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient>
+                  <linearGradient id="barGrad5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient>
+                </defs>
+                <line x1="30" y1="10" x2="30" y2="135" stroke="#E5E7EB" stroke-width="1"/>
+                <line x1="30" y1="45" x2="330" y2="45" stroke="#F3F4F6" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="30" y1="78" x2="330" y2="78" stroke="#F3F4F6" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="30" y1="111" x2="330" y2="111" stroke="#F3F4F6" stroke-width="1" stroke-dasharray="4,4"/>
+                <line x1="30" y1="135" x2="330" y2="135" stroke="#E5E7EB" stroke-width="1.5"/>
+                <rect id="relatorios_bar-0" x="38" y="42" width="34" height="93" rx="5" fill="url(#barGrad0)" class="transition-all duration-300 cursor-pointer" onclick="relatorios_detalheMes(0)"/>
+                <rect id="relatorios_bar-1" x="80" y="28" width="34" height="107" rx="5" fill="url(#barGrad1)" class="transition-all duration-300 cursor-pointer" onclick="relatorios_detalheMes(1)"/>
+                <rect id="relatorios_bar-2" x="122" y="65" width="34" height="70" rx="5" fill="url(#barGrad2)" class="transition-all duration-300 cursor-pointer" onclick="relatorios_detalheMes(2)"/>
+                <rect id="relatorios_bar-3" x="164" y="15" width="34" height="120" rx="5" fill="url(#barGrad3)" class="transition-all duration-300 cursor-pointer" onclick="relatorios_detalheMes(3)"/>
+                <rect id="relatorios_bar-4" x="206" y="35" width="34" height="100" rx="5" fill="url(#barGrad4)" class="transition-all duration-300 cursor-pointer" onclick="relatorios_detalheMes(4)"/>
+                <rect id="relatorios_bar-5" x="248" y="55" width="34" height="80" rx="5" fill="url(#barGrad5)" class="transition-all duration-300 cursor-pointer" onclick="relatorios_detalheMes(5)"/>
+                <text x="55" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Jan</text>
+                <text x="97" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Fev</text>
+                <text x="139" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Mar</text>
+                <text x="181" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Abr</text>
+                <text x="223" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Mai</text>
+                <text x="265" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Jun</text>
+                <text x="15" y="48" text-anchor="end" class="text-[8px] fill-cinza-400">50k</text>
+                <text x="15" y="81" text-anchor="end" class="text-[8px] fill-cinza-400">35k</text>
+                <text x="15" y="114" text-anchor="end" class="text-[8px] fill-cinza-400">20k</text>
+                <text x="15" y="137" text-anchor="end" class="text-[8px] fill-cinza-400">0</text>
+              </svg>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 px-4 pb-3" id="relatorios-legenda">
+            <button onclick="relatorios_toggleBarra(0, this)" data-bar="0" class="legenda-item inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full bg-marca-50 text-marca-700 border border-marca-200 transition-all active:scale-95">
+              <span class="w-2 h-2 rounded-full bg-marca-500"></span>Jan R$ 38.200
+            </button>
+            <button onclick="relatorios_toggleBarra(1, this)" data-bar="1" class="legenda-item inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full bg-marca-50 text-marca-700 border border-marca-200 transition-all active:scale-95">
+              <span class="w-2 h-2 rounded-full bg-marca-500"></span>Fev R$ 42.100
+            </button>
+            <button onclick="relatorios_toggleBarra(2, this)" data-bar="2" class="legenda-item inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full bg-marca-50 text-marca-700 border border-marca-200 transition-all active:scale-95">
+              <span class="w-2 h-2 rounded-full bg-marca-500"></span>Mar R$ 31.800
+            </button>
+            <button onclick="relatorios_toggleBarra(3, this)" data-bar="3" class="legenda-item inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full bg-marca-50 text-marca-700 border border-marca-200 transition-all active:scale-95">
+              <span class="w-2 h-2 rounded-full bg-marca-500"></span>Abr R$ 45.600
+            </button>
+            <button onclick="relatorios_toggleBarra(4, this)" data-bar="4" class="legenda-item inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full bg-marca-50 text-marca-700 border border-marca-200 transition-all active:scale-95">
+              <span class="w-2 h-2 rounded-full bg-marca-500"></span>Mai R$ 39.700
+            </button>
+            <button onclick="relatorios_toggleBarra(5, this)" data-bar="5" class="legenda-item inline-flex items-center gap-1.5 text-[10px] font-medium px-2.5 py-1 rounded-full bg-marca-50 text-marca-700 border border-marca-200 transition-all active:scale-95">
+              <span class="w-2 h-2 rounded-full bg-marca-500"></span>Jun R$ 48.320
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-cinza-100 shadow-sm mb-4 overflow-hidden">
+          <h2 class="text-sm font-display font-bold text-cinza-900 p-4 pb-3">Vendas por Categoria</h2>
+          <div class="flex items-center gap-2 px-4 pb-3">
+            <div class="relative w-28 h-28 flex-shrink-0">
+              <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#F0FDF4" stroke-width="18"/>
+                <circle id="relatorios_donut-0" cx="50" cy="50" r="38" fill="none" stroke="#14532D" stroke-width="18" stroke-dasharray="107.5 238.8" stroke-dashoffset="0" class="transition-all duration-500 cursor-pointer" onclick="relatorios_destacarCategoria(0)"/>
+                <circle id="relatorios_donut-1" cx="50" cy="50" r="38" fill="none" stroke="#22C55E" stroke-width="18" stroke-dasharray="66.5 238.8" stroke-dashoffset="-107.5" class="transition-all duration-500 cursor-pointer" onclick="relatorios_destacarCategoria(1)"/>
+                <circle id="relatorios_donut-2" cx="50" cy="50" r="38" fill="none" stroke="#86EFAC" stroke-width="18" stroke-dasharray="38.0 238.8" stroke-dashoffset="-174" class="transition-all duration-500 cursor-pointer" onclick="relatorios_destacarCategoria(2)"/>
+                <circle id="relatorios_donut-3" cx="50" cy="50" r="38" fill="none" stroke="#166534" stroke-width="18" stroke-dasharray="26.3 238.8" stroke-dashoffset="-212" class="transition-all duration-500 cursor-pointer" onclick="relatorios_destacarCategoria(3)"/>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center">
+                <span class="text-base font-display font-bold text-cinza-900">48.3k</span>
+                <span class="text-[8px] text-cinza-400">Total</span>
+              </div>
+            </div>
+            <div class="flex-1 space-y-1.5">
+              <button onclick="relatorios_destacarCategoria(0)" class="flex items-center gap-2 w-full text-left">
+                <span class="w-2.5 h-2.5 rounded-sm bg-marca-800 flex-shrink-0"></span>
+                <span class="text-[11px] text-cinza-700 flex-1">Manutenção Geral</span>
+                <span class="text-[11px] font-semibold text-cinza-900">45%</span>
+              </button>
+              <button onclick="relatorios_destacarCategoria(1)" class="flex items-center gap-2 w-full text-left">
+                <span class="w-2.5 h-2.5 rounded-sm bg-marca-500 flex-shrink-0"></span>
+                <span class="text-[11px] text-cinza-700 flex-1">Troca de Óleo</span>
+                <span class="text-[11px] font-semibold text-cinza-900">28%</span>
+              </button>
+              <button onclick="relatorios_destacarCategoria(2)" class="flex items-center gap-2 w-full text-left">
+                <span class="w-2.5 h-2.5 rounded-sm bg-marca-300 flex-shrink-0"></span>
+                <span class="text-[11px] text-cinza-700 flex-1">Alinhamento/Balanceamento</span>
+                <span class="text-[11px] font-semibold text-cinza-900">16%</span>
+              </button>
+              <button onclick="relatorios_destacarCategoria(3)" class="flex items-center gap-2 w-full text-left">
+                <span class="w-2.5 h-2.5 rounded-sm bg-marca-900 flex-shrink-0"></span>
+                <span class="text-[11px] text-cinza-700 flex-1">Outros Serviços</span>
+                <span class="text-[11px] font-semibold text-cinza-900">11%</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-cinza-100 shadow-sm overflow-hidden">
+          <div class="flex items-center justify-between p-4 pb-3">
+            <h2 class="text-sm font-display font-bold text-cinza-900">Top 5 Clientes</h2>
+            <button onclick="mostrarTela('meus-clientes')" class="text-xs text-marca-600 font-medium hover:text-marca-700 transition-colors">Ver todos</button>
+          </div>
+          <div class="divide-y divide-cinza-50">
+            <button onclick="relatorios_abrirDetalheCliente('Roberto Almeida', 12800, 5)" class="w-full flex items-center gap-3 p-3.5 hover:bg-verde-50/50 transition-colors text-left active:bg-verde-50">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-azul-400 to-azul-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm">RA</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-cinza-900 truncate">Roberto Almeida</p>
+                <p class="text-[10px] text-cinza-500">Honda Civic • 8 serviços</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-cinza-900">R$ 12.800</p>
+                <span class="badge badge-success text-[9px]">VIP</span>
+              </div>
+            </button>
+            <button onclick="relatorios_abrirDetalheCliente('Marina Costa', 9600, 6)" class="w-full flex items-center gap-3 p-3.5 hover:bg-verde-50/50 transition-colors text-left active:bg-verde-50">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-laranja-400 to-rosa-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm">MC</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-cinza-900 truncate">Marina Costa</p>
+                <p class="text-[10px] text-cinza-500">Toyota Corolla • 6 serviços</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-cinza-900">R$ 9.600</p>
+                <span class="badge badge-success text-[9px]">VIP</span>
+              </div>
+            </button>
+            <button onclick="relatorios_abrirDetalheCliente('Fernanda Lima', 7400, 4)" class="w-full flex items-center gap-3 p-3.5 hover:bg-verde-50/50 transition-colors text-left active:bg-verde-50">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-verde-400 to-marca-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm">FL</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-cinza-900 truncate">Fernanda Lima</p>
+                <p class="text-[10px] text-cinza-500">Volkswagen Golf • 4 serviços</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-cinza-900">R$ 7.400</p>
+                <span class="badge badge-primary text-[9px]">Ativo</span>
+              </div>
+            </button>
+            <button onclick="relatorios_abrirDetalheCliente('Carlos Eduardo', 5900, 5)" class="w-full flex items-center gap-3 p-3.5 hover:bg-verde-50/50 transition-colors text-left active:bg-verde-50">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-roxo-400 to-azul-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm">CE</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-cinza-900 truncate">Carlos Eduardo</p>
+                <p class="text-[10px] text-cinza-500">Fiat Toro • 5 serviços</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-cinza-900">R$ 5.900</p>
+                <span class="badge badge-primary text-[9px]">Ativo</span>
+              </div>
+            </button>
+            <button onclick="relatorios_abrirDetalheCliente('Juliana Pereira', 4200, 3)" class="w-full flex items-center gap-3 p-3.5 hover:bg-verde-50/50 transition-colors text-left active:bg-verde-50">
+              <div class="w-9 h-9 rounded-full bg-gradient-to-br from-rosa-400 to-laranja-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm">JP</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-semibold text-cinza-900 truncate">Juliana Pereira</p>
+                <p class="text-[10px] text-cinza-500">Hyundai HB20 • 3 serviços</p>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <p class="text-sm font-bold text-cinza-900">R$ 4.200</p>
+                <span class="badge badge-warning text-[9px]">Recente</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    (function() {
+      var periodos = ['Este mês', 'Esta semana', 'Últimos 3 meses', 'Este ano'];
+      var periodoAtual = 0;
+      var barrasOcultas = new Set();
+      var categoriaAtiva = -1;
+      var isDonut = false;
+
+      window.relatorios_selecionarPeriodo = function() {
+        periodoAtual = (periodoAtual + 1) % periodos.length;
+        document.getElementById('relatorios_label-periodo').textContent = periodos[periodoAtual];
+        barrasOcultas.clear();
+        relatorios_resetarBarras();
+        relatorios_resetarLegenda();
+        toast('Período atualizado: ' + periodos[periodoAtual], 'info');
+      };
+
+      window.relatorios_toggleBarra = function(index, btn) {
+        if (barrasOcultas.has(index)) {
+          barrasOcultas.delete(index);
+          btn.classList.remove('opacity-40', 'line-through', 'bg-cinza-100', 'text-cinza-400', 'border-cinza-200');
+          btn.classList.add('bg-marca-50', 'text-marca-700', 'border-marca-200');
+        } else {
+          barrasOcultas.add(index);
+          btn.classList.add('opacity-40', 'line-through', 'bg-cinza-100', 'text-cinza-400', 'border-cinza-200');
+          btn.classList.remove('bg-marca-50', 'text-marca-700', 'border-marca-200');
+        }
+        var bar = document.getElementById('relatorios_bar-' + index);
+        if (barrasOcultas.has(index)) {
+          bar.style.opacity = '0.2';
+          bar.style.transform = 'scaleY(0.8)';
+          bar.style.transformOrigin = 'bottom';
+        } else {
+          bar.style.opacity = '1';
+          bar.style.transform = 'scaleY(1)';
+        }
+      };
+
+      function relatorios_resetarBarras() {
+        for (var i = 0; i < 6; i++) {
+          var bar = document.getElementById('relatorios_bar-' + i);
+          bar.style.opacity = '1';
+          bar.style.transform = 'scaleY(1)';
+        }
+      }
+
+      function relatorios_resetarLegenda() {
+        var items = document.querySelectorAll('.legenda-item');
+        items.forEach(function(item) {
+          item.classList.remove('opacity-40', 'line-through', 'bg-cinza-100', 'text-cinza-400', 'border-cinza-200');
+          item.classList.add('bg-marca-50', 'text-marca-700', 'border-marca-200');
+        });
+      }
+
+      window.relatorios_exportarPDF = function() {
+        toast('Gerando relatório em PDF...', 'info');
+        setTimeout(function() {
+          toast('Relatório exportado com sucesso!', 'ok');
+        }, 1500);
+      };
+
+      window.relatorios_detalheMes = function(index) {
+        var valores = [38200, 42100, 31800, 45600, 39700, 48320];
+        var nomes = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'];
+        var html = '<div class="p-1">';
+        html += '<div class="text-center mb-4">';
+        html += '<p class="text-2xl font-display font-bold text-marca-700">R$ ' + valores[index].toLocaleString('pt-BR') + '</p>';
+        html += '<p class="text-sm text-cinza-500 mt-1">Receita de ' + nomes[index] + ' 2025</p>';
+        html += '</div>';
+        html += '<div class="space-y-2.5">';
+        html += '<div class="flex justify-between text-xs"><span class="text-cinza-500">Orçamentos enviados</span><span class="font-semibold text-cinza-900">' + [18, 22, 15, 25, 20, 27][index] + '</span></div>';
+        html += '<div class="flex justify-between text-xs"><span class="text-cinza-500">Serviços realizados</span><span class="font-semibold text-cinza-900">' + [14, 18, 11, 21, 16, 23][index] + '</span></div>';
+        html += '<div class="flex justify-between text-xs"><span class="text-cinza-500">Clientes atendidos</span><span class="font-semibold text-cinza-900">' + [12, 16, 9, 18, 14, 19][index] + '</span></div>';
+        html += '<div class="flex justify-between text-xs"><span class="text-cinza-500">Ticket médio</span><span class="font-semibold text-cinza-900">R$ ' + [2728, 2339, 2891, 2171, 2487, 2103][index].toLocaleString('pt-BR') + '</span></div>';
+        html += '</div>';
+        html += '<button onclick="fecharModal()" class="w-full mt-4 bg-marca-700 text-white rounded-lg py-2.5 text-sm font-semibold active:scale-95 transition-transform">Fechar</button>';
+        html += '</div>';
+        abrirModal(html, 'Detalhes — ' + nomes[index]);
+      };
+
+      window.relatorios_abrirDetalheCliente = function(nome, gasto, servicos) {
+        var html = '<div class="p-1">';
+        html += '<div class="flex items-center gap-3 mb-4">';
+        var iniciais = nome.split(' ').map(function(w){ return w[0]; }).join('').substring(0,2);
+        html += '<div class="w-12 h-12 rounded-full bg-marca-700 text-white flex items-center justify-center text-lg font-bold">' + iniciais + '</div>';
+        html += '<div><p class="font-display font-bold text-cinza-900">' + nome + '</p><p class="text-xs text-cinza-500">' + servicos + ' serviços realizados</p></div>';
+        html += '</div>';
+        html += '<div class="bg-verde-50 rounded-lg p-3 mb-3"><p class="text-xs text-cinza-500">Total gasto</p><p class="text-lg font-display font-bold text-marca-700">R$ ' + gasto.toLocaleString('pt-BR') + '</p></div>';
+        html += '<p class="text-xs font-semibold text-cinza-700 mb-2">Serviços recentes</p>';
+        html += '<div class="space-y-2">';
+        var servs = ['Troca de óleo e filtro', 'Alinhamento e balanceamento', 'Revisão completa', 'Troca de pastilhas de freio'];
+        var vals = [380, 320, 1200, 650];
+        var datas = ['15/06/2025', '02/06/2025', '18/05/2025', '29/04/2025'];
+        for (var i = 0; i < 4; i++) {
+          html += '<div class="flex justify-between items-center text-xs py-1.5 border-b border-cinza-50 last:border-0"><span class="text-cinza-700">' + servs[i] + '</span><span class="font-semibold text-cinza-900">R$ ' + vals[i].toLocaleString('pt-BR') + '</span></div>';
+        }
+        html += '</div>';
+        html += '<div class="flex gap-2 mt-4">';
+        html += '<button onclick="mostrarTela(\'chat-com-cliente\'); fecharModal();" class="flex-1 bg-marca-700 text-white rounded-lg py-2.5 text-xs font-semibold active:scale-95 transition-transform">Enviar Mensagem</button>';
+        html += '<button onclick="mostrarTela(\'novo-orcamento\'); fecharModal();" class="flex-1 bg-white border border-marca-300 text-marca-700 rounded-lg py-2.5 text-xs font-semibold active:scale-95 transition-transform">Novo Orçamento</button>';
+        html += '</div>';
+        html += '</div>';
+        abrirModal(html, nome);
+      };
+
+      window.relatorios_destacarCategoria = function(index) {
+        var categorias = ['Manutenção Geral', 'Troca de Óleo', 'Alinhamento/Balanceamento', 'Outros Serviços'];
+        var valores = ['R$ 21.744', 'R$ 13.530', 'R$ 7.731', 'R$ 5.315'];
+        var iniciais = ['MGE', 'TRO', 'ALB', 'OUT'];
+        var html = '<div class="p-1">';
+        html += '<div class="flex items-center gap-2 mb-3">';
+        var cores = ['bg-marca-800', 'bg-marca-500', 'bg-marca-300', 'bg-marca-900'];
+        html += '<span class="w-3 h-3 rounded ' + cores[index] + '"></span>';
+        html += '<p class="font-display font-bold text-cinza-900">' + categorias[index] + '</p>';
+        html += '</div>';
+        html += '<div class="bg-verde-50 rounded-lg p-3 mb-3"><p class="text-xs text-cinza-500">Faturamento total</p><p class="text-xl font-display font-bold text-marca-700">' + valores[index] + '</p></div>';
+        html += '<div class="space-y-2">';
+        html += '<div class="flex justify-between text-xs"><span class="text-cinza-500">Serviços realizados</span><span class="font-semibold">' + [45, 89, 156, 34][index] + '</span></div>';
+        html += '<div class="flex justify-between text-xs"><span class="text-cinza-500">Clientes únicos</span><span class="font-semibold">' + [32, 67, 98, 28][index] + '</span></div>';
+        html += '</div>';
+        html += '<button onclick="fecharModal()" class="w-full mt-4 bg-marca-700 text-white rounded-lg py-2.5 text-sm font-semibold active:scale-95 transition-transform">Fechar</button>';
+        html += '</div>';
+        abrirModal(html, categorias[index]);
+      };
+
+      window.relatorios_toggleGrafico = function() {
+        isDonut = !isDonut;
+        var label = document.getElementById('relatorios_label-grafico-tipo');
+        var chart = document.getElementById('relatorios_chart-barras');
+        if (isDonut) {
+          label.textContent = 'Linha';
+          chart.innerHTML = '<svg viewBox="0 0 340 180" class="w-full h-auto"><polyline points="38,93 80,75 122,115 164,50 206,85 248,65" fill="none" stroke="#14532D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="38,93 80,75 122,115 164,50 206,85 248,65" fill="url(#areaGrad)" opacity="0.15"/><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#22C55E" stop-opacity="0"/></linearGradient></defs><circle cx="38" cy="93" r="4" fill="#14532D" stroke="white" stroke-width="2"/><circle cx="80" cy="75" r="4" fill="#14532D" stroke="white" stroke-width="2"/><circle cx="122" cy="115" r="4" fill="#14532D" stroke="white" stroke-width="2"/><circle cx="164" cy="50" r="4" fill="#14532D" stroke="white" stroke-width="2"/><circle cx="206" cy="85" r="4" fill="#14532D" stroke="white" stroke-width="2"/><circle cx="248" cy="65" r="4" fill="#22C55E" stroke="white" stroke-width="2.5" class="animate-pulse"/><text x="55" y="170" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Jan</text><text x="97" y="170" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Fev</text><text x="139" y="170" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Mar</text><text x="181" y="170" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Abr</text><text x="223" y="170" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Mai</text><text x="265" y="170" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Jun</text></svg>';
+        } else {
+          label.textContent = 'Barras';
+          chart.innerHTML = '<svg viewBox="0 0 340 180" class="w-full h-auto"><defs><linearGradient id="barGradA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient><linearGradient id="barGradB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient><linearGradient id="barGradC" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient><linearGradient id="barGradD" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient><linearGradient id="barGradE" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient><linearGradient id="barGradF" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E"/><stop offset="100%" stop-color="#15803D"/></linearGradient></defs><line x1="30" y1="10" x2="30" y2="135" stroke="#E5E7EB" stroke-width="1"/><line x1="30" y1="45" x2="330" y2="45" stroke="#F3F4F6" stroke-width="1" stroke-dasharray="4,4"/><line x1="30" y1="78" x2="330" y2="78" stroke="#F3F4F6" stroke-width="1" stroke-dasharray="4,4"/><line x1="30" y1="111" x2="330" y2="111" stroke="#F3F4F6" stroke-width="1" stroke-dasharray="4,4"/><line x1="30" y1="135" x2="330" y2="135" stroke="#E5E7EB" stroke-width="1.5"/><rect x="38" y="42" width="34" height="93" rx="5" fill="url(#barGradA)" class="transition-all duration-300 cursor-pointer"/><rect x="80" y="28" width="34" height="107" rx="5" fill="url(#barGradB)" class="transition-all duration-300 cursor-pointer"/><rect x="122" y="65" width="34" height="70" rx="5" fill="url(#barGradC)" class="transition-all duration-300 cursor-pointer"/><rect x="164" y="15" width="34" height="120" rx="5" fill="url(#barGradD)" class="transition-all duration-300 cursor-pointer"/><rect x="206" y="35" width="34" height="100" rx="5" fill="url(#barGradE)" class="transition-all duration-300 cursor-pointer"/><rect x="248" y="55" width="34" height="80" rx="5" fill="url(#barGradF)" class="transition-all duration-300 cursor-pointer"/><text x="55" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Jan</text><text x="97" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Fev</text><text x="139" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Mar</text><text x="181" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Abr</text><text x="223" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Mai</text><text x="265" y="165" text-anchor="middle" class="text-[9px] fill-cinza-500 font-medium">Jun</text></svg>';
+        }
+      };
+    })();
+    </script>
+
     <!-- TELAS -->
 
     </main>
