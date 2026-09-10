@@ -388,7 +388,288 @@
     <!-- Main content area -->
     <main id="main-content" style="flex:1; overflow:hidden; position:relative;">
 
-      <!-- TELAS -->
+      <section data-tela="painel-principal" class="hidden">
+<style>
+.chart-line{fill:none;stroke:#22C55E;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.chart-area{fill:url(#chartGrad)}
+.chart-dot{cursor:pointer;transition:r .2s}
+.chart-dot:hover{r:7}
+.chart-grid{stroke:#e5e7eb;stroke-width:.5;stroke-dasharray:4 3}
+.kpi-enter{animation:kpiIn .5s ease both}
+@keyframes kpiIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .4s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.tooltip-chart{position:absolute;background:#14532D;color:#fff;font-size:11px;padding:4px 10px;border-radius:6px;pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .15s}
+.fab-enter{animation:fabIn .4s ease both}
+@keyframes fabIn{from{opacity:0;transform:scale(.5) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+</style>
+
+<div class="px-5 pt-2 pb-24">
+
+  <!-- Cabeçalho da tela -->
+  <div class="flex items-center justify-between mb-5 fade-up">
+    <div>
+      <p class="text-xs font-body text-gray-500 mb-0.5" id="painel-principal-saudacao">Bom dia</p>
+      <h1 class="font-display text-xl font-bold text-marca-900">Painel Principal</h1>
+      <p class="text-xs text-gray-400 font-body">Visão geral do seu negócio</p>
+    </div>
+    <button onclick="mostrarTela('notificacoes')" class="relative w-10 h-10 rounded-xl bg-marca-50 flex items-center justify-center active:scale-95 transition-transform">
+      <svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+      <span class="absolute -top-0.5 -right-0.5 w-4.5 h-4.5 bg-red-500 rounded-full text-white text-[9px] font-bold flex items-center justify-center border-2 border-white">3</span>
+    </button>
+  </div>
+
+  <!-- Cards KPI -->
+  <div class="grid grid-cols-2 gap-3 mb-5">
+    <div class="kpi-enter bg-marca-900 text-white rounded-2xl p-4 shadow-lg shadow-marca-900/20" style="animation-delay:.05s">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[11px] font-body text-marca-200 font-medium">Faturamento</span>
+        <div class="w-8 h-8 rounded-lg bg-marca-800 flex items-center justify-center">
+          <svg class="w-4 h-4 text-marca-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+      </div>
+      <p class="font-display text-xl font-bold">R$ 48.320</p>
+      <p class="text-[10px] text-marca-300 font-body mt-0.5 flex items-center gap-0.5">
+        <svg class="w-3 h-3 text-marca-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5"/></svg>
+        +12.5% vs mês anterior
+      </p>
+    </div>
+    <div class="kpi-enter bg-white border border-gray-100 rounded-2xl p-4 shadow-sm" style="animation-delay:.1s">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[11px] font-body text-gray-500 font-medium">Pedidos Abertos</span>
+        <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+          <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h15a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0019.5 3.75h-15A2.25 2.25 0 002.25 6v10.5A2.25 2.25 0 004.5 18.75z"/></svg>
+        </div>
+      </div>
+      <p class="font-display text-xl font-bold text-gray-900">12</p>
+      <p class="text-[10px] text-gray-400 font-body mt-0.5">+3 novos esta semana</p>
+    </div>
+    <div class="kpi-enter bg-white border border-gray-100 rounded-2xl p-4 shadow-sm" style="animation-delay:.15s">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[11px] font-body text-gray-500 font-medium">Clientes Ativos</span>
+        <div class="w-8 h-8 rounded-lg bg-marca-50 flex items-center justify-center">
+          <svg class="w-4 h-4 text-marca-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-3.257-3.182 48.66 48.66 0 00-6.318 0 4.125 4.125 0 00-3.257 3.182 9.337 9.337 0 004.121.952A9.078 9.078 0 0115 19.128z"/></svg>
+        </div>
+      </div>
+      <p class="font-display text-xl font-bold text-gray-900">89</p>
+      <p class="text-[10px] text-gray-400 font-body mt-0.5">+7 este mês</p>
+    </div>
+    <div class="kpi-enter bg-white border border-gray-100 rounded-2xl p-4 shadow-sm" style="animation-delay:.2s">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[11px] font-body text-gray-500 font-medium">Taxa de Conversão</span>
+        <div class="w-8 h-8 rounded-lg bg-marca-100 flex items-center justify-center">
+          <svg class="w-4 h-4 text-marca-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V19.5c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
+        </div>
+      </div>
+      <p class="font-display text-xl font-bold text-gray-900">73%</p>
+      <p class="text-[10px] text-gray-400 font-body mt-0.5">+5% este mês</p>
+    </div>
+  </div>
+
+  <!-- Ação rápida -->
+  <button onclick="mostrarTela('novo-orcamento')" class="w-full flex items-center gap-3 bg-marca-700 hover:bg-marca-800 text-white rounded-2xl p-4 mb-5 active:scale-[0.98] transition-all fade-up" style="animation-delay:.22s">
+    <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center flex-shrink-0">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+    </div>
+    <div class="text-left">
+      <p class="font-display font-bold text-sm">Criar Novo Orçamento</p>
+      <p class="text-[11px] text-marca-100 font-body">Envie para um cliente em segundos</p>
+    </div>
+    <svg class="w-4 h-4 ml-auto text-marca-200 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+  </button>
+
+  <!-- Gráfico de Vendas -->
+  <div class="bg-white border border-gray-100 rounded-2xl p-4 mb-5 shadow-sm fade-up" style="animation-delay:.25s">
+    <div class="flex items-center justify-between mb-3">
+      <div>
+        <h2 class="font-display font-bold text-sm text-gray-900">Vendas dos Últimos 7 Dias</h2>
+        <p class="text-[11px] text-gray-400 font-body">Total: R$ 11.840,00</p>
+      </div>
+      <button onclick="mostrarTela('relatorios')" class="text-[11px] text-marca-600 font-body font-medium hover:text-marca-700 flex items-center gap-0.5">
+        Ver tudo
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+      </button>
+    </div>
+    <div class="relative" id="chart-container">
+      <svg viewBox="0 0 340 140" class="w-full" id="sales-chart">
+        <defs>
+          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#22C55E" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#22C55E" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <line x1="0" y1="35" x2="340" y2="35" class="chart-grid"/>
+        <line x1="0" y1="70" x2="340" y2="70" class="chart-grid"/>
+        <line x1="0" y1="105" x2="340" y2="105" class="chart-grid"/>
+        <path class="chart-area" d="M0,105 L0,85 L57,72 L114,58 L171,78 L228,40 L285,22 L340,35 L340,105 Z"/>
+        <path class="chart-line" d="M0,85 L57,72 L114,58 L171,78 L228,40 L285,22 L340,35"/>
+        <circle class="chart-dot" cx="0" cy="85" r="5" fill="#22C55E" stroke="#fff" stroke-width="2" data-label="Seg: R$ 1.680"/>
+        <circle class="chart-dot" cx="57" cy="72" r="5" fill="#22C55E" stroke="#fff" stroke-width="2" data-label="Ter: R$ 2.150"/>
+        <circle class="chart-dot" cx="114" cy="58" r="5" fill="#22C55E" stroke="#fff" stroke-width="2" data-label="Qua: R$ 2.890"/>
+        <circle class="chart-dot" cx="171" cy="78" r="5" fill="#22C55E" stroke="#fff" stroke-width="2" data-label="Qui: R$ 1.420"/>
+        <circle class="chart-dot" cx="228" cy="40" r="5" fill="#22C55E" stroke="#fff" stroke-width="2" data-label="Sex: R$ 3.200"/>
+        <circle class="chart-dot" cx="285" cy="22" r="5" fill="#22C55E" stroke="#fff" stroke-width="2" data-label="Sáb: R$ 4.100"/>
+        <circle class="chart-dot" cx="340" cy="35" r="5" fill="#22C55E" stroke="#fff" stroke-width="2" data-label="Dom: R$ 2.600"/>
+      </svg>
+      <div class="tooltip-chart" id="chart-tooltip"></div>
+    </div>
+    <div class="flex justify-between mt-1 px-1">
+      <span class="text-[10px] text-gray-400 font-body">Seg</span>
+      <span class="text-[10px] text-gray-400 font-body">Ter</span>
+      <span class="text-[10px] text-gray-400 font-body">Qua</span>
+      <span class="text-[10px] text-gray-400 font-body">Qui</span>
+      <span class="text-[10px] text-gray-400 font-body">Sex</span>
+      <span class="text-[10px] text-gray-400 font-body">Sáb</span>
+      <span class="text-[10px] text-gray-400 font-body">Dom</span>
+    </div>
+  </div>
+
+  <!-- Pedidos Recentes -->
+  <div class="fade-up" style="animation-delay:.3s">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="font-display font-bold text-base text-gray-900">Pedidos Recentes</h2>
+      <button onclick="mostrarTela('meus-clientes')" class="text-[11px] text-marca-600 font-body font-medium">Ver todos</button>
+    </div>
+    <div id="painel-principal-pedidos" class="space-y-2.5"></div>
+  </div>
+
+</div>
+
+<!-- Botão flutuante -->
+<button onclick="mostrarTela('novo-orcamento')" class="fab-enter fixed bottom-20 right-5 w-14 h-14 bg-marca-600 hover:bg-marca-700 text-white rounded-full shadow-lg shadow-marca-600/30 flex items-center justify-center active:scale-90 transition-all z-40">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+</button>
+
+<script>
+const pedidosRecentes = [
+  { id:1, cliente:"Carlos Eduardo Mendes", veiculo:"Honda Civic 2022 / ABC-1234", servico:"Troca de óleo + filtros", valor:385.00, status:"em-andamento", data:"2025-01-15", oficina:"Auto Center São Paulo", avatar:"CM" },
+  { id:2, cliente:"Marina Oliveira Santos", veiculo:"Toyota Corolla 2021 / DEF-5678", servico:"Revisão completa dos freios", valor:1280.00, status:"concluido", data:"2025-01-14", oficina:"Oficina Premium SP", avatar:"MO" },
+  { id:3, cliente:"Roberto Ferreira Lima", veiculo:"Fiat Toro 2023 / GHI-9012", servico:"Troca de correia dentada", valor:1950.00, status:"aguardando", data:"2025-01-14", oficina:"Mecânica Express", avatar:"RF" },
+  { id:4, cliente:"Ana Paula Costa", veiculo:"VW Polo 2020 / JKL-3456", servico:"Alinhamento e balanceamento", valor:220.00, status:"em-andamento", data:"2025-01-13", oficina:"Auto Center São Paulo", avatar:"AC" },
+  { id:5, cliente:"João Pedro Almeida", veiculo:"Chevrolet Onix 2022 / MNO-7890", servico:"Reparo do sistema elétrico", valor:890.00, status:"aguardando", data:"2025-01-13", oficina:"Elétrica Auto Tech", avatar:"JA" },
+  { id:6, cliente:"Fernanda Rodrigues", veiculo:"Hyundai HB20 2021 / PQR-1122", servico:"Troca de amortecedores", valor:1640.00, status:"concluido", data:"2025-01-12", oficina:"Oficina Premium SP", avatar:"FR" }
+];
+
+const statusConfig = {
+  "em-andamento": { label:"Em andamento", bg:"bg-blue-50", text:"text-blue-700", dot:"bg-blue-500" },
+  "concluido":    { label:"Concluído", bg:"bg-marca-50", text:"text-marca-700", dot:"bg-marca-500" },
+  "aguardando":   { label:"Aguardando aprovação", bg:"bg-amber-50", text:"text-amber-700", dot:"bg-amber-500" }
+};
+
+const avatarColors = ["bg-marca-700","bg-marca-800","bg-marca-900","bg-blue-700","bg-blue-800","bg-gray-700"];
+
+function painel_principal_renderPedidos(filtro) {
+  const container = document.getElementById('painel-principal-pedidos');
+  let lista = pedidosRecentes;
+  if (filtro && filtro !== 'todos') {
+    lista = lista.filter(p => p.status === filtro);
+  }
+  if (lista.length === 0) {
+    container.innerHTML = '<div class="bg-gray-50 rounded-2xl p-8 text-center"><svg class="w-10 h-10 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.182 16.318A4.486 4.486 0 0012.016 15a4.486 4.486 0 00-3.198 1.318M21 12a9 9 0 11-18 0 9 9 0 0118 0zM7.5 10.5a.375.375 0 11.75 0 .375.375 0 01-.75 0zm.375 3.75a.375.375 0 11.75 0 .375.375 0 01-.75 0zm.375 3.75a.375.375 0 11.75 0 .375.375 0 01-.75 0z"/></svg><p class="text-sm text-gray-400 font-body">Nenhum pedido encontrado</p></div>';
+    return;
+  }
+  container.innerHTML = lista.map((p, i) => {
+    const cfg = statusConfig[p.status];
+    const cor = avatarColors[i % avatarColors.length];
+    return `<div class="bg-white border border-gray-100 rounded-2xl p-3.5 active:scale-[0.98] transition-all cursor-pointer" onclick="painel_principal_abrirPedido(${p.id})">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full ${cor} flex items-center justify-center flex-shrink-0">
+          <span class="text-white text-xs font-bold">${p.avatar}</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0">
+              <p class="font-body font-bold text-sm text-gray-900 truncate">${p.cliente}</p>
+              <p class="text-[11px] text-gray-400 font-body truncate">${p.veiculo}</p>
+            </div>
+            <span class="${cfg.bg} ${cfg.text} text-[10px] font-body font-medium px-2 py-0.5 rounded-full flex-shrink-0">${cfg.label}</span>
+          </div>
+          <p class="text-xs text-gray-600 font-body mt-1">${p.servico}</p>
+          <div class="flex items-center justify-between mt-2">
+            <span class="font-display font-bold text-sm text-marca-700">R$ ${p.valor.toFixed(2).replace('.',',')}</span>
+            <span class="text-[10px] text-gray-400 font-body">${dataBR(p.data)}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function painel_principal_abrirPedido(id) {
+  const p = pedidosRecentes.find(x => x.id === id);
+  if (!p) return;
+  const cfg = statusConfig[p.status];
+  const botoes = p.status === 'aguardando'
+    ? `<button onclick="painel_principal_aprovarPedido(${id}); fecharModal()" class="flex-1 bg-marca-700 text-white py-3 rounded-xl font-body font-bold text-sm active:scale-95 transition-transform">Aprovar Orçamento</button><button onclick="painel_principal_recusarPedido(${id}); fecharModal()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-body font-bold text-sm active:scale-95 transition-transform">Recusar</button>`
+    : p.status === 'em-andamento'
+    ? `<button onclick="painel_principal_concluirPedido(${id}); fecharModal()" class="flex-1 bg-marca-700 text-white py-3 rounded-xl font-body font-bold text-sm active:scale-95 transition-transform">Marcar como Concluído</button><button onclick="mostrarTela('chat-com-cliente'); fecharModal()" class="flex-1 bg-gray-100 text-gray-700 py-3 rounded-xl font-body font-bold text-sm active:scale-95 transition-transform">Enviar Mensagem</button>`
+    : `<button onclick="mostrarTela('novo-orcamento'); fecharModal()" class="flex-1 bg-marca-700 text-white py-3 rounded-xl font-body font-bold text-sm active:scale-95 transition-transform">Novo Orçamento</button>`;
+  abrirModal(`
+    <div class="text-center mb-4">
+      <div class="w-14 h-14 rounded-full ${avatarColors[(pedidosRecentes.indexOf(p)) % avatarColors.length]} flex items-center justify-center mx-auto mb-2">
+        <span class="text-white text-lg font-bold">${p.avatar}</span>
+      </div>
+      <h3 class="font-display font-bold text-lg text-gray-900">${p.cliente}</h3>
+      <p class="text-xs text-gray-400 font-body">${p.veiculo}</p>
+    </div>
+    <div class="bg-gray-50 rounded-xl p-3 space-y-2 mb-4">
+      <div class="flex justify-between"><span class="text-xs text-gray-500 font-body">Serviço</span><span class="text-xs font-bold text-gray-900 font-body">${p.servico}</span></div>
+      <div class="flex justify-between"><span class="text-xs text-gray-500 font-body">Oficina</span><span class="text-xs font-bold text-gray-900 font-body">${p.oficina}</span></div>
+      <div class="flex justify-between"><span class="text-xs text-gray-500 font-body">Data</span><span class="text-xs font-bold text-gray-900 font-body">${dataBR(p.data)}</span></div>
+      <div class="flex justify-between"><span class="text-xs text-gray-500 font-body">Status</span><span class="text-xs font-bold ${cfg.text} font-body">${cfg.label}</span></div>
+      <div class="border-t border-gray-200 pt-2 flex justify-between"><span class="text-xs text-gray-500 font-body">Valor</span><span class="font-display font-bold text-marca-700">R$ ${p.valor.toFixed(2).replace('.',',')}</span></div>
+    </div>
+    <div class="flex gap-2">${botoes}</div>
+  `, 'Detalhes do Pedido #' + String(p.id).padStart(4,'0'));
+}
+
+function painel_principal_aprovarPedido(id) {
+  const p = pedidosRecentes.find(x => x.id === id);
+  if (p) { p.status = 'em-andamento'; painel_principal_renderPedidos(); toast('Orçamento aprovado com sucesso!','ok'); }
+}
+function painel_principal_recusarPedido(id) {
+  const p = pedidosRecentes.find(x => x.id === id);
+  if (p) { p.status = 'recusado'; painel_principal_renderPedidos(); toast('Orçamento recusado.','info'); }
+}
+function painel_principal_concluirPedido(id) {
+  const p = pedidosRecentes.find(x => x.id === id);
+  if (p) { p.status = 'concluido'; painel_principal_renderPedidos(); toast('Serviço marcado como concluído!','ok'); }
+}
+
+function painel_principal_setSaudacao() {
+  const h = new Date().getHours();
+  const el = document.getElementById('painel-principal-saudacao');
+  if (!el) return;
+  el.textContent = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+}
+
+// Tooltip do gráfico
+(function(){
+  const svg = document.getElementById('sales-chart');
+  const tip = document.getElementById('chart-tooltip');
+  const dots = svg ? svg.querySelectorAll('.chart-dot') : [];
+  const container = document.getElementById('chart-container');
+  if (!svg || !tip || !container) return;
+  dots.forEach(d => {
+    d.addEventListener('mouseenter', e => {
+      tip.textContent = d.getAttribute('data-label');
+      tip.style.opacity = '1';
+    });
+    d.addEventListener('mousemove', e => {
+      const rect = container.getBoundingClientRect();
+      tip.style.left = (e.clientX - rect.left + 12) + 'px';
+      tip.style.top = (e.clientY - rect.top - 32) + 'px';
+    });
+    d.addEventListener('mouseleave', () => { tip.style.opacity = '0'; });
+  });
+})();
+
+painel_principal_setSaudacao();
+painel_principal_renderPedidos();
+</script>
+</section>
+
+    <!-- TELAS -->
 
     </main>
 
