@@ -736,6 +736,566 @@
       })();
     </script>
 
+    <section data-tela="clientes" class="hidden">
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Sidebar de contadores e filtros -->
+        <aside class="w-full lg:w-64 flex-shrink-0 space-y-4">
+          <div class="bg-white rounded-xl border border-gray-200 p-5 space-y-4">
+            <h3 class="font-display font-semibold text-gray-800 text-sm uppercase tracking-wide">Resumo</h3>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-600">Total de clientes</span>
+                <span class="text-lg font-bold text-gray-900" id="contador-total">156</span>
+              </div>
+              <div class="w-full bg-gray-100 rounded-full h-1.5">
+                <div class="bg-marca-500 rounded-full h-1.5" style="width:100%"></div>
+              </div>
+            </div>
+            <div class="space-y-3 pt-2">
+              <div class="flex items-center justify-between cursor-pointer hover:bg-marca-50 rounded-lg px-2 py-1.5 -mx-2 transition" onclick="clientes_filtrarStatus('todos')">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-marca-500"></div>
+                  <span class="text-sm text-gray-700">Todos</span>
+                </div>
+                <span class="text-sm font-semibold text-gray-900" id="contador-todos">156</span>
+              </div>
+              <div class="flex items-center justify-between cursor-pointer hover:bg-marca-50 rounded-lg px-2 py-1.5 -mx-2 transition" onclick="clientes_filtrarStatus('ativo')">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span class="text-sm text-gray-700">Ativos</span>
+                </div>
+                <span class="text-sm font-semibold text-gray-900" id="contador-ativos">124</span>
+              </div>
+              <div class="flex items-center justify-between cursor-pointer hover:bg-marca-50 rounded-lg px-2 py-1.5 -mx-2 transition" onclick="clientes_filtrarStatus('inativo')">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-gray-400"></div>
+                  <span class="text-sm text-gray-700">Inativos</span>
+                </div>
+                <span class="text-sm font-semibold text-gray-900" id="contador-inativos">32</span>
+              </div>
+            </div>
+            <div class="border-t border-gray-100 pt-3 space-y-3">
+              <div class="flex items-center justify-between cursor-pointer hover:bg-marca-50 rounded-lg px-2 py-1.5 -mx-2 transition" onclick="clientes_filtrarVisita('novos')">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 014 4V7.5h1.25a2.25 2.25 0 012.25 2.25v9.5a2.25 2.25 0 01-2.25 2.25h-9.5A2.25 2.25 0 015.75 19.25v-9.5A2.25 2.25 0 018 7.75H9.5V8.354a4 4 0 014-4z"/></svg>
+                  <span class="text-sm text-gray-700">Novos este mês</span>
+                </div>
+                <span class="text-sm font-semibold text-green-600" id="contador-novos">23</span>
+              </div>
+              <div class="flex items-center justify-between cursor-pointer hover:bg-marca-50 rounded-lg px-2 py-1.5 -mx-2 transition" onclick="clientes_filtrarVisita('30dias')">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <span class="text-sm text-gray-700">Sem retorno 30d</span>
+                </div>
+                <span class="text-sm font-semibold text-orange-600" id="contador-30d">8</span>
+              </div>
+              <div class="flex items-center justify-between cursor-pointer hover:bg-marca-50 rounded-lg px-2 py-1.5 -mx-2 transition" onclick="clientes_filtrarVisita('60dias')">
+                <div class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+                  <span class="text-sm text-gray-700">Sem retorno 60d+</span>
+                </div>
+                <span class="text-sm font-semibold text-red-600" id="contador-60d">5</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <div class="flex-1 min-w-0 space-y-4">
+          <!-- Cabeçalho da tela -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 class="font-display text-2xl font-bold text-gray-900">Clientes</h1>
+              <p class="text-sm text-gray-500 mt-0.5">Gerencie a base de clientes da oficina</p>
+            </div>
+            <button onclick="clientes_novo()" class="active:scale-95 transition inline-flex items-center justify-center gap-2 bg-marca-500 hover:bg-marca-600 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+              Novo Cliente
+            </button>
+          </div>
+
+          <!-- Busca e filtros -->
+          <div class="bg-white rounded-xl border border-gray-200 p-4 space-y-3">
+            <div class="relative">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+              <input type="text" id="input-busca" placeholder="Buscar por nome, CPF ou placa..." oninput="clientes_buscar(this.value)" class="w-full pl-10 pr-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <select id="filtro-status" onchange="clientes_aplicarFiltros()" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition">
+                <option value="todos">Todos os status</option>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+              </select>
+              <select id="filtro-visita" onchange="clientes_aplicarFiltros()" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition">
+                <option value="todos">Última visita</option>
+                <option value="30dias">Últimos 30 dias</option>
+                <option value="60dias">60+ dias</option>
+                <option value="novos">Novos este mês</option>
+              </select>
+              <select id="filtro-veiculo" onchange="clientes_aplicarFiltros()" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition">
+                <option value="todos">Todos os veículos</option>
+                <option value="hatch">Hatch</option>
+                <option value="sedan">Sedan</option>
+                <option value="suv">SUV</option>
+                <option value="pickup">Pick-up</option>
+                <option value="moto">Motocicleta</option>
+              </select>
+              <button onclick="clientes_limparFiltros()" class="text-sm text-gray-500 hover:text-gray-700 px-3 py-2 rounded-lg hover:bg-gray-50 transition flex items-center gap-1">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                Limpar
+              </button>
+            </div>
+          </div>
+
+          <!-- Resultado da busca -->
+          <div id="clientes-resultado-info" class="text-sm text-gray-500 px-1"></div>
+
+          <!-- Grid de cards -->
+          <div id="clientes-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          </div>
+
+          <!-- Estado vazio -->
+          <div id="clientes-vazio" class="hidden bg-white rounded-xl border border-gray-200 p-12 text-center">
+            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <p class="text-gray-500 font-medium">Nenhum cliente encontrado</p>
+            <p class="text-sm text-gray-400 mt-1">Tente ajustar os filtros ou a busca</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal de detalhe do cliente -->
+      <div id="modal-cliente-overlay" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4" onclick="if(event.target===this)clientes_fecharModal()">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto" onclick="event.stopPropagation()">
+          <div id="modal-cliente-conteudo"></div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+    (function() {
+      var dadosClientes = [
+        {id:1,nome:"Ana Beatriz Oliveira",cpf:"123.456.789-00",telefone:"(11) 98765-4321",whatsapp:"11987654321",email:"ana.oliveira@email.com",veiculo:"Honda Civic",ano:"2022",cor:"Preto",placa:"ABC-1D23",tipoVeiculo:"sedan",kmAtual:"35.420",status:"ativo",ultimaVisita:"2025-01-10",foto:null,corAvatar:"bg-rose-500",iniciais:"AO"},
+        {id:2,nome:"Carlos Eduardo Santos",cpf:"987.654.321-00",telefone:"(11) 91234-5678",whatsapp:"11912345678",email:"carlos.santos@email.com",veiculo:"Toyota Hilux",ano:"2023",cor:"Branco",placa:"DEF-4G56",tipoVeiculo:"pickup",kmAtual:"28.100",status:"ativo",ultimaVisita:"2025-01-15",foto:null,corAvatar:"bg-blue-500",iniciais:"CS"},
+        {id:3,nome:"Fernanda Lima Pereira",cpf:"456.789.123-00",telefone:"(11) 99876-5432",whatsapp:"11998765432",email:"fernanda.lima@email.com",veiculo:"Volkswagen Nivus",ano:"2024",cor:"Vermelho",placa:"GHI-7J89",tipoVeiculo:"suv",kmAtual:"12.500",status:"ativo",ultimaVisita:"2025-01-08",foto:null,corAvatar:"bg-purple-500",iniciais:"FL"},
+        {id:4,nome:"Ricardo Mendes Souza",cpf:"321.654.987-00",telefone:"(11) 97654-3210",whatsapp:"11976543210",email:"ricardo.mendes@email.com",veiculo:"Fiat Argo",ano:"2021",cor:"Cinza",placa:"JKL-2M34",tipoVeiculo:"hatch",kmAtual:"48.300",status:"inativo",ultimaVisita:"2024-10-20",foto:null,corAvatar:"bg-amber-500",iniciais:"RM"},
+        {id:5,nome:"Patrícia Nascimento",cpf:"654.987.321-00",telefone:"(11) 96543-2109",whatsapp:"11965432109",email:"patricia.nasc@email.com",veiculo:"Hyundai HB20",ano:"2023",cor:"Azul",placa:"MNO-5P67",tipoVeiculo:"hatch",kmAtual:"22.800",status:"ativo",ultimaVisita:"2025-01-12",foto:null,corAvatar:"bg-teal-500",iniciais:"PN"},
+        {id:6,nome:"João Pedro Ferreira",cpf:"789.123.456-00",telefone:"(11) 95432-1098",whatsapp:"11954321098",email:"joao.ferreira@email.com",veiculo:"Honda CG 160",ano:"2022",cor:"Preto",placa:"PQR-8S90",tipoVeiculo:"moto",kmAtual:"15.600",status:"ativo",ultimaVisita:"2025-01-05",foto:null,corAvatar:"bg-indigo-500",iniciais:"JF"},
+        {id:7,nome:"Mariana Costa Rocha",cpf:"147.258.369-00",telefone:"(11) 94321-0987",whatsapp:"11943210987",email:"mariana.costa@email.com",veiculo:"Jeep Compass",ano:"2024",cor:"Cinza Grafite",placa:"STU-1V23",tipoVeiculo:"suv",kmAtual:"8.900",status:"ativo",ultimaVisita:"2025-01-14",foto:null,corAvatar:"bg-pink-500",iniciais:"MC"},
+        {id:8,nome:"Roberto Almeida Vieira",cpf:"258.369.147-00",telefone:"(11) 93210-9876",whatsapp:"11932109876",email:"roberto.vieira@email.com",veiculo:"Chevrolet Onix",ano:"2020",cor:"Branco",placa:"VWX-4Y56",tipoVeiculo:"hatch",kmAtual:"62.400",status:"inativo",ultimaVisita:"2024-08-15",foto:null,corAvatar:"bg-cyan-500",iniciais:"RA"}
+      ];
+
+      var historicoExemplo = [
+        {data:"2025-01-10",servico:"Troca de óleo e filtro",valor:280.00,status:"Concluído"},
+        {data:"2024-12-05",servico:"Alinhamento e balanceamento",valor:180.00,status:"Concluído"},
+        {data:"2024-10-22",servico:"Revisão dos 30.000 km",valor:650.00,status:"Concluído"},
+        {data:"2024-08-10",servico:"Troca de pastilhas de freio",valor:420.00,status:"Concluído"}
+      ];
+
+      var iconeVeiculo = function(tipo) {
+        var m = {hatch:'🚗',sedan:'🚘',suv:'🚙',pickup:'🛻',moto:'🏍️'};
+        return m[tipo] || '🚗';
+      };
+
+      function clientes_buscar(termo) {
+        clientes_aplicarFiltros();
+      }
+
+      function clientes_aplicarFiltros() {
+        var busca = document.getElementById('input-busca').value.toLowerCase().trim();
+        var filtroStatus = document.getElementById('filtro-status').value;
+        var filtroVisita = document.getElementById('filtro-visita').value;
+        var filtroVeiculo = document.getElementById('filtro-veiculo').value;
+
+        var agora = new Date();
+        var trintaDias = new Date(agora); trintaDias.setDate(trintaDias.getDate() - 30);
+        var sessentaDias = new Date(agora); sessentaDias.setDate(sessentaDias.getDate() - 60);
+
+        var filtrados = dadosClientes.filter(function(c) {
+          var matchBusca = !busca || c.nome.toLowerCase().includes(busca) || c.cpf.includes(busca) || c.placa.toLowerCase().includes(busca);
+          var matchStatus = filtroStatus === 'todos' || c.status === filtroStatus;
+          var matchVeiculo = filtroVeiculo === 'todos' || c.tipoVeiculo === filtroVeiculo;
+          var dataVisita = new Date(c.ultimaVisita + 'T00:00:00');
+          var matchVisita = true;
+          if (filtroVisita === '30dias') matchVisita = dataVisita >= trintaDias;
+          else if (filtroVisita === '60dias') matchVisita = dataVisita < sessentaDias;
+          else if (filtroVisita === 'novos') matchVisita = dataVisita >= new Date(agora.getFullYear(), agora.getMonth(), 1);
+          return matchBusca && matchStatus && matchVeiculo && matchVisita;
+        });
+
+        clientes_renderizar(filtrados);
+      }
+
+      function clientes_filtrarStatus(status) {
+        document.getElementById('filtro-status').value = status;
+        clientes_aplicarFiltros();
+      }
+
+      function clientes_filtrarVisita(periodo) {
+        document.getElementById('filtro-visita').value = periodo;
+        clientes_aplicarFiltros();
+      }
+
+      function clientes_limparFiltros() {
+        document.getElementById('input-busca').value = '';
+        document.getElementById('filtro-status').value = 'todos';
+        document.getElementById('filtro-visita').value = 'todos';
+        document.getElementById('filtro-veiculo').value = 'todos';
+        clientes_aplicarFiltros();
+      }
+
+      function clientes_renderizar(lista) {
+        var grid = document.getElementById('clientes-grid');
+        var vazio = document.getElementById('clientes-vazio');
+        var info = document.getElementById('clientes-resultado-info');
+        info.textContent = lista.length + ' cliente' + (lista.length !== 1 ? 's' : '') + ' encontrado' + (lista.length !== 1 ? 's' : '');
+
+        if (lista.length === 0) {
+          grid.innerHTML = '';
+          vazio.classList.remove('hidden');
+          return;
+        }
+        vazio.classList.add('hidden');
+
+        grid.innerHTML = lista.map(function(c) {
+          var diasSemVisita = Math.floor((new Date() - new Date(c.ultimaVisita + 'T00:00:00')) / 86400000);
+          var badgeStatus = c.status === 'ativo'
+            ? '<span class="badge badge-green">Ativo</span>'
+            : '<span class="badge badge-gray">Inativo</span>';
+          var alertaVisita = diasSemVisita > 60
+            ? '<span class="text-xs text-red-500 font-medium">Sem retorno há ' + diasSemVisita + ' dias</span>'
+            : diasSemVisita > 30
+              ? '<span class="text-xs text-orange-500 font-medium">Sem retorno há ' + diasSemVisita + ' dias</span>'
+              : '<span class="text-xs text-gray-400">Há ' + diasSemVisita + ' dia' + (diasSemVisita !== 1 ? 's' : '') + '</span>';
+
+          return '<div class="card cursor-pointer hover:shadow-lg hover:border-marca-300 transition group" onclick="clientes_abrirDetalhe(' + c.id + ')">' +
+            '<div class="p-5 space-y-3">' +
+              '<div class="flex items-start justify-between">' +
+                '<div class="flex items-center gap-3">' +
+                  '<div class="w-12 h-12 rounded-full ' + c.corAvatar + ' flex items-center justify-center text-white font-bold text-sm flex-shrink-0">' + c.iniciais + '</div>' +
+                  '<div class="min-w-0">' +
+                    '<h3 class="font-display font-semibold text-gray-900 text-sm truncate group-hover:text-marca-700 transition">' + c.nome + '</h3>' +
+                    '<p class="text-xs text-gray-500">' + c.cpf + '</p>' +
+                  '</div>' +
+                '</div>' +
+                badgeStatus +
+              '</div>' +
+              '<div class="bg-gray-50 rounded-lg p-3 flex items-center gap-3">' +
+                '<span class="text-2xl flex-shrink-0">' + iconeVeiculo(c.tipoVeiculo) + '</span>' +
+                '<div class="min-w-0">' +
+                  '<p class="text-sm font-medium text-gray-800 truncate">' + c.veiculo + ' <span class="text-gray-500">' + c.ano + '</span></p>' +
+                  '<p class="text-xs text-gray-500 font-mono">' + c.placa + '</p>' +
+                '</div>' +
+              '</div>' +
+              '<div class="flex items-center justify-between text-sm">' +
+                '<a href="https://wa.me/' + c.whatsapp + '" target="_blank" onclick="event.stopPropagation()" class="flex items-center gap-1.5 text-green-600 hover:text-green-700 transition">' +
+                  '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
+                  c.telefone +
+                '</a>' +
+                '<span class="text-gray-400">' + c.kmAtual.replace('.', '.') + ' km</span>' +
+              '</div>' +
+              '<div class="pt-1 border-t border-gray-100 flex items-center justify-between">' +
+                '<span class="text-xs text-gray-400">' + c.veiculo + '</span>' +
+                alertaVisita +
+              '</div>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      function clientes_abrirDetalhe(id) {
+        var c = dadosClientes.find(function(x){return x.id===id;});
+        if (!c) return;
+        var diasSemVisita = Math.floor((new Date() - new Date(c.ultimaVisita + 'T00:00:00')) / 86400000);
+        var whatsappUrl = 'https://wa.me/' + c.whatsapp + '?text=Olá%20' + encodeURIComponent(c.nome.split(' ')[0]) + ',%20tudo%20bem?%20Aqui%20é%20da%20HELPcar%20Oficina.';
+
+        var html = '<div class="relative">' +
+          '<div class="bg-marca-700 px-6 py-5 flex items-center gap-4">' +
+            '<div class="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-xl flex-shrink-0">' + c.iniciais + '</div>' +
+            '<div class="text-white">' +
+              '<h2 class="font-display text-xl font-bold">' + c.nome + '</h2>' +
+              '<p class="text-marca-200 text-sm">' + c.email + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="px-6 py-4 border-b border-gray-100 flex flex-wrap gap-2">' +
+            '<a href="' + whatsappUrl + '" target="_blank" class="active:scale-95 transition inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">' +
+              '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>' +
+              'WhatsApp' +
+            '</a>' +
+            '<button onclick="clientes_editar(' + c.id + ')" class="active:scale-95 transition inline-flex items-center gap-2 bg-marca-500 hover:bg-marca-600 text-white text-sm font-semibold px-4 py-2 rounded-lg">' +
+              '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>' +
+              'Editar' +
+            '</button>' +
+            '<button onclick="mostrarTela(\'novo-orcamento\'); clientes_fecharModal();" class="active:scale-95 transition inline-flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-semibold px-4 py-2 rounded-lg">' +
+              '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h.75m3 3h.75"/></svg>' +
+              'Novo Orçamento' +
+            '</button>' +
+            '<button onclick="mostrarTela(\'agenda\'); clientes_fecharModal();" class="active:scale-95 transition inline-flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-semibold px-4 py-2 rounded-lg">' +
+              '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>' +
+              'Agendar' +
+            '</button>' +
+          '</div>' +
+          '<div class="p-6 space-y-6">' +
+            '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">' +
+              '<div class="bg-gray-50 rounded-lg p-4">' +
+                '<p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Veículo</p>' +
+                '<p class="font-medium text-gray-900">' + iconeVeiculo(c.tipoVeiculo) + ' ' + c.veiculo + '</p>' +
+                '<p class="text-sm text-gray-500">' + c.ano + ' · ' + c.cor + '</p>' +
+                '<p class="text-sm text-gray-500 font-mono mt-1">Placa: ' + c.placa + '</p>' +
+                '<p class="text-sm text-gray-500">Quilometragem: ' + c.kmAtual + ' km</p>' +
+              '</div>' +
+              '<div class="bg-gray-50 rounded-lg p-4">' +
+                '<p class="text-xs text-gray-500 uppercase tracking-wide mb-2">Documentos</p>' +
+                '<p class="text-sm text-gray-600">CPF: ' + c.cpf + '</p>' +
+                '<p class="text-sm text-gray-600">CNH: 024.789.451-33</p>' +
+                '<p class="text-sm text-gray-600">RG: 45.678.901-2</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="grid grid-cols-3 gap-3">' +
+              '<div class="text-center p-3 bg-marca-50 rounded-lg">' +
+                '<p class="text-2xl font-bold text-marca-700">12</p>' +
+                '<p class="text-xs text-gray-500">Serviços</p>' +
+              '</div>' +
+              '<div class="text-center p-3 bg-marca-50 rounded-lg">' +
+                '<p class="text-2xl font-bold text-marca-700">R$ ' + brl(4280).replace('R$ ','') + '</p>' +
+                '<p class="text-xs text-gray-500">Total gasto</p>' +
+              '</div>' +
+              '<div class="text-center p-3 bg-marca-50 rounded-lg">' +
+                '<p class="text-2xl font-bold text-marca-700">' + diasSemVisita + 'd</p>' +
+                '<p class="text-xs text-gray-500">Última visita</p>' +
+              '</div>' +
+            '</div>' +
+            '<div>' +
+              '<h3 class="font-display font-semibold text-gray-800 text-sm uppercase tracking-wide mb-3">Histórico de Serviços</h3>' +
+              '<div class="space-y-2">' +
+                historicoExemplo.map(function(h) {
+                  return '<div class="flex items-center justify-between py-2.5 px-3 bg-gray-50 rounded-lg">' +
+                    '<div class="flex items-center gap-3">' +
+                      '<div class="w-1 h-8 bg-marca-500 rounded-full"></div>' +
+                      '<div>' +
+                        '<p class="text-sm font-medium text-gray-800">' + h.servico + '</p>' +
+                        '<p class="text-xs text-gray-400">' + dataBR(h.data) + '</p>' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="text-right">' +
+                      '<p class="text-sm font-semibold text-gray-700">R$ ' + brl(h.valor).replace('R$ ','') + '</p>' +
+                      '<span class="badge badge-green text-xs">' + h.status + '</span>' +
+                    '</div>' +
+                  '</div>';
+                }).join('') +
+              '</div>' +
+            '</div>' +
+            '<div class="flex flex-wrap gap-2 pt-2">' +
+              '<button onclick="clientes_enviarAviso(' + c.id + ')" class="active:scale-95 transition inline-flex items-center gap-2 bg-marca-500 hover:bg-marca-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg">' +
+                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>' +
+                'Enviar Aviso' +
+              '</button>' +
+              '<button onclick="clientes_exportar(' + c.id + ')" class="active:scale-95 transition inline-flex items-center gap-2 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-semibold px-4 py-2.5 rounded-lg">' +
+                '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>' +
+                'Exportar Dados' +
+              '</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+        var overlay = document.getElementById('modal-cliente-overlay');
+        var content = document.getElementById('modal-cliente-conteudo');
+        content.innerHTML = html;
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function clientes_fecharModal() {
+        var overlay = document.getElementById('modal-cliente-overlay');
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+
+      function clientes_novo() {
+        var html = '<div class="p-6 space-y-5">' +
+          '<p class="text-sm text-gray-500">Preencha os dados para cadastrar um novo cliente.</p>' +
+          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">' +
+            '<div class="sm:col-span-2">' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Nome completo</label>' +
+              '<input type="text" id="novo-nome" placeholder="Nome do cliente" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>' +
+              '<input type="text" id="novo-cpf" placeholder="000.000.000-00" oninput="this.value=mascaraCpf(this.value)" maxlength="14" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>' +
+              '<input type="text" id="novo-telefone" placeholder="(00) 00000-0000" oninput="this.value=mascaraTel(this.value)" maxlength="15" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Veículo</label>' +
+              '<input type="text" id="novo-veiculo" placeholder="Ex: Honda Civic" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Placa</label>' +
+              '<input type="text" id="novo-placa" placeholder="ABC-1D23" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition uppercase" />' +
+            '</div>' +
+          '</div>' +
+          '<div class="flex justify-end gap-2 pt-3 border-t border-gray-100">' +
+            '<button onclick="clientes_fecharModal()" class="active:scale-95 transition px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-lg hover:bg-gray-50">Cancelar</button>' +
+            '<button onclick="clientes_salvarNovo()" class="active:scale-95 transition px-5 py-2 text-sm bg-marca-500 hover:bg-marca-600 text-white font-semibold rounded-lg">Cadastrar Cliente</button>' +
+          '</div>' +
+        '</div>';
+        abrirModal(html, 'Novo Cliente');
+      }
+
+      function clientes_salvarNovo() {
+        var nome = document.getElementById('novo-nome').value.trim();
+        var cpf = document.getElementById('novo-cpf').value.trim();
+        var telefone = document.getElementById('novo-telefone').value.trim();
+        var veiculo = document.getElementById('novo-veiculo').value.trim();
+        var placa = document.getElementById('novo-placa').value.trim();
+
+        if (!nome || !cpf || !telefone) {
+          toast('Preencha nome, CPF e telefone.', 'erro');
+          return;
+        }
+
+        var iniciais = nome.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+        var cores = ['bg-emerald-500','bg-cyan-500','bg-violet-500','bg-orange-500','bg-fuchsia-500','bg-lime-600'];
+        var corAvatar = cores[Math.floor(Math.random()*cores.length)];
+
+        var novoId = dadosClientes.length > 0 ? Math.max.apply(null, dadosClientes.map(function(x){return x.id;})) + 1 : 1;
+        dadosClientes.push({
+          id: novoId, nome: nome, cpf: cpf, telefone: telefone, whatsapp: telefone.replace(/\D/g,''),
+          email: nome.toLowerCase().replace(/\s/g,'.') + '@email.com', veiculo: veiculo || 'Não informado',
+          ano: '—', cor: '—', placa: placa.toUpperCase() || '—', tipoVeiculo: 'hatch',
+          kmAtual: '0', status: 'ativo', ultimaVisita: new Date().toISOString().split('T')[0],
+          foto: null, corAvatar: corAvatar, iniciais: iniciais
+        });
+
+        clientes_fecharModal();
+        clientes_atualizarContadores();
+        clientes_aplicarFiltros();
+        toast('Cliente cadastrado com sucesso!', 'ok');
+      }
+
+      function clientes_editar(id) {
+        var c = dadosClientes.find(function(x){return x.id===id;});
+        if (!c) return;
+        var html = '<div class="p-6 space-y-5">' +
+          '<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">' +
+            '<div class="sm:col-span-2">' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Nome completo</label>' +
+              '<input type="text" id="edit-nome" value="' + c.nome + '" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">CPF</label>' +
+              '<input type="text" id="edit-cpf" value="' + c.cpf + '" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Telefone</label>' +
+              '<input type="text" id="edit-telefone" value="' + c.telefone + '" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Veículo</label>' +
+              '<input type="text" id="edit-veiculo" value="' + c.veiculo + '" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Placa</label>' +
+              '<input type="text" id="edit-placa" value="' + c.placa + '" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition uppercase" />' +
+            '</div>' +
+            '<div>' +
+              '<label class="block text-sm font-medium text-gray-700 mb-1">Status</label>' +
+              '<select id="edit-status" class="w-full px-3 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/30 focus:border-marca-500 transition">' +
+                '<option value="ativo"' + (c.status==='ativo'?' selected':'') + '>Ativo</option>' +
+                '<option value="inativo"' + (c.status==='inativo'?' selected':'') + '>Inativo</option>' +
+              '</select>' +
+            '</div>' +
+          '</div>' +
+          '<div class="flex justify-end gap-2 pt-3 border-t border-gray-100">' +
+            '<button onclick="clientes_fecharModal()" class="active:scale-95 transition px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-200 rounded-lg hover:bg-gray-50">Cancelar</button>' +
+            '<button onclick="clientes_salvarEdicao(' + c.id + ')" class="active:scale-95 transition px-5 py-2 text-sm bg-marca-500 hover:bg-marca-600 text-white font-semibold rounded-lg">Salvar Alterações</button>' +
+          '</div>' +
+        '</div>';
+        abrirModal(html, 'Editar Cliente');
+      }
+
+      function clientes_salvarEdicao(id) {
+        var c = dadosClientes.find(function(x){return x.id===id;});
+        if (!c) return;
+        c.nome = document.getElementById('edit-nome').value.trim();
+        c.cpf = document.getElementById('edit-cpf').value.trim();
+        c.telefone = document.getElementById('edit-telefone').value.trim();
+        c.veiculo = document.getElementById('edit-veiculo').value.trim();
+        c.placa = document.getElementById('edit-placa').value.trim().toUpperCase();
+        c.status = document.getElementById('edit-status').value;
+        clientes_fecharModal();
+        clientes_atualizarContadores();
+        clientes_aplicarFiltros();
+        toast('Cliente atualizado com sucesso!', 'ok');
+      }
+
+      function clientes_enviarAviso(id) {
+        var c = dadosClientes.find(function(x){return x.id===id;});
+        if (!c) return;
+        toast('Aviso enviado para ' + c.nome.split(' ')[0] + ' via WhatsApp!', 'ok');
+      }
+
+      function clientes_exportar(id) {
+        var c = dadosClientes.find(function(x){return x.id===id;});
+        if (!c) return;
+        toast('Dados de ' + c.nome.split(' ')[0] + ' exportados em PDF.', 'ok');
+      }
+
+      function clientes_atualizarContadores() {
+        var agora = new Date();
+        var trintaDias = new Date(agora); trintaDias.setDate(trintaDias.getDate() - 30);
+        var sessentaDias = new Date(agora); sessentaDias.setDate(sessentaDias.getDate() - 60);
+        var inicioMes = new Date(agora.getFullYear(), agora.getMonth(), 1);
+
+        var total = dadosClientes.length;
+        var ativos = dadosClientes.filter(function(c){return c.status==='ativo';}).length;
+        var inativos = dadosClientes.filter(function(c){return c.status==='inativo';}).length;
+        var novos = dadosClientes.filter(function(c){return new Date(c.ultimaVisita+'T00:00:00') >= inicioMes;}).length;
+        var d30 = dadosClientes.filter(function(c){var d=new Date(c.ultimaVisita+'T00:00:00'); return d < trintaDias && d >= sessentaDias;}).length;
+        var d60 = dadosClientes.filter(function(c){return new Date(c.ultimaVisita+'T00:00:00') < sessentaDias;}).length;
+
+        document.getElementById('contador-total').textContent = total;
+        document.getElementById('contador-todos').textContent = total;
+        document.getElementById('contador-ativos').textContent = ativos;
+        document.getElementById('contador-inativos').textContent = inativos;
+        document.getElementById('contador-novos').textContent = novos;
+        document.getElementById('contador-30d').textContent = d30;
+        document.getElementById('contador-60d').textContent = d60;
+      }
+
+      function mascaraCpf(v) {
+        return v.replace(/\D/g,'').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})/,'$1-$2').substring(0,14);
+      }
+      function mascaraTel(v) {
+        return v.replace(/\D/g,'').replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').substring(0,15);
+      }
+
+      window.clientes_buscar = clientes_buscar;
+      window.clientes_aplicarFiltros = clientes_aplicarFiltros;
+      window.clientes_filtrarStatus = clientes_filtrarStatus;
+      window.clientes_filtrarVisita = clientes_filtrarVisita;
+      window.clientes_limparFiltros = clientes_limparFiltros;
+      window.clientes_renderizar = clientes_renderizar;
+      window.clientes_abrirDetalhe = clientes_abrirDetalhe;
+      window.clientes_fecharModal = clientes_fecharModal;
+      window.clientes_novo = clientes_novo;
+      window.clientes_salvarNovo = clientes_salvarNovo;
+      window.clientes_editar = clientes_editar;
+      window.clientes_salvarEdicao = clientes_salvarEdicao;
+      window.clientes_enviarAviso = clientes_enviarAviso;
+      window.clientes_exportar = clientes_exportar;
+      window.clientes_atualizarContadores = clientes_atualizarContadores;
+
+      document.addEventListener('DOMContentLoaded', function() {
+        clientes_atualizarContadores();
+        clientes_renderizar(dadosClientes);
+      });
+    })();
+    </script>
+
     <!-- TELAS -->
     </main>
   </div>
