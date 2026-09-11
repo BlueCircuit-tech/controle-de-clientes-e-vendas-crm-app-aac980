@@ -2261,6 +2261,194 @@
     </script>
 </section>
 
+    <section data-tela="ordem-de-servico" class="hidden fadein-anim">
+  <div class="card p-6 lg:p-8 mt-2 mb-6">
+    <!-- Cabeçalho OS -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-4">
+      <div>
+        <h2 class="font-display text-2xl lg:text-3xl text-marca-900">Ordem de Serviço #4521</h2>
+        <div class="flex items-center gap-3 mt-1 text-marca-700 font-body">
+          <span class="text-base lg:text-lg font-semibold">Cliente:</span>
+          <span class="flex items-center gap-2">
+            <span class="inline-block w-8 h-8 rounded-full bg-gradient-to-br from-marca-200 via-marca-100 to-marca-50 flex items-center justify-center font-bold text-marca-900 text-lg">MG</span>
+            <span class="lg:text-lg font-medium">Maria Gabriela Souza</span>
+          </span>
+        </div>
+        <div class="flex items-center gap-3 mt-1">
+          <span class="badge badge-success font-medium">Em andamento</span>
+          <span class="font-body text-base text-marca-500">Fiat Argo 1.3 2020 • Prata</span>
+        </div>
+      </div>
+      <div class="flex gap-2 flex-wrap mt-2 lg:mt-0">
+        <button class="btn btn-primary min-h-[40px] px-5 font-semibold flex items-center gap-2 transition active:scale-95" type="button" onclick="ordem_de_servico_iniciarServico()">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 20 20" fill="currentColor"><path d="M4 16V4h2v8.586l6.293-6.293 1.414 1.414L7.414 14H16v2H4z"/></svg>
+          Iniciar serviço
+        </button>
+        <button class="btn btn-success min-h-[40px] px-5 font-semibold flex items-center gap-2 transition active:scale-95" type="button" onclick="ordem_de_servico_finalizarServico()">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13l4 4 8-8"/></svg>
+          Finalizar serviço
+        </button>
+        <button class="btn btn-secondary min-h-[40px] px-5 font-semibold flex items-center gap-2 transition active:scale-95" type="button" onclick="mostrarTela('painel')">
+          <svg class="w-5 h-5 text-marca-700" viewBox="0 0 20 20" fill="currentColor"><path d="M3 3h14v2H3V3zm0 4h14v2H3V7zm0 4h10v2H3v-2zm0 4h10v2H3v-2z"/></svg>
+          Voltar ao painel
+        </button>
+      </div>
+    </div>
+    <!-- Timeline -->
+    <div class="bg-marca-50 p-4 rounded-xl mb-6 max-w-full overflow-x-auto">
+      <div class="font-display text-marca-900 text-lg mb-3">Progresso da Ordem</div>
+      <ol class="relative border-l-4 border-marca-200 pl-4">
+        <li class="mb-6 flex items-start gap-4">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-marca-100 font-bold text-marca-900 text-xl">SR</div>
+          <div>
+            <div class="font-semibold text-marca-900 flex items-center gap-2">Recebido <span class="badge badge-info">18/04/2024 09:20</span></div>
+            <div class="text-marca-600 text-sm">Atendente: Sandra Ribeiro</div>
+          </div>
+        </li>
+        <li class="mb-6 flex items-start gap-4">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-marca-100 font-bold text-marca-900 text-xl">AL</div>
+          <div>
+            <div class="font-semibold text-marca-900 flex items-center gap-2">Orçamento aprovado <span class="badge badge-success">18/04/2024 11:37</span></div>
+            <div class="text-marca-600 text-sm">Responsável: Antonio Lopes</div>
+          </div>
+        </li>
+        <li class="mb-6 flex items-start gap-4">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-marca-100 font-bold text-marca-900 text-xl">JS</div>
+          <div>
+            <div class="font-semibold text-marca-900 flex items-center gap-2">Em andamento <span class="badge badge-warning">18/04/2024 14:00</span></div>
+            <div class="text-marca-600 text-sm">Mecânico: João Santos</div>
+          </div>
+        </li>
+        <li class="flex items-start gap-4 opacity-60">
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-marca-100 font-bold text-marca-900 text-xl">MG</div>
+          <div>
+            <div class="font-semibold text-marca-900 flex items-center gap-2">Finalizado <span class="badge badge-ghost">--</span></div>
+            <div class="text-marca-600 text-sm">Cliente: Maria Gabriela Souza</div>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <!-- Conteúdo principal -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-4">
+      <!-- Esquerda: Itens, Fotos/Documentos -->
+      <div>
+        <!-- Itens aprovados -->
+        <div class="mb-6">
+          <div class="font-display text-marca-900 text-lg mb-3 flex items-center gap-2">
+            <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/><path stroke-linecap="round" d="M14 2v6h6"/></svg>
+            Itens aprovados
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-xl shadow-sm">
+              <thead class="bg-marca-50 text-marca-700 font-body text-sm">
+                <tr>
+                  <th class="px-4 py-2 text-left">Descrição</th>
+                  <th class="px-4 py-2 text-left">Valor</th>
+                  <th class="px-4 py-2 text-left"></th>
+                </tr>
+              </thead>
+              <tbody id="ordem_de_servico_itens">
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
+            <div id="ordem_de_servico_itens_empty" class="hidden border bg-marca-50 mt-2 rounded-lg text-marca-400 p-4 font-body flex items-center gap-2">
+              <svg class="w-6 h-6 text-marca-300" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20.5c-7.732 0-10.5-6.268-10.5-9a10.5 10.5 0 0 1 21 0c0 2.732-2.768 9-10.5 9z"/><path d="M12 4a8 8 0 0 0-8 8"/></svg>
+              Nenhum item aprovado.
+            </div>
+          </div>
+        </div>
+        <!-- Galeria de fotos/documentos -->
+        <div>
+          <div class="flex items-center gap-2 mb-3 font-display text-marca-900 text-lg">
+            <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M14 10l2 2 4-4"/></svg>
+            Fotos e documentos anexados
+          </div>
+          <div class="flex flex-wrap gap-4 mb-4" id="ordem_de_servico_galeria">
+            <!-- Preenchido via JS -->
+          </div>
+          <label class="block mb-0">
+            <input type="file" accept="image/*,application/pdf" class="hidden" id="ordem_de_servico_fileinput" onchange="ordem_de_servico_handleUpload(event)">
+            <button class="btn btn-secondary min-h-[40px] px-4 flex items-center gap-2 transition active:scale-95" type="button" onclick="document.getElementById('ordem_de_servico_fileinput').click()">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 20 20"><path d="M16 16H4V14H16v2z"/><path d="M8 12V4h4v8"/><path d="M12 4l4 4"/></svg>
+              Anexar foto/documento
+            </button>
+          </label>
+        </div>
+      </div>
+      <!-- Direita: Observações, Peças utilizadas -->
+      <div>
+        <!-- Observações -->
+        <div class="mb-6">
+          <div class="flex items-center gap-2 mb-2 font-display text-marca-900 text-lg">
+            <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 11.5l9-9 9 9"/><rect x="4" y="13" width="16" height="7" rx="2"/></svg>
+            Observações do mecânico
+          </div>
+          <textarea class="w-full border border-marca-200 rounded-lg p-3 min-h-[80px] font-body text-marca-900 resize-none shadow-sm focus:ring-2 focus:ring-marca-100 transition" id="ordem_de_servico_obs" placeholder="Adicione observações sobre o veículo ou serviço..." onchange="ordem_de_servico_obsSave()" oninput="ordem_de_servico_updateObsBtn()"></textarea>
+          <button id="ordem_de_servico_btnObs" class="btn btn-primary mt-2 min-h-[40px] px-5 font-semibold flex items-center gap-2 transition active:scale-95" type="button" style="display:none" onclick="ordem_de_servico_obsSave()">
+            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13l4 4 8-8"/></svg>
+            Salvar observação
+          </button>
+        </div>
+        <!-- Peças utilizadas -->
+        <div>
+          <div class="flex items-center gap-2 mb-2 font-display text-marca-900 text-lg">
+            <svg class="w-6 h-6 text-marca-700" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 9v6"/><path d="M9 12h6"/></svg>
+            Peças utilizadas
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white rounded-xl shadow-sm mb-3">
+              <thead class="bg-marca-50 text-marca-700 font-body text-sm">
+                <tr>
+                  <th class="px-4 py-2 text-left">Peça</th>
+                  <th class="px-4 py-2 text-left">Quantidade</th>
+                  <th class="px-4 py-2 text-left">Valor unitário</th>
+                </tr>
+              </thead>
+              <tbody id="ordem_de_servico_pecas">
+                <!-- Preenchido via JS -->
+              </tbody>
+            </table>
+            <div id="ordem_de_servico_pecas_empty" class="hidden border bg-marca-50 mt-2 rounded-lg text-marca-400 p-4 font-body flex items-center gap-2">
+              <svg class="w-6 h-6 text-marca-300" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M16 16H4V14H16v2z"/></svg>
+              Nenhuma peça registrada.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal preview da foto/documento -->
+  <script>
+    // Dados de exemplo plausíveis para oficinas automotivas
+    const ordem_de_servico_itens = [
+      { id:1, desc:"Troca de pastilhas de freio", valor:178.65 },
+      { id:2, desc:"Alinhamento e balanceamento", valor:89.50 },
+      { id:3, desc:"Revisão dos fluidos", valor:52.90 },
+      { id:4, desc:"Substituição filtro de ar", valor:44.70 },
+      { id:5, desc:"Diagnóstico eletrônico", valor:120.00 },
+      { id:6, desc:"Limpeza do sistema de arrefecimento", valor:85.60 },
+      { id:7, desc:"Calibração dos pneus", valor:15.00 }
+    ];
+    const ordem_de_servico_pecas = [
+      { id:1, nome:"Pastilha de freio (Par)", qtd:1, valor:90.00 },
+      { id:2, nome:"Filtro de ar", qtd:1, valor:39.00 },
+      { id:3, nome:"Fluido de freio Dot4 (500ml)", qtd:2, valor:25.70 },
+      { id:4, nome:"Parafuso de roda", qtd:4, valor:12.80 },
+      { id:5, nome:"Líquido arrefecimento (1L)", qtd:2, valor:34.50 },
+      { id:6, nome:"Pneu 185/65R15", qtd:1, valor:289.00 }
+    ];
+    let ordem_de_servico_galeria = [
+      {id:1, tipo:"foto", nome:"Antes", url:"data:image/svg+xml;base64,"+btoa('<svg width="112" height="112" xmlns="http://www.w3.org/2000/svg"><rect fill="#F0FDF4" width="112" height="112"/><circle cx="56" cy="56" r="48" fill="#22C55E"/><text x="56" y="61" text-anchor="middle" font-size="28" fill="#14532D" font-family="Arial" font-weight="bold">F</text></svg>')},
+      {id:2, tipo:"foto", nome:"Após", url:"data:image/svg+xml;base64,"+btoa('<svg width="112" height="112" xmlns="http://www.w3.org/2000/svg"><rect fill="#F0FDF4" width="112" height="112"/><circle cx="56" cy="56" r="48" fill="#14532D"/><text x="56" y="61" text-anchor="middle" font-size="28" fill="#F0FDF4" font-family="Arial" font-weight="bold">F</text></svg>')},
+      {id:3, tipo:"doc", nome:"Relatório Diagnóstico", url:"data:application/pdf;base64,JVBERi0xLjQK"},
+      {id:4, tipo:"foto", nome:"Pneu trocado", url:"data:image/svg+xml;base64,"+btoa('<svg width="112" height="112" xmlns="http://www.w3.org/2000/svg"><rect fill="#F0FDF4" width="112" height="112"/><circle cx="56" cy="56" r="48" fill="#22C55E"/><text x="56" y="61" text-anchor="middle" font-size="28" fill="#14532D" font-family="Arial" font-weight="bold">F</text></svg>')},
+      {id:5, tipo:"doc", nome:"Nota Fiscal", url:"data:application/pdf;base64,JVBERi0xLjQK"},
+      {id:6, tipo:"foto", nome:"Placa do veículo", url:"data:image/svg+xml;base64,"+btoa('<svg width="112" height="112" xmlns="http://www.w3.org/2000/svg"><rect fill="#F0FDF4" width="112" height="112"/><circle cx="56" cy="56" r="48" fill="#14532D"/><text x="56" y="61" text-anchor="middle" font-size="28" fill="#F0FDF4" font-family="Arial" font-weight="bold">F</text></svg>')}
+    ];
+    let ordem_de_servico_obs_salva = "";
+
+    function ordem_de_serv
+
     <!-- TELAS -->
     </main>
   </div>
