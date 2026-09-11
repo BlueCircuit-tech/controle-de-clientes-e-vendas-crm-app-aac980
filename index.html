@@ -1296,6 +1296,521 @@
     })();
     </script>
 
+    <section data-tela="novo-orcamento" class="hidden">
+      <div class="mb-8">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h1 class="text-2xl font-bold font-display text-marca-900">Novo Orçamento</h1>
+            <p class="text-gray-500 mt-1 text-sm">Preencha as etapas abaixo para criar um novo orçamento de serviços automotivos.</p>
+          </div>
+          <button onclick="mostrarTela('clientes')" class="btn btn-outline text-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            Cliente existente
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 mb-8">
+        <button id="tab-1" onclick="novo_orcamento_mudar_aba(1)" class="novo_orcamento_tab flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-marca-800 text-white transition-all">
+          <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold">1</span>
+          Cliente
+        </button>
+        <div class="w-8 h-px bg-gray-300"></div>
+        <button id="tab-2" onclick="novo_orcamento_mudar_aba(2)" class="novo_orcamento_tab flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 transition-all">
+          <span class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">2</span>
+          Veículo
+        </button>
+        <div class="w-8 h-px bg-gray-300"></div>
+        <button id="tab-3" onclick="novo_orcamento_mudar_aba(3)" class="novo_orcamento_tab flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 transition-all">
+          <span class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">3</span>
+          Serviços
+        </button>
+        <div class="w-8 h-px bg-gray-300"></div>
+        <button id="tab-4" onclick="novo_orcamento_mudar_aba(4)" class="novo_orcamento_tab flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 transition-all">
+          <span class="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">4</span>
+          Revisão
+        </button>
+      </div>
+
+      <div id="step-1" class="novo_orcamento_step">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <div class="card p-6">
+              <h2 class="text-lg font-semibold font-display text-marca-900 mb-4">Buscar Cliente</h2>
+              <div class="relative">
+                <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input id="busca-cliente" type="text" placeholder="Buscar por nome ou CPF..." oninput="novo_orcamento_buscar_cliente(this.value)" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm" autocomplete="off">
+                <div id="autocomplete-cliente" class="hidden absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto"></div>
+              </div>
+              <div id="cliente-selecionado" class="hidden mt-4 p-4 bg-marca-50 rounded-lg border border-marca-200">
+                <div class="flex items-center gap-3">
+                  <div id="cliente-avatar" class="w-12 h-12 rounded-full bg-marca-800 text-white flex items-center justify-center text-lg font-bold"></div>
+                  <div class="flex-1">
+                    <p id="cliente-nome" class="font-semibold text-marca-900"></p>
+                    <p id="cliente-cpf" class="text-xs text-gray-500"></p>
+                    <p id="cliente-telefone" class="text-xs text-gray-500"></p>
+                  </div>
+                  <button onclick="novo_orcamento_remover_cliente()" class="p-2 text-gray-400 hover:text-red-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-1">
+            <div class="card p-6">
+              <h3 class="font-semibold text-marca-900 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a1 1 0 01-1-1v-1a2 2 0 012-2h12a2 2 0 012 2v1a1 1 0 01-1 1H3z"/></svg>
+                Cadastro Rápido
+              </h3>
+              <div class="space-y-3">
+                <input id="cr-nome" type="text" placeholder="Nome completo" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm">
+                <input id="cr-cpf" type="text" placeholder="CPF" oninput="novo_orcamento_mascara_cpf(this)" maxlength="14" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm">
+                <input id="cr-telefone" type="text" placeholder="Telefone" oninput="novo_orcamento_mascara_tel(this)" maxlength="15" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm">
+                <button onclick="novo_orcamento_cadastro_rapido()" class="btn btn-primary w-full text-sm">Cadastrar e Continuar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end mt-6">
+          <button id="btn-step1" onclick="novo_orcamento_proximo(1)" disabled class="btn btn-primary opacity-50 cursor-not-allowed">
+            Continuar para Veículo
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="step-2" class="novo_orcamento_step hidden">
+        <div class="card p-6">
+          <h2 class="text-lg font-semibold font-display text-marca-900 mb-4">Dados do Veículo</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1">Placa *</label>
+              <input id="veic-placa" type="text" placeholder="ABC-1234" oninput="novo_orcamento_mascara_placa(this)" maxlength="8" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm uppercase font-mono">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1">Modelo *</label>
+              <input id="veic-modelo" type="text" placeholder="Ex: Civic EXL" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1">Ano *</label>
+              <input id="veic-ano" type="number" placeholder="2023" min="1990" max="2026" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1">Cor</label>
+              <select id="veic-cor" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm bg-white">
+                <option value="">Selecione</option>
+                <option>Branco</option><option>Preto</option><option>Prata</option><option>Cinza</option><option>Vermelho</option><option>Azul</option><option>Verde</option><option>Amarelo</option><option>Marrom</option><option>Bege</option><option>Outro</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1">Quilometragem</label>
+              <input id="veic-km" type="number" placeholder="Ex: 45000" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-gray-600 mb-1">Combustível</label>
+              <select id="veic-comb" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm bg-white">
+                <option value="">Selecione</option>
+                <option>Gasolina</option><option>Etanol</option><option>Flex</option><option>Diesel</option><option>Elétrico</option><option>Híbrido</option><option>GNV</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-4">
+            <label class="block text-xs font-medium text-gray-600 mb-1">Observações do veículo</label>
+            <textarea id="veic-obs" rows="2" placeholder="Informações adicionais: barulhos, luzes de alerta, etc." class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm resize-none"></textarea>
+          </div>
+        </div>
+        <div class="flex justify-between mt-6">
+          <button onclick="novo_orcamento_mudar_aba(1)" class="btn btn-outline">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Voltar
+          </button>
+          <button onclick="novo_orcamento_proximo(2)" class="btn btn-primary">
+            Continuar para Serviços
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="step-3" class="novo_orcamento_step hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2">
+            <div class="card p-6">
+              <h2 class="text-lg font-semibold font-display text-marca-900 mb-4">Catálogo de Serviços</h2>
+              <div class="relative mb-4">
+                <svg class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                <input id="busca-servico" type="text" placeholder="Buscar serviço..." oninput="novo_orcamento_filtrar_servicos(this.value)" class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm" autocomplete="off">
+              </div>
+              <div id="lista-servicos" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+              <div id="servicos-vazio" class="hidden text-center py-8 text-gray-400">
+                <svg class="w-12 h-12 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <p class="text-sm">Nenhum serviço encontrado</p>
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-1">
+            <div class="card p-6">
+              <h3 class="font-semibold text-marca-900 mb-4">Itens Selecionados</h3>
+              <div id="itens-orcamento" class="space-y-3">
+                <div id="itens-vazio" class="text-center py-6 text-gray-400">
+                  <svg class="w-10 h-10 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                  <p class="text-xs">Nenhum item adicionado</p>
+                </div>
+              </div>
+              <div class="border-t border-gray-200 mt-4 pt-4">
+                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                  <span>Subtotal</span>
+                  <span id="orc-subtotal" class="font-mono">R$ 0,00</span>
+                </div>
+                <div class="flex justify-between text-sm text-gray-600 mb-2">
+                  <span>Desconto</span>
+                  <input id="orc-desconto" type="text" placeholder="R$ 0,00" oninput="novo_orcamento_aplicar_desconto(this.value)" class="w-24 text-right text-sm font-mono border-b border-gray-300 focus:border-marca-500 outline-none bg-transparent">
+                </div>
+                <div class="flex justify-between font-bold text-marca-900 text-base pt-2 border-t border-gray-200">
+                  <span>Total</span>
+                  <span id="orc-total" class="font-mono">R$ 0,00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-between mt-6">
+          <button onclick="novo_orcamento_mudar_aba(2)" class="btn btn-outline">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Voltar
+          </button>
+          <button onclick="novo_orcamento_proximo(3)" class="btn btn-primary">
+            Continuar para Revisão
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="step-4" class="novo_orcamento_step hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 space-y-6">
+            <div class="card p-6">
+              <h2 class="text-lg font-semibold font-display text-marca-900 mb-4">Resumo do Orçamento</h2>
+              <div id="resumo-cliente" class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg mb-4">
+                <div class="w-10 h-10 rounded-full bg-marca-800 text-white flex items-center justify-center text-sm font-bold">-</div>
+                <div><p class="font-medium text-sm text-gray-500">Cliente não selecionado</p></div>
+              </div>
+              <div id="resumo-veiculo" class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8m-8 5h8m-4-9a9 9 0 110 18 9 9 0 010-18z"/></svg>
+                <div><p class="font-medium text-sm text-gray-500">Veículo não informado</p></div>
+              </div>
+            </div>
+            <div class="card p-6">
+              <h2 class="text-lg font-semibold font-display text-marca-900 mb-4">Itens do Orçamento</h2>
+              <div id="resumo-itens" class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead><tr class="border-b border-gray-200">
+                    <th class="text-left py-2 text-gray-500 font-medium">Serviço</th>
+                    <th class="text-right py-2 text-gray-500 font-medium">Valor</th>
+                  </tr></thead>
+                  <tbody id="resumo-itens-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card p-6">
+              <h2 class="text-lg font-semibold font-display text-marca-900 mb-4">Observações</h2>
+              <textarea id="orc-obs" rows="3" placeholder="Informações adicionais, condições especiais, etc." class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 focus:ring-2 focus:ring-marca-100 outline-none text-sm resize-none"></textarea>
+            </div>
+          </div>
+          <div class="lg:col-span-1">
+            <div class="card p-6">
+              <h3 class="font-semibold text-marca-900 mb-4">Configurações</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-xs font-medium text-gray-600 mb-1">Validade do orçamento</label>
+                  <select id="orc-validade" class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 outline-none text-sm bg-white">
+                    <option value="3">3 dias</option>
+                    <option value="7" selected>7 dias</option>
+                    <option value="15">15 dias</option>
+                    <option value="30">30 dias</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-600 mb-1">Tipo de desconto</label>
+                  <select class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 outline-none text-sm bg-white">
+                    <option>Nenhum</option><option>Valor fixo</option><option>Percentual</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-600 mb-1">Forma de pagamento preferida</label>
+                  <select class="w-full px-3 py-2.5 rounded-lg border border-gray-200 focus:border-marca-500 outline-none text-sm bg-white">
+                    <option>A combinar</option><option>À vista</option><option>Parcelado</option><option>Cartão de crédito</option><option>PIX</option>
+                  </select>
+                </div>
+              </div>
+              <div class="border-t border-gray-200 mt-5 pt-4 space-y-3">
+                <div class="flex justify-between text-sm text-gray-600"><span>Subtotal</span><span id="res-subtotal" class="font-mono">R$ 0,00</span></div>
+                <div class="flex justify-between text-sm text-gray-600"><span>Desconto</span><span id="res-desconto" class="font-mono">R$ 0,00</span></div>
+                <div class="flex justify-between font-bold text-xl text-marca-900 pt-2 border-t border-gray-200">
+                  <span>Total</span><span id="res-total" class="font-mono">R$ 0,00</span>
+                </div>
+              </div>
+              <div class="mt-5 space-y-2.5">
+                <button onclick="novo_orcamento_salvar_rascunho()" class="btn btn-outline w-full text-sm justify-center">Salvar Rascunho</button>
+                <button onclick="novo_orcamento_enviar_cliente()" class="btn btn-primary w-full text-sm justify-center">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                  Enviar ao Cliente
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-start mt-6">
+          <button onclick="novo_orcamento_mudar_aba(3)" class="btn btn-outline">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Voltar para Serviços
+          </button>
+        </div>
+      </div>
+
+      <script>
+        const novo_orcamento_servicos_catalogo = [
+          {id:1,nome:'Troca de Óleo',categoria:'Motor',preco:180,icone:'🛢️'},
+          {id:2,nome:'Filtro de Óleo',categoria:'Motor',preco:45,icone:'🔧'},
+          {id:3,nome:'Alinhamento',categoria:'Suspensão',preco:120,icone:'⚙️'},
+          {id:4,nome:'Balanceamento',categoria:'Rodas',preco:90,icone:'⚖️'},
+          {id:5,nome:'Revisão Completa',categoria:'Geral',preco:450,icone:'📋'},
+          {id:6,nome:'Troca de Pastilhas de Freio',categoria:'Freios',preco:320,icone:'🔩'},
+          {id:7,nome:'Troca de Velas de Ignição',categoria:'Motor',preco:200,icone:'⚡'},
+          {id:8,nome:'Troca de Correia Dentada',categoria:'Motor',preco:580,icone:'⭕'},
+          {id:9,nome:'Diagnóstico Eletrônico',categoria:'Eletrônica',preco:150,icone:'💻'},
+          {id:10,nome:'Troca de Amortecedor',categoria:'Suspensão',preco:750,icone:'🔧'},
+          {id:11,nome:'Arrefecimento — Limpeza',categoria:'Motor',preco:160,icone:'💧'},
+          {id:12,nome:'Polimento e Vitrificação',categoria:'Estética',preco:400,icone:'✨'},
+          {id:13,nome:'Higienização do Ar-Condicionado',categoria:'Climatização',preco:130,icone:'❄️'},
+          {id:14,nome:'Troca de Bateria',categoria:'Elétrica',preco:380,icone:'🔋'},
+          {id:15,nome:'Troca de Fluido de Freio',categoria:'Freios',preco:110,icone:'🛑'},
+          {id:16,nome:'Inspeção de 20 Itens',categoria:'Geral',preco:90,icone:'✅'},
+        ];
+
+        const novo_orcamento_clientes_exemplo = [
+          {id:1,nome:'Maria Fernanda Oliveira',cpf:'123.456.789-00',telefone:'(11) 98765-4321',veiculo:{placa:'ABC1D23',modelo:'Honda Civic EXL',ano:2022,cor:'Branco',km:32000,comb:'Flex'}},
+          {id:2,nome:'Ana Carolina Santos',cpf:'987.654.321-00',telefone:'(11) 91234-5678',veiculo:{placa:'XYZ9F87',modelo:'Toyota Corolla XEi',ano:2023,cor:'Prata',km:18000,comb:'Flex'}},
+          {id:3,nome:'Roberto Carlos Mendes',cpf:'456.789.123-00',telefone:'(11) 99876-5432',veiculo:{placa:'DEF4G56',modelo:'VW Golf TSI',ano:2021,cor:'Preto',km:45000,comb:'Gasolina'}},
+          {id:4,nome:'Juliana Pereira Costa',cpf:'321.654.987-00',telefone:'(11) 96543-2109',veiculo:{placa:'GHI7J89',modelo:'Hyundai HB20S',ano:2020,cor:'Vermelho',km:55000,comb:'Flex'}},
+          {id:5,nome:'Fernando Luis Ribeiro',cpf:'654.987.321-00',telefone:'(11) 95432-1098',veiculo:{placa:'JKL0M12',modelo:'Fiat Argo Drive',ano:2019,cor:'Cinza',km:62000,comb:'Flex'}},
+          {id:6,nome:'Patricia Almeida Souza',cpf:'789.123.654-00',telefone:'(11) 94321-0876',veiculo:{placa:'MNO3P45',modelo:'Chevrolet Onix LTZ',ano:2024,cor:'Azul',km:8000,comb:'Flex'}},
+          {id:7,nome:'Carlos Eduardo Lima',cpf:'147.258.369-00',telefone:'(11) 93210-9765',veiculo:{placa:'PQR6S78',modelo:'Jeep Compass Limited',ano:2022,cor:'Bege',km:28000,comb:'Diesel'}},
+          {id:8,nome:'Luciana Aparecida Dias',cpf:'258.369.147-00',telefone:'(11) 92109-8654',veiculo:{placa:'STU9V01',modelo:'Renault Kwid Zen',ano:2021,cor:'Branco',km:35000,comb:'Flex'}},
+        ];
+
+        let novo_orcamento_estado = {aba:1, cliente:null, veiculo:{}, itens:[], desconto:0, subtotal:0};
+
+        function novo_orcamento_mudar_aba(num) {
+          document.querySelectorAll('.novo_orcamento_step').forEach(s => s.classList.add('hidden'));
+          document.getElementById('step-' + num).classList.remove('hidden');
+          document.querySelectorAll('.novo_orcamento_tab').forEach(t => {
+            const n = parseInt(t.id.replace('tab-',''));
+            const circle = t.querySelector('span');
+            if (n <= num) { t.className = 'novo_orcamento_tab flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-marca-800 text-white transition-all'; circle.className='w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold text-white'; }
+            else { t.className = 'novo_orcamento_tab flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 transition-all'; circle.className='w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500'; }
+          });
+          if (num === 3) novo_orcamento_render_servicos(novo_orcamento_servicos_catalogo);
+          if (num === 4) novo_orcamento_render_resumo();
+          novo_orcamento_estado.aba = num;
+          window.scrollTo({top:0, behavior:'smooth'});
+        }
+
+        function novo_orcamento_proximo(atual) {
+          if (atual === 1 && !novo_orcamento_estado.cliente) { toast('Selecione ou cadastre um cliente primeiro.','erro'); return; }
+          if (atual === 2) {
+            const placa = document.getElementById('veic-placa').value.trim();
+            const modelo = document.getElementById('veic-modelo').value.trim();
+            const ano = document.getElementById('veic-ano').value;
+            if (!placa || !modelo || !ano) { toast('Preencha placa, modelo e ano do veículo.','erro'); return; }
+            novo_orcamento_estado.veiculo = {placa,modelo,ano,cor:document.getElementById('veic-cor').value,km:document.getElementById('veic-km').value,comb:document.getElementById('veic-comb').value,obs:document.getElementById('veic-obs').value};
+          }
+          novo_orcamento_mudar_aba(atual + 1);
+        }
+
+        function novo_orcamento_buscar_cliente(val) {
+          const ac = document.getElementById('autocomplete-cliente');
+          if (val.length < 2) { ac.classList.add('hidden'); return; }
+          const q = val.toLowerCase();
+          const res = novo_orcamento_clientes_exemplo.filter(c => c.nome.toLowerCase().includes(q) || c.cpf.includes(q));
+          if (res.length === 0) { ac.innerHTML='<div class="p-3 text-sm text-gray-500">Nenhum cliente encontrado</div>'; ac.classList.remove('hidden'); return; }
+          ac.innerHTML = res.map(c => `<div onclick="novo_orcamento_selecionar_cliente(${c.id})" class="flex items-center gap-3 p-3 hover:bg-marca-50 cursor-pointer transition-colors border-b border-gray-100 last:border-0">
+            <div class="w-9 h-9 rounded-full bg-marca-800 text-white flex items-center justify-center text-xs font-bold">${c.nome.split(' ').map(n=>n[0]).slice(0,2).join('')}</div>
+            <div><p class="text-sm font-medium text-gray-800">${c.nome}</p><p class="text-xs text-gray-500">${c.cpf} · ${c.telefone}</p></div>
+          </div>`).join('');
+          ac.classList.remove('hidden');
+        }
+
+        function novo_orcamento_selecionar_cliente(id) {
+          const c = novo_orcamento_clientes_exemplo.find(x => x.id === id);
+          if (!c) return;
+          novo_orcamento_estado.cliente = c;
+          document.getElementById('autocomplete-cliente').classList.add('hidden');
+          document.getElementById('busca-cliente').value = '';
+          const sel = document.getElementById('cliente-selecionado');
+          sel.classList.remove('hidden');
+          document.getElementById('cliente-avatar').textContent = c.nome.split(' ').map(n=>n[0]).slice(0,2).join('');
+          document.getElementById('cliente-nome').textContent = c.nome;
+          document.getElementById('cliente-cpf').textContent = c.cpf;
+          document.getElementById('cliente-telefone').textContent = c.telefone;
+          const btn = document.getElementById('btn-step1');
+          btn.disabled = false; btn.classList.remove('opacity-50','cursor-not-allowed');
+          if (c.veiculo) {
+            document.getElementById('veic-placa').value = c.veiculo.placa;
+            document.getElementById('veic-modelo').value = c.veiculo.modelo;
+            document.getElementById('veic-ano').value = c.veiculo.ano;
+            document.getElementById('veic-cor').value = c.veiculo.cor;
+            document.getElementById('veic-km').value = c.veiculo.km;
+            document.getElementById('veic-comb').value = c.veiculo.comb;
+          }
+          toast('Cliente selecionado: ' + c.nome, 'ok');
+        }
+
+        function novo_orcamento_remover_cliente() {
+          novo_orcamento_estado.cliente = null;
+          document.getElementById('cliente-selecionado').classList.add('hidden');
+          const btn = document.getElementById('btn-step1');
+          btn.disabled = true; btn.classList.add('opacity-50','cursor-not-allowed');
+          ['veic-placa','veic-modelo','veic-ano','veic-km'].forEach(id => document.getElementById(id).value = '');
+          document.getElementById('veic-cor').value = ''; document.getElementById('veic-comb').value = '';
+          toast('Cliente removido.','info');
+        }
+
+        function novo_orcamento_cadastro_rapido() {
+          const nome = document.getElementById('cr-nome').value.trim();
+          const cpf = document.getElementById('cr-cpf').value.trim();
+          const tel = document.getElementById('cr-telefone').value.trim();
+          if (!nome || !cpf) { toast('Preencha nome e CPF.','erro'); return; }
+          const c = {id: Date.now(), nome, cpf, telefone: tel || '(11) 00000-0000', veiculo: null};
+          novo_orcamento_clientes_exemplo.push(c);
+          document.getElementById('cr-nome').value = ''; document.getElementById('cr-cpf').value = ''; document.getElementById('cr-telefone').value = '';
+          toast('Cliente cadastrado com sucesso!','ok');
+          novo_orcamento_selecionar_cliente(c.id);
+        }
+
+        function novo_orcamento_render_servicos(lista) {
+          const container = document.getElementById('lista-servicos');
+          const vazio = document.getElementById('servicos-vazio');
+          if (lista.length === 0) { container.innerHTML = ''; vazio.classList.remove('hidden'); return; }
+          vazio.classList.add('hidden');
+          container.innerHTML = lista.map(s => {
+            const sel = novo_orcamento_estado.itens.find(i => i.id === s.id);
+            return `<div class="p-4 border ${sel ? 'border-marca-400 bg-marca-50' : 'border-gray-200'} rounded-lg hover:border-marca-300 transition-all cursor-pointer" onclick="novo_orcamento_toggle_servico(${s.id})">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="text-xl">${s.icone}</span>
+                  <div><p class="font-medium text-sm text-gray-800">${s.nome}</p><p class="text-xs text-gray-500">${s.categoria}</p></div>
+                </div>
+                <div class="text-right">
+                  <p class="font-bold text-marca-800 font-mono text-sm">${brl(s.preco)}</p>
+                  ${sel ? `<span class="badge badge-success text-xs mt-1">Selecionado</span>` : '<span class="text-xs text-gray-400 mt-1 block">Clique para adicionar</span>'}
+                </div>
+              </div>
+            </div>`;
+          }).join('');
+        }
+
+        function novo_orcamento_filtrar_servicos(val) {
+          const q = val.toLowerCase();
+          const filtrados = novo_orcamento_servicos_catalogo.filter(s => s.nome.toLowerCase().includes(q) || s.categoria.toLowerCase().includes(q));
+          novo_orcamento_render_servicos(filtrados);
+        }
+
+        function novo_orcamento_toggle_servico(id) {
+          const s = novo_orcamento_servicos_catalogo.find(x => x.id === id);
+          const idx = novo_orcamento_estado.itens.findIndex(i => i.id === id);
+          if (idx >= 0) { novo_orcamento_estado.itens.splice(idx, 1); }
+          else { novo_orcamento_estado.itens.push({id: s.id, nome: s.nome, preco: s.preco, icone: s.icone}); }
+          const busca = document.getElementById('busca-servico').value;
+          novo_orcamento_filtrar_servicos(busca);
+          novo_orcamento_atualizar_totais();
+        }
+
+        function novo_orcamento_atualizar_totais() {
+          const itens = novo_orcamento_estado.itens;
+          const container = document.getElementById('itens-orcamento');
+          const vazio = document.getElementById('itens-vazio');
+          if (itens.length === 0) { container.innerHTML = '<div id="itens-vazio" class="text-center py-6 text-gray-400"><svg class="w-10 h-10 mx-auto mb-2 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg><p class="text-xs">Nenhum item adicionado</p></div>'; }
+          else {
+            container.innerHTML = itens.map(item => `<div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div class="flex items-center gap-2"><span>${item.icone}</span><span class="text-sm font-medium">${item.nome}</span></div>
+              <div class="flex items-center gap-2"><span class="text-sm font-mono font-medium text-marca-800">${brl(item.preco)}</span>
+              <button onclick="novo_orcamento_remover_item(${item.id})" class="p-1 text-gray-400 hover:text-red-500 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></div>
+            </div>`).join('');
+          }
+          const sub = itens.reduce((s, i) => s + i.preco, 0);
+          novo_orcamento_estado.subtotal = sub;
+          novo_orcamento_estado.desconto = 0;
+          const total = sub;
+          document.getElementById('orc-subtotal').textContent = brl(sub);
+          document.getElementById('orc-total').textContent = brl(total);
+          document.getElementById('orc-desconto').value = '';
+        }
+
+        function novo_orcamento_remover_item(id) {
+          novo_orcamento_estado.itens = novo_orcamento_estado.itens.filter(i => i.id !== id);
+          const busca = document.getElementById('busca-servico').value;
+          novo_orcamento_filtrar_servicos(busca);
+          novo_orcamento_atualizar_totais();
+        }
+
+        function novo_orcamento_aplicar_desconto(val) {
+          const raw = val.replace(/[^\d,]/g, '').replace(',', '.');
+          const d = parseFloat(raw) || 0;
+          novo_orcamento_estado.desconto = Math.min(d, novo_orcamento_estado.subtotal);
+          const total = Math.max(0, novo_orcamento_estado.subtotal - novo_orcamento_estado.desconto);
+          document.getElementById('orc-total').textContent = brl(total);
+        }
+
+        function novo_orcamento_render_resumo() {
+          const c = novo_orcamento_estado.cliente;
+          const v = novo_orcamento_estado.veiculo;
+          const rc = document.getElementById('resumo-cliente');
+          if (c) {
+            rc.innerHTML = `<div class="w-10 h-10 rounded-full bg-marca-800 text-white flex items-center justify-center text-sm font-bold">${c.nome.split(' ').map(n=>n[0]).slice(0,2).join('')}</div>
+            <div><p class="font-medium text-sm text-gray-800">${c.nome}</p><p class="text-xs text-gray-500">${c.cpf} · ${c.telefone}</p></div>`;
+          }
+          const rv = document.getElementById('resumo-veiculo');
+          if (v) { rv.innerHTML = `<div class="flex items-center gap-4 p-4 bg-gray-50 rounded-lg"><svg class="w-8 h-8 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h8m-8 5h8m-4-9a9 9 0 110 18 9 9 0 010-18z"/></svg><div><p class="font-medium text-sm text-gray-800">${v.modelo} (${v.ano})</p><p class="text-xs text-gray-500">Placa: ${v.placa} · ${v.cor} · ${v.km ? v.km + ' km' : ''} · ${v.comb || ''}</p></div></div>`; }
+          const tbody = document.getElementById('resumo-itens-tbody');
+          if (novo_orcamento_estado.itens.length === 0) { tbody.innerHTML = '<tr><td colspan="2" class="text-center py-4 text-gray-400 text-sm">Nenhum serviço selecionado</td></tr>'; }
+          else { tbody.innerHTML = novo_orcamento_estado.itens.map(i => `<tr class="border-b border-gray-100"><td class="py-2">${i.icone} ${i.nome}</td><td class="text-right py-2 font-mono">${brl(i.preco)}</td></tr>`).join(''); }
+          const sub = novo_orcamento_estado.subtotal;
+          const desc = novo_orcamento_estado.desconto;
+          const total = Math.max(0, sub - desc);
+          document.getElementById('res-subtotal').textContent = brl(sub);
+          document.getElementById('res-desconto').textContent = brl(desc);
+          document.getElementById('res-total').textContent = brl(total);
+        }
+
+        function novo_orcamento_salvar_rascunho() {
+          toast('Orçamento salvo como rascunho!','ok');
+        }
+
+        function novo_orcamento_enviar_cliente() {
+          if (novo_orcamento_estado.itens.length === 0) { toast('Adicione pelo menos um serviço.','erro'); return; }
+          toast('Orçamento enviado ao cliente com sucesso!','ok');
+          setTimeout(() => mostrarTela('clientes'), 1200);
+        }
+
+        function novo_orcamento_mascara_cpf(el) {
+          let v = el.value.replace(/\D/g,'').slice(0,11);
+          el.value = v.length > 9 ? v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6,9)+'-'+v.slice(9) : v.length > 6 ? v.slice(0,3)+'.'+v.slice(3,6)+'.'+v.slice(6) : v.length > 3 ? v.slice(0,3)+'.'+v.slice(3) : v;
+        }
+        function novo_orcamento_mascara_tel(el) {
+          let v = el.value.replace(/\D/g,'').slice(0,11);
+          el.value = v.length > 7 ? '('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7) : v.length > 2 ? '('+v.slice(0,2)+') '+v.slice(2) : v;
+        }
+        function novo_orcamento_mascara_placa(el) {
+          let v = el.value.replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(0,7);
+          if (v.length > 3) v = v.slice(0,3)+'-'+v.slice(3);
+          el.value = v;
+        }
+
+        novo_orcamento_render_servicos(novo_orcamento_servicos_catalogo);
+      </script>
+    </section>
+
     <!-- TELAS -->
     </main>
   </div>
