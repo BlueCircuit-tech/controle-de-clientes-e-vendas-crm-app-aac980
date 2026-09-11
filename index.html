@@ -3158,6 +3158,373 @@
       </script>
     </section>
 
+    <section data-tela="equipe" class="hidden">
+      <!-- Cabeçalho da tela -->
+      <div class="mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-display font-bold text-gray-900">Equipe</h2>
+            <p class="text-gray-500 mt-1 text-sm">Gerencie membros, funções e permissões</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="equipe_abrirConvites()" class="relative inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 active:scale-95 transition-all">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              Convites
+              <span id="badge-convites" class="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">3</span>
+            </button>
+            <button onclick="equipe_abrirConvidar()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-marca-700 text-white rounded-lg text-sm font-medium hover:bg-marca-800 active:scale-95 transition-all shadow-sm">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              Convidar membro
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards de indicadores -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Total de Membros</p>
+              <p class="text-2xl font-display font-bold text-gray-900 mt-1">12</p>
+              <p class="text-xs text-marca-600 mt-1 font-medium">+2 este mês</p>
+            </div>
+            <div class="w-10 h-10 bg-marca-50 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Ativos Hoje</p>
+              <p class="text-2xl font-display font-bold text-gray-900 mt-1">9</p>
+              <p class="text-xs text-green-600 mt-1 font-medium">75% do time</p>
+            </div>
+            <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Ordens Mês</p>
+              <p class="text-2xl font-display font-bold text-gray-900 mt-1">147</p>
+              <p class="text-xs text-marca-600 mt-1 font-medium">+18% vs mês ant.</p>
+            </div>
+            <div class="w-10 h-10 bg-marca-50 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-marca-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Convites Pendentes</p>
+              <p class="text-2xl font-display font-bold text-gray-900 mt-1">3</p>
+              <p class="text-xs text-amber-600 mt-1 font-medium">Aguardando resposta</p>
+            </div>
+            <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center"><svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico SVG de atividades -->
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-6">
+        <h3 class="text-sm font-display font-semibold text-gray-700 mb-4">Ordens de Serviço por Membro — Últimos 6 Meses</h3>
+        <svg viewBox="0 0 700 180" class="w-full h-40">
+          <defs>
+            <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22C55E" stop-opacity="0.8"/><stop offset="100%" stop-color="#14532D" stop-opacity="0.4"/></linearGradient>
+          </defs>
+          <line x1="40" y1="10" x2="40" y2="150" stroke="#E5E7EB" stroke-width="1"/>
+          <line x1="40" y1="150" x2="690" y2="150" stroke="#E5E7EB" stroke-width="1"/>
+          <line x1="40" y1="110" x2="690" y2="110" stroke="#F3F4F6" stroke-width="1"/>
+          <line x1="40" y1="70" x2="690" y2="70" stroke="#F3F4F6" stroke-width="1"/>
+          <line x1="40" y1="30" x2="690" y2="30" stroke="#F3F4F6" stroke-width="1"/>
+          <text x="35" y="14" text-anchor="end" font-size="9" fill="#9CA3AF">30</text>
+          <text x="35" y="74" text-anchor="end" font-size="9" fill="#9CA3AF">20</text>
+          <text x="35" y="114" text-anchor="end" font-size="9" fill="#9CA3AF">10</text>
+          <text x="35" y="154" text-anchor="end" font-size="9" fill="#9CA3AF">0</text>
+          <rect x="55" y="90" width="22" height="60" rx="3" fill="url(#barGrad)"/>
+          <rect x="90" y="70" width="22" height="80" rx="3" fill="url(#barGrad)"/>
+          <rect x="125" y="55" width="22" height="95" rx="3" fill="url(#barGrad)"/>
+          <rect x="210" y="80" width="22" height="70" rx="3" fill="url(#barGrad)"/>
+          <rect x="245" y="50" width="22" height="100" rx="3" fill="url(#barGrad)"/>
+          <rect x="280" y="60" width="22" height="90" rx="3" fill="url(#barGrad)"/>
+          <rect x="365" y="70" width="22" height="80" rx="3" fill="url(#barGrad)"/>
+          <rect x="400" y="45" width="22" height="105" rx="3" fill="url(#barGrad)"/>
+          <rect x="435" y="55" width="22" height="95" rx="3" fill="url(#barGrad)"/>
+          <rect x="520" y="40" width="22" height="110" rx="3" fill="url(#barGrad)"/>
+          <rect x="555" y="30" width="22" height="120" rx="3" fill="url(#barGrad)"/>
+          <rect x="590" y="50" width="22" height="100" rx="3" fill="url(#barGrad)"/>
+          <text x="95" y="168" text-anchor="middle" font-size="9" fill="#6B7280">Jan</text>
+          <text x="245" y="168" text-anchor="middle" font-size="9" fill="#6B7280">Fev</text>
+          <text x="400" y="168" text-anchor="middle" font-size="9" fill="#6B7280">Mar</text>
+          <text x="555" y="168" text-anchor="middle" font-size="9" fill="#6B7280">Abr</text>
+        </svg>
+      </div>
+
+      <!-- Grid de membros -->
+      <h3 class="text-sm font-display font-semibold text-gray-700 mb-3 uppercase tracking-wider">Membros da Equipe</h3>
+      <div id="grid-membros" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <!-- preenchido via JS -->
+      </div>
+
+      <!-- Tabela de permissões -->
+      <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="px-5 py-4 border-b border-gray-100">
+          <h3 class="text-sm font-display font-semibold text-gray-700 uppercase tracking-wider">Matriz de Permissões por Função</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gray-50">
+                <th class="text-left px-5 py-3 font-semibold text-gray-600">Função</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-600" title="Cadastrar clientes">Cad. Clientes</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-600" title="Criar orçamentos">Orçamentos</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-600" title="Aprovar orçamentos">Aprovar</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-600" title="Acessar financeiro">Financeiro</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-600" title="Gerenciar equipe">Equipe</th>
+                <th class="text-center px-4 py-3 font-semibold text-gray-600" title="Fechar ordens">Fechar OS</th>
+              </tr>
+            </thead>
+            <tbody id="tbl-permissoes">
+              <!-- preenchido via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      function equipe_init() {
+        equipe_renderGrid(equipe_membros());
+        equipe_renderPermissoes(equipe_permissoes());
+      }
+
+      function equipe_membros() {
+        return [
+          { id: 1, nome: 'Carlos Eduardo Mendes', funcao: 'Gerente', email: 'carlos@helpcar.com.br', status: 'ativo', ordens: 42, cor: '#14532D', iniciais: 'CM' },
+          { id: 2, nome: 'Ana Beatriz Oliveira', funcao: 'Atendente', email: 'ana.oliveira@helpcar.com.br', status: 'ativo', ordens: 38, cor: '#22C55E', iniciais: 'AO' },
+          { id: 3, nome: 'Roberto da Silva Santos', funcao: 'Mecânico', email: 'roberto.silva@helpcar.com.br', status: 'ativo', ordens: 55, cor: '#15803D', iniciais: 'RS' },
+          { id: 4, nome: 'Juliana Pereira Costa', funcao: 'Atendente', email: 'juliana@helpcar.com.br', status: 'ativo', ordens: 31, cor: '#166534', iniciais: 'JC' },
+          { id: 5, nome: 'Fernando Alves Rocha', funcao: 'Mecânico', email: 'fernando@helpcar.com.br', status: 'inativo', ordens: 27, cor: '#22C55E', iniciais: 'FR' },
+          { id: 6, nome: 'Mariana Souza Lima', funcao: 'Gerente', email: 'mariana@helpcar.com.br', status: 'ativo', ordens: 44, cor: '#14532D', iniciais: 'ML' },
+          { id: 7, nome: 'Paulo Henrique Dias', funcao: 'Mecânico', email: 'paulo.dias@helpcar.com.br', status: 'ativo', ordens: 39, cor: '#15803D', iniciais: 'PD' },
+          { id: 8, nome: 'Camila Ribeiro Nunes', funcao: 'Atendente', email: 'camila@helpcar.com.br', status: 'ativo', ordens: 22, cor: '#22C55E', iniciais: 'CR' },
+        ];
+      }
+
+      function equipe_permissoes() {
+        return [
+          { funcao: 'Gerente', cadClientes: true, orcamentos: true, aprovar: true, financeiro: true, equipe: true, fecharOS: true },
+          { funcao: 'Atendente', cadClientes: true, orcamentos: true, aprovar: false, financeiro: false, equipe: false, fecharOS: false },
+          { funcao: 'Mecânico', cadClientes: false, orcamentos: false, aprovar: false, financeiro: false, equipe: false, fecharOS: true },
+        ];
+      }
+
+      function equipe_renderGrid(membros) {
+        const grid = document.getElementById('grid-membros');
+        if (!grid) return;
+        const termo = (document.getElementById('busca-membros')?.value || '').toLowerCase();
+        const filtrados = membros.filter(m => m.nome.toLowerCase().includes(termo) || m.funcao.toLowerCase().includes(termo) || m.email.toLowerCase().includes(termo));
+        grid.innerHTML = filtrados.map(m => `
+          <div onclick="equipe_abrirEditar(${m.id})" class="bg-white rounded-xl border border-gray-100 shadow-sm p-5 cursor-pointer hover:shadow-md hover:border-marca-200 active:scale-[0.98] transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0" style="background:${m.cor}">${m.iniciais}</div>
+              <div class="flex-1 min-w-0">
+                <h4 class="font-display font-semibold text-gray-900 text-sm truncate">${m.nome}</h4>
+                <p class="text-xs text-gray-500 mt-0.5">${m.funcao}</p>
+                <p class="text-xs text-gray-400 mt-0.5 truncate">${m.email}</p>
+                <div class="flex items-center justify-between mt-3">
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${m.status === 'ativo' ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-600'}">
+                    <span class="w-1.5 h-1.5 rounded-full ${m.status === 'ativo' ? 'bg-green-500' : 'bg-gray-400'}"></span>${m.status === 'ativo' ? 'Ativo' : 'Inativo'}
+                  </span>
+                  <span class="text-xs text-gray-500">${m.ordens} OS/mês</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('') || '<p class="text-gray-400 text-sm col-span-full text-center py-8">Nenhum membro encontrado</p>';
+      }
+
+      function equipe_renderPermissoes(perms) {
+        const tbody = document.getElementById('tbl-permissoes');
+        if (!tbody) return;
+        tbody.innerHTML = perms.map(p => `
+          <tr class="border-t border-gray-50 hover:bg-gray-50/50">
+            <td class="px-5 py-3 font-medium text-gray-800">${p.funcao}</td>
+            ${equipe_iconeBool(p.cadClientes)}
+            ${equipe_iconeBool(p.orcamentos)}
+            ${equipe_iconeBool(p.aprovar)}
+            ${equipe_iconeBool(p.financeiro)}
+            ${equipe_iconeBool(p.equipe)}
+            ${equipe_iconeBool(p.fecharOS)}
+          </tr>
+        `).join('');
+      }
+
+      function equipe_iconeBool(v) {
+        return `<td class="text-center px-4 py-3">${v ? '<svg class="w-4 h-4 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>' : '<svg class="w-4 h-4 text-gray-300 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>'}</td>`;
+      }
+
+      function equipe_abrirConvidar() {
+        const html = `
+          <form onsubmit="event.preventDefault(); equipe_enviarConvite();">
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nome completo</label>
+                <input id="conv-nome" type="text" required placeholder="Ex: João da Silva" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:ring-2 focus:ring-marca-500 focus:border-marca-500 outline-none transition-all">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                <input id="conv-email" type="email" required placeholder="Ex: joao@email.com" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:ring-2 focus:ring-marca-500 focus:border-marca-500 outline-none transition-all">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Função</label>
+                <select id="conv-funcao" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:ring-2 focus:ring-marca-500 focus:border-marca-500 outline-none transition-all bg-white">
+                  <option value="Atendente">Atendente</option>
+                  <option value="Mecânico">Mecânico</option>
+                  <option value="Gerente">Gerente</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Permissões</label>
+                <div class="grid grid-cols-2 gap-2">
+                  <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" checked class="rounded border-gray-300 text-marca-700 focus:ring-marca-500"> Cadastrar clientes</label>
+                  <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" checked class="rounded border-gray-300 text-marca-700 focus:ring-marca-500"> Criar orçamentos</label>
+                  <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" class="rounded border-gray-300 text-marca-700 focus:ring-marca-500"> Aprovar orçamentos</label>
+                  <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" class="rounded border-gray-300 text-marca-700 focus:ring-marca-500"> Acessar financeiro</label>
+                  <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" class="rounded border-gray-300 text-marca-700 focus:ring-marca-500"> Gerenciar equipe</label>
+                  <label class="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" checked class="rounded border-gray-300 text-marca-700 focus:ring-marca-500"> Fechar ordens</label>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end gap-3 mt-6">
+              <button type="button" onclick="fecharModal()" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">Cancelar</button>
+              <button type="submit" class="px-5 py-2.5 bg-marca-700 text-white rounded-lg text-sm font-medium hover:bg-marca-800 active:scale-95 transition-all">Enviar convite</button>
+            </div>
+          </form>
+        `;
+        abrirModal(html, 'Convidar novo membro');
+      }
+
+      function equipe_enviarConvite() {
+        const nome = document.getElementById('conv-nome').value;
+        const email = document.getElementById('conv-email').value;
+        const funcao = document.getElementById('conv-funcao').value;
+        if (!nome || !email) return;
+        const novo = { id: Date.now(), nome, funcao, email, status: 'ativo', ordens: 0, cor: '#6B7280', iniciais: nome.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase() };
+        equipe_membros().push(novo);
+        equipe_renderGrid(equipe_membros());
+        fecharModal();
+        toast('Convite enviado com sucesso!', 'ok');
+      }
+
+      function equipe_abrirConvites() {
+        const convites = [
+          { nome: 'Ricardo Moreira', email: 'ricardo.moreira@gmail.com', funcao: 'Mecânico', enviadoEm: '2025-01-18' },
+          { nome: 'Patrícia Lopes', email: 'patricia.lopes@outlook.com', funcao: 'Atendente', enviadoEm: '2025-01-20' },
+          { nome: 'Diego Fagundes', email: 'diego.fag@hotmail.com', funcao: 'Gerente', enviadoEm: '2025-01-22' },
+        ];
+        const html = `
+          <div class="space-y-3">
+            ${convites.map(c => `
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div>
+                  <p class="text-sm font-medium text-gray-800">${c.nome}</p>
+                  <p class="text-xs text-gray-500">${c.email} · ${c.funcao}</p>
+                  <p class="text-xs text-gray-400 mt-0.5">Enviado em ${dataBR(c.enviadoEm)}</p>
+                </div>
+                <div class="flex gap-2">
+                  <button onclick="equipe_reenviarConvite('${c.nome}')" class="px-3 py-1.5 text-xs font-medium text-marca-700 bg-marca-50 rounded-lg hover:bg-marca-100 active:scale-95 transition-all">Reenviar</button>
+                  <button onclick="equipe_cancelarConvite('${c.nome}')" class="px-3 py-1.5 text-xs font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 active:scale-95 transition-all">Cancelar</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        abrirModal(html, 'Convites Pendentes');
+      }
+
+      function equipe_reenviarConvite(nome) {
+        toast(`Convite reenviado para ${nome}`, 'ok');
+      }
+      function equipe_cancelarConvite(nome) {
+        const badge = document.getElementById('badge-convites');
+        if (badge) { let n = parseInt(badge.textContent); badge.textContent = n - 1; }
+        toast(`Convite de ${nome} cancelado`, 'info');
+        fecharModal();
+      }
+
+      function equipe_abrirEditar(id) {
+        const membros = equipe_membros();
+        const m = membros.find(x => x.id === id);
+        if (!m) return;
+        const html = `
+          <form onsubmit="event.preventDefault(); equipe_salvarEdicao(${m.id});">
+            <div class="space-y-4">
+              <div class="flex justify-center mb-2">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl" style="background:${m.cor}">${m.iniciais}</div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                <input id="edit-nome" type="text" value="${m.nome}" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:ring-2 focus:ring-marca-500 outline-none transition-all">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                <input id="edit-email" type="email" value="${m.email}" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:ring-2 focus:ring-marca-500 outline-none transition-all">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Função</label>
+                <select id="edit-funcao" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:ring-2 focus:ring-marca-500 outline-none transition-all bg-white">
+                  <option ${m.funcao === 'Gerente' ? 'selected' : ''}>Gerente</option>
+                  <option ${m.funcao === 'Atendente' ? 'selected' : ''}>Atendente</option>
+                  <option ${m.funcao === 'Mecânico' ? 'selected' : ''}>Mecânico</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select id="edit-status" class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:ring-2 focus:ring-marca-500 outline-none transition-all bg-white">
+                  <option value="ativo" ${m.status === 'ativo' ? 'selected' : ''}>Ativo</option>
+                  <option value="inativo" ${m.status === 'inativo' ? 'selected' : ''}>Inativo</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex justify-between items-center mt-6">
+              <button type="button" onclick="if(confirm('Remover este membro da equipe?')){equipe_remover(${m.id});fecharModal();}" class="px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 active:scale-95 transition-all">Remover</button>
+              <div class="flex gap-3">
+                <button type="button" onclick="fecharModal()" class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">Cancelar</button>
+                <button type="submit" class="px-5 py-2.5 bg-marca-700 text-white rounded-lg text-sm font-medium hover:bg-marca-800 active:scale-95 transition-all">Salvar</button>
+              </div>
+            </div>
+          </form>
+        `;
+        abrirModal(html, 'Editar Membro');
+      }
+
+      function equipe_salvarEdicao(id) {
+        const membros = equipe_membros();
+        const idx = membros.findIndex(x => x.id === id);
+        if (idx === -1) return;
+        membros[idx].nome = document.getElementById('edit-nome').value;
+        membros[idx].email = document.getElementById('edit-email').value;
+        membros[idx].funcao = document.getElementById('edit-funcao').value;
+        membros[idx].status = document.getElementById('edit-status').value;
+        membros[idx].iniciais = membros[idx].nome.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+        equipe_renderGrid(membros);
+        fecharModal();
+        toast('Perfil atualizado com sucesso!', 'ok');
+      }
+
+      function equipe_remover(id) {
+        const idx = equipe_membros().findIndex(x => x.id === id);
+        if (idx > -1) equipe_membros().splice(idx, 1);
+        equipe_renderGrid(equipe_membros());
+        toast('Membro removido da equipe.', 'info');
+      }
+
+      // busca
+      document.addEventListener('input', function(e) {
+        if (e.target.id === 'busca-membros') equipe_renderGrid(equipe_membros());
+      });
+    </script>
+
     <!-- TELAS -->
     </main>
   </div>
