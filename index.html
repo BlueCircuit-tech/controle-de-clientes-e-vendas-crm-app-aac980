@@ -2449,6 +2449,402 @@
 
     function ordem_de_serv
 
+    <section data-tela="financeiro" class="hidden">
+      <!-- Abas -->
+      <div class="flex gap-1 mb-6 bg-marca-50/60 p-1 rounded-lg w-fit">
+        <button onclick="financeiro_aba('visao')" id="aba-visao" class="tab-ativa px-5 py-2 rounded-md text-sm font-semibold transition-all bg-marca-800 text-white">Visão Geral</button>
+        <button onclick="financeiro_aba('receber')" id="aba-receber" class="tab-inativa px-5 py-2 rounded-md text-sm font-semibold transition-all text-marca-700 hover:bg-marca-100">Contas a Receber</button>
+        <button onclick="financeiro_aba('pagar')" id="aba-pagar" class="tab-inativa px-5 py-2 rounded-md text-sm font-semibold transition-all text-marca-700 hover:bg-marca-100">Contas a Pagar</button>
+      </div>
+
+      <!-- Visão Geral -->
+      <div id="painel-visao" class="space-y-6">
+        <!-- Cards indicadores -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="card p-4 flex items-start gap-3">
+            <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div><p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Total a Receber</p><p class="text-xl font-bold text-gray-900 mt-0.5">R$ 32.000</p><p class="text-xs text-blue-600 font-medium mt-1">Este mês</p></div>
+          </div>
+          <div class="card p-4 flex items-start gap-3">
+            <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div><p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Recebido</p><p class="text-xl font-bold text-green-700 mt-0.5">R$ 24.800</p><p class="text-xs text-green-600 font-medium mt-1">77,5% da meta</p></div>
+          </div>
+          <div class="card p-4 flex items-start gap-3">
+            <div class="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+            </div>
+            <div><p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Atrasados</p><p class="text-xl font-bold text-red-600 mt-0.5">R$ 3.200</p><p class="text-xs text-red-500 font-medium mt-1">8 cobranças pendentes</p></div>
+          </div>
+          <div class="card p-4 flex items-start gap-3">
+            <div class="w-10 h-10 rounded-lg bg-orange-100 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"/></svg>
+            </div>
+            <div><p class="text-xs text-gray-500 font-medium uppercase tracking-wide">Despesas</p><p class="text-xl font-bold text-gray-900 mt-0.5">R$ 12.400</p><p class="text-xs text-orange-500 font-medium mt-1">38,8% do faturado</p></div>
+          </div>
+        </div>
+
+        <!-- Gráfico -->
+        <div class="card p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div><h3 class="font-display font-bold text-gray-900">Faturamento Mensal</h3><p class="text-sm text-gray-500">Últimos 6 meses vs. meta</p></div>
+            <select class="text-sm border border-gray-200 rounded-lg px-3 py-1.5 bg-white"><option>Últimos 6 meses</option><option>Este ano</option></select>
+          </div>
+          <div class="relative">
+            <svg viewBox="0 0 620 220" class="w-full h-auto">
+              <!-- Grade -->
+              <line x1="50" y1="20" x2="610" y2="20" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="50" y1="60" x2="610" y2="60" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="50" y1="100" x2="610" y2="100" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="50" y1="140" x2="610" y2="140" stroke="#f0f0f0" stroke-width="1"/>
+              <line x1="50" y1="180" x2="610" y2="180" stroke="#f0f0f0" stroke-width="1"/>
+              <!-- Eixo Y -->
+              <text x="42" y="24" text-anchor="end" class="text-[9px]" fill="#9CA3AF">40k</text>
+              <text x="42" y="64" text-anchor="end" class="text-[9px]" fill="#9CA3AF">30k</text>
+              <text x="42" y="104" text-anchor="end" class="text-[9px]" fill="#9CA3AF">20k</text>
+              <text x="42" y="144" text-anchor="end" class="text-[9px]" fill="#9CA3AF">10k</text>
+              <text x="42" y="184" text-anchor="end" class="text-[9px]" fill="#9CA3AF">0</text>
+              <!-- Barras -->
+              <rect x="70" y="116" width="32" height="64" rx="3" fill="#14532D" opacity="0.85"/><text x="86" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Jan</text>
+              <rect x="122" y="92" width="32" height="88" rx="3" fill="#14532D" opacity="0.85"/><text x="138" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Fev</text>
+              <rect x="174" y="104" width="32" height="76" rx="3" fill="#14532D" opacity="0.85"/><text x="190" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Mar</text>
+              <rect x="226" y="68" width="32" height="112" rx="3" fill="#14532D" opacity="0.85"/><text x="242" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Abr</text>
+              <rect x="278" y="52" width="32" height="128" rx="3" fill="#22C55E" opacity="0.9"/><text x="294" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Mai</text>
+              <rect x="330" y="36" width="32" height="144" rx="3" fill="#22C55E" opacity="0.9"/><text x="346" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Jun</text>
+              <rect x="392" y="72" width="32" height="108" rx="3" fill="#14532D" opacity="0.85"/><text x="408" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Jul</text>
+              <rect x="444" y="56" width="32" height="124" rx="3" fill="#22C55E" opacity="0.9"/><text x="460" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Ago</text>
+              <rect x="496" y="80" width="32" height="100" rx="3" fill="#14532D" opacity="0.85"/><text x="512" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Set</text>
+              <rect x="548" y="44" width="32" height="136" rx="3" fill="#22C55E" opacity="0.9"/><text x="564" y="112" text-anchor="middle" class="text-[8px]" fill="#6B7280">Out</text>
+              <!-- Linha de meta -->
+              <polyline points="70,120 122,110 174,118 226,96 278,82 330,70 392,108 444,90 496,116 548,88" fill="none" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="6,3"/>
+              <text x="600" y="72" text-anchor="end" class="text-[9px] font-semibold" fill="#F59E0B">Meta: R$ 35k</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Transações recentes -->
+        <div class="card">
+          <div class="p-5 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <h3 class="font-display font-bold text-gray-900">Transações Recentes</h3>
+            <div class="flex gap-2 flex-wrap">
+              <select id="filtro-periodo-f" onchange="financeiro_filtrar()" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white"><option value="todos">Todos</option><option value="mes">Este mês</option><option value="semana">Esta semana</option></select>
+              <select id="filtro-categoria-f" onchange="financeiro_filtrar()" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white"><option value="todos">Todas categorias</option><option>Ordem de Serviço</option><option>Peças</option><option>Mão de obra</option><option>Aluguel</option><option>Salários</option><option>Marketing</option></select>
+              <input type="text" id="busca-transacao" oninput="financeiro_filtrar()" placeholder="Buscar transação..." class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white">
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead><tr class="text-left text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100">
+                <th class="pb-3 pl-5 pr-3 font-medium">Tipo</th>
+                <th class="pb-3 px-3 font-medium">Descrição</th>
+                <th class="pb-3 px-3 font-medium">Categoria</th>
+                <th class="pb-3 px-3 font-medium">Valor</th>
+                <th class="pb-3 px-3 font-medium">Data</th>
+                <th class="pb-3 px-3 font-medium">Status</th>
+                <th class="pb-3 pr-5 pl-3 font-medium w-10"></th>
+              </tr></thead>
+              <tbody id="lista-transacoes"></tbody>
+            </table>
+          </div>
+          <div id="empty-transacoes" class="hidden p-10 text-center"><p class="text-gray-400 text-sm">Nenhuma transação encontrada</p></div>
+        </div>
+      </div>
+
+      <!-- Contas a Receber -->
+      <div id="painel-receber" class="hidden space-y-6">
+        <div class="flex flex-col sm:flex-row gap-3 justify-between">
+          <div class="flex gap-2 flex-wrap">
+            <select id="filtro-status-cr" onchange="financeiro_filtrarContas()" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white"><option value="todos">Todos os status</option><option value="pendente">Pendente</option><option value="pago">Recebido</option><option value="atrasado">Atrasado</option></select>
+            <input type="text" id="busca-cliente-cr" oninput="financeiro_filtrarContas()" placeholder="Buscar cliente..." class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white">
+          </div>
+          <button onclick="mostrarTela('novo-orcamento')" class="btn btn-primary text-sm">+ Novo Orçamento</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="card p-4"><p class="text-xs text-gray-500 uppercase tracking-wide">Pendente</p><p class="text-2xl font-bold text-yellow-600 mt-1">R$ 18.400</p><p class="text-xs text-gray-400 mt-1">24 boletos</p></div>
+          <div class="card p-4"><p class="text-xs text-gray-500 uppercase tracking-wide">Recebido</p><p class="text-2xl font-bold text-green-600 mt-1">R$ 24.800</p><p class="text-xs text-gray-400 mt-1">56 boletos</p></div>
+          <div class="card p-4"><p class="text-xs text-gray-500 uppercase tracking-wide">Atrasado</p><p class="text-2xl font-bold text-red-600 mt-1">R$ 3.200</p><p class="text-xs text-gray-400 mt-1">8 boletos</p></div>
+        </div>
+        <div class="card">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm"><thead><tr class="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
+              <th class="pb-3 pl-5 pr-3 font-medium">Cliente</th><th class="pb-3 px-3 font-medium">Documento</th><th class="pb-3 px-3 font-medium">Vencimento</th><th class="pb-3 px-3 font-medium">Valor</th><th class="pb-3 px-3 font-medium">Status</th><th class="pb-3 pr-5 pl-3 font-medium">Ação</th>
+            </tr></thead>
+            <tbody id="lista-receber"></tbody></table>
+          </div>
+          <div id="empty-receber" class="hidden p-10 text-center"><p class="text-gray-400 text-sm">Nenhuma conta encontrada</p></div>
+        </div>
+      </div>
+
+      <!-- Contas a Pagar -->
+      <div id="painel-pagar" class="hidden space-y-6">
+        <div class="flex flex-col sm:flex-row gap-3 justify-between">
+          <div class="flex gap-2 flex-wrap">
+            <select id="filtro-categoria-cp" onchange="financeiro_filtrarContasPagar()" class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white"><option value="todos">Todas categorias</option><option>Fornecedor</option><option>Aluguel</option><option>Salários</option><option>Marketing</option><option>Impostos</option></select>
+            <input type="text" id="busca-fornecedor-cp" oninput="financeiro_filtrarContasPagar()" placeholder="Buscar fornecedor..." class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-white">
+          </div>
+          <button onclick="financeiro_novaDespesa()" class="btn btn-primary text-sm">+ Nova Despesa</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="card p-4"><p class="text-xs text-gray-500 uppercase tracking-wide">Total a Pagar</p><p class="text-2xl font-bold text-orange-600 mt-1">R$ 12.400</p><p class="text-xs text-gray-400 mt-1">7 contas</p></div>
+          <div class="card p-4"><p class="text-xs text-gray-500 uppercase tracking-wide">Pago este Mês</p><p class="text-2xl font-bold text-green-600 mt-1">R$ 9.100</p><p class="text-xs text-gray-400 mt-1">15 contas</p></div>
+          <div class="card p-4"><p class="text-xs text-gray-500 uppercase tracking-wide">Vencendo em 7 dias</p><p class="text-2xl font-bold text-yellow-600 mt-1">R$ 2.800</p><p class="text-xs text-gray-400 mt-1">2 contas</p></div>
+        </div>
+        <div class="card">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm"><thead><tr class="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
+              <th class="pb-3 pl-5 pr-3 font-medium">Fornecedor</th><th class="pb-3 px-3 font-medium">Categoria</th><th class="pb-3 px-3 font-medium">Vencimento</th><th class="pb-3 px-3 font-medium">Valor</th><th class="pb-3 px-3 font-medium">Status</th><th class="pb-3 pr-5 pl-3 font-medium">Ação</th>
+            </tr></thead>
+            <tbody id="lista-pagar"></tbody></table>
+          </div>
+          <div id="empty-pagar" class="hidden p-10 text-center"><p class="text-gray-400 text-sm">Nenhuma conta encontrada</p></div>
+        </div>
+      </div>
+
+      <!-- Modal nova despesa -->
+      <div id="modal-nova-despesa" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+          <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-display font-bold text-lg text-gray-900">Nova Despesa</h3>
+            <button onclick="document.getElementById('modal-nova-despesa').classList.add('hidden')" class="p-1 hover:bg-gray-100 rounded-lg transition-colors"><svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+          </div>
+          <form onsubmit="event.preventDefault(); financeiro_salvarDespesa();" class="p-6 space-y-4">
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">Fornecedor</label><input type="text" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-marca-500 focus:border-marca-500" placeholder="Nome do fornecedor"></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">Categoria</label><select class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white"><option>Fornecedor</option><option>Aluguel</option><option>Salários</option><option>Marketing</option><option>Impostos</option></select></div>
+            <div class="grid grid-cols-2 gap-3">
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Valor (R$)</label><input type="text" id="input-valor-despesa" oninput="financeiro_mascaraMoeda(this)" placeholder="0,00" class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Vencimento</label><input type="date" required class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"></div>
+            </div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">Descrição</label><textarea rows="2" placeholder="Descrição da despesa..." class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm"></textarea></div>
+            <div><label class="block text-sm font-medium text-gray-700 mb-1">Anexar Comprovante</label><div class="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-marca-400 transition-colors" onclick="this.querySelector('input').click()"><svg class="w-8 h-8 text-gray-300 mx-auto mb-1" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5h12a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0018.75 4.5H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z"/></svg><p class="text-xs text-gray-400">Clique para anexar arquivo</p><input type="file" class="hidden"></div></div>
+            <div class="flex gap-3 pt-2"><button type="button" onclick="document.getElementById('modal-nova-despesa').classList.add('hidden')" class="btn btn-secondary flex-1">Cancelar</button><button type="submit" class="btn btn-primary flex-1">Salvar Despesa</button></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="flex gap-3 mt-6 flex-wrap">
+        <button onclick="financeiro_novaDespesa()" class="btn btn-primary">+ Nova Despesa</button>
+        <button onclick="financeiro_exportar()" class="btn btn-secondary">
+          <svg class="w-4 h-4 inline mr-1.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>
+          Exportar Relatório
+        </button>
+      </div>
+    </section>
+
+    <script>
+    (function(){
+      const transacoes = [
+        {tipo:'entrada',desc:'Ordem de Serviço #12847 - Toyota Corolla',categoria:'Ordem de Serviço',valor:2800,data:'2025-07-15',status:'recebido',comprovante:'PIX'},
+        {tipo:'entrada',desc:'Ordem de Serviço #12844 - Honda Civic',categoria:'Ordem de Serviço',valor:1850,data:'2025-07-14',status:'recebido',comprovante:'Cartão'},
+        {tipo:'saida',desc:'Fornecedor de Peças - Autopeças Silva',categoria:'Peças',valor:3200,data:'2025-07-15',status:'pago',comprovante:'Boleto'},
+        {tipo:'entrada',desc:'Ordem de Serviço #12840 - Fiat Argo',categoria:'Ordem de Serviço',valor:950,data:'2025-07-13',status:'pendente',comprovante:'PIX'},
+        {tipo:'saida',desc:'Aluguel da Oficina - Julho/2025',categoria:'Aluguel',valor:4500,data:'2025-07-05',status:'pago',comprovante:'Transferência'},
+        {tipo:'saida',desc:'Folha de Pagamento - Mecânicos',categoria:'Salários',valor:8400,data:'2025-07-07',status:'pago',comprovante:'Transferência'},
+        {tipo:'entrada',desc:'Ordem de Serviço #12835 - VW Gol',categoria:'Ordem de Serviço',valor:1650,data:'2025-07-10',status:'atrasado',comprovante:'Boleto'},
+        {tipo:'saida',desc:'Google Ads - Campanha Julho',categoria:'Marketing',valor:1200,data:'2025-07-01',status:'pago',comprovante:'Cartão'},
+        {tipo:'entrada',desc:'Ordem de Serviço #12830 - Chevrolet Onix',categoria:'Ordem de Serviço',valor:2200,data:'2025-07-08',status:'recebido',comprovante:'PIX'},
+        {tipo:'saida',desc:'Fornecedor Lubrificantes - Brasil Óleos',categoria:'Peças',valor:780,data:'2025-07-12',status:'pendente',comprovante:'Boleto'},
+      ];
+      const contasReceber = [
+        {cliente:'Marina Costa',doc:'CPF: 123.456.789-00',vencimento:'2025-07-20',valor:2800,status:'pendente'},
+        {cliente:'Roberto Almeida',doc:'CPF: 987.654.321-00',vencimento:'2025-07-18',valor:1650,status:'pendente'},
+        {cliente:'Fernanda Lima',doc:'CPF: 456.789.123-00',vencimento:'2025-07-10',valor:950,status:'atrasado'},
+        {cliente:'Carlos Mendes',doc:'CPF: 321.654.987-00',vencimento:'2025-07-22',valor:3200,status:'pendente'},
+        {cliente:'Ana Beatriz Souza',doc:'CPF: 654.987.321-00',vencimento:'2025-07-08',valor:1850,status:'atrasado'},
+        {cliente:'Paulo Henrique Dias',doc:'CPF: 159.753.486-00',vencimento:'2025-07-25',valor:1400,status:'pendente'},
+        {cliente:'Juliana Rocha',doc:'CPF: 753.159.486-00',vencimento:'2025-07-12',valor:2200,status:'recebido'},
+        {cliente:'Lucas Ferreira',doc:'CPF: 486.852.159-00',vencimento:'2025-07-30',valor:750,status:'pendente'},
+      ];
+      const contasPagar = [
+        {fornecedor:'Autopeças Silva ME',categoria:'Fornecedor',vencimento:'2025-07-20',valor:3200,status:'pendente'},
+        {fornecedor:'Imobiliária Central',categoria:'Aluguel',vencimento:'2025-07-05',valor:4500,status:'pago'},
+        {fornecedor:'Equipe de Mecânicos',categoria:'Salários',vencimento:'2025-07-07',valor:8400,status:'pago'},
+        {fornecedor:'Google Brasil',categoria:'Marketing',vencimento:'2025-07-01',valor:1200,status:'pago'},
+        {fornecedor:'Brasil Óleos Ltda',categoria:'Fornecedor',vencimento:'2025-07-12',valor:780,status:'pendente'},
+        {fornecedor:'Prefeitura Municipal',categoria:'Impostos',vencimento:'2025-07-25',valor:2100,status:'pendente'},
+        {fornecedor:'EPIs & Segurança',categoria:'Fornecedor',vencimento:'2025-07-18',valor:650,status:'pendente'},
+      ];
+
+      function financeiro_aba(aba) {
+        ['visao','receber','pagar'].forEach(a => {
+          document.getElementById('painel-'+a).classList.toggle('hidden', a!==aba);
+          const b = document.getElementById('aba-'+a);
+          b.className = a===aba ? 'tab-ativa px-5 py-2 rounded-md text-sm font-semibold transition-all bg-marca-800 text-white' : 'tab-inativa px-5 py-2 rounded-md text-sm font-semibold transition-all text-marca-700 hover:bg-marca-100';
+        });
+        if(aba==='visao') financeiro_render();
+        if(aba==='receber') financeiro_renderContasReceber();
+        if(aba==='pagar') financeiro_renderContasPagar();
+      }
+
+      function financeiro_render() {
+        const p = document.getElementById('filtro-periodo-f').value;
+        const c = document.getElementById('filtro-categoria-f').value;
+        const q = document.getElementById('busca-transacao').value.toLowerCase();
+        let items = transacoes;
+        if(p!=='todos') items = items.filter(t => t.data.startsWith('2025-07'));
+        if(c!=='todos') items = items.filter(t => t.categoria===c);
+        if(q) items = items.filter(t => t.desc.toLowerCase().includes(q));
+        const tb = document.getElementById('lista-transacoes');
+        const em = document.getElementById('empty-transacoes');
+        if(!items.length){ tb.innerHTML=''; em.classList.remove('hidden'); return; }
+        em.classList.add('hidden');
+        tb.innerHTML = items.map((t,i) => {
+          const isE = t.tipo==='entrada';
+          const sColor = t.status==='recebido'?'bg-green-100 text-green-700':t.status==='atrasado'?'bg-red-100 text-red-700':t.status==='pendente'?'bg-yellow-100 text-yellow-700':'bg-gray-100 text-gray-700';
+          const sLabel = t.status==='recebido'?'Recebido':t.status==='atrasado'?'Atrasado':t.status==='pendente'?'Pendente':'Pago';
+          return `<tr class="border-b border-gray-50 hover:bg-gray-50 cursor-pointer transition-colors" onclick="financeiro_detalheTransacao(${transacoes.indexOf(t)})">
+            <td class="py-3 pl-5 pr-3"><div class="w-8 h-8 rounded-full ${isE?'bg-green-100':'bg-red-100'} flex items-center justify-center"><svg class="w-4 h-4 ${isE?'text-green-600':'text-red-600'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${isE?'M12 4v16m8-8H4':'M20 12H4'"/></svg></div></td>
+            <td class="py-3 px-3 font-medium text-gray-800 max-w-[240px] truncate">${t.desc}</td>
+            <td class="py-3 px-3 text-gray-500 text-xs">${t.categoria}</td>
+            <td class="py-3 px-3 font-semibold ${isE?'text-green-700':'text-red-600'}">${isE?'+':'-'} R$ ${t.valor.toLocaleString('pt-BR')}</td>
+            <td class="py-3 px-3 text-gray-500 text-xs">${dataBR(t.data)}</td>
+            <td class="py-3 px-3"><span class="px-2 py-0.5 rounded-full text-xs font-medium ${sColor}">${sLabel}</span></td>
+            <td class="py-3 pr-5 pl-3"><svg class="w-4 h-4 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></td>
+          </tr>`;
+        }).join('');
+      }
+      function financeiro_filtrar(){ financeiro_render(); }
+
+      function financeiro_detalheTransacao(i) {
+        const t = transacoes[i];
+        const isE = t.tipo==='entrada';
+        abrirModal(`
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 p-4 rounded-lg ${isE?'bg-green-50':'bg-red-50'}">
+              <div class="w-10 h-10 rounded-full ${isE?'bg-green-100':'bg-red-100'} flex items-center justify-center">
+                <svg class="w-5 h-5 ${isE?'text-green-600':'text-red-600'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="${isE?'M12 4v16m8-8H4':'M20 12H4'}"/></svg>
+              </div>
+              <div><p class="font-semibold ${isE?'text-green-800':'text-red-800'}">${isE?'Entrada':'Saída'}</p><p class="text-sm ${isE?'text-green-600':'text-red-600'}">${isE?'+':'-'} R$ ${t.valor.toLocaleString('pt-BR')}</p></div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-sm">
+              <div><p class="text-gray-400 text-xs">Descrição</p><p class="font-medium text-gray-800 mt-0.5">${t.desc}</p></div>
+              <div><p class="text-gray-400 text-xs">Categoria</p><p class="font-medium text-gray-800 mt-0.5">${t.categoria}</p></div>
+              <div><p class="text-gray-400 text-xs">Data</p><p class="font-medium text-gray-800 mt-0.5">${dataBR(t.data)}</p></div>
+              <div><p class="text-gray-400 text-xs">Forma</p><p class="font-medium text-gray-800 mt-0.5">${t.comprovante}</p></div>
+            </div>
+            <div class="border-t border-gray-100 pt-3">
+              <p class="text-xs text-gray-400 mb-2">Comprovante</p>
+              <div class="bg-gray-50 rounded-lg p-6 flex items-center justify-center border border-dashed border-gray-200">
+                <div class="text-center"><svg class="w-10 h-10 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg><p class="text-xs text-gray-400">Comprovante ${t.comprovante}</p><p class="text-[10px] text-gray-300">PDF simulado</p></div>
+              </div>
+            </div>
+            <div class="flex gap-3 pt-2">
+              ${t.status==='pendente'?`<button onclick="financeiro_confirmarPagamento(${i});fecharModal();" class="btn btn-primary flex-1 text-sm">Confirmar Recebimento</button>`:''}
+              <button onclick="fecharModal()" class="btn btn-secondary flex-1 text-sm">Fechar</button>
+            </div>
+          </div>
+        `, 'Detalhe da Transação');
+      }
+
+      function financeiro_confirmarPagamento(i){
+        transacoes[i].status='recebido';
+        financeiro_render();
+        toast('Pagamento confirmado com sucesso!','ok');
+      }
+
+      function financeiro_renderContasReceber(){
+        const st = document.getElementById('filtro-status-cr').value;
+        const q = document.getElementById('busca-cliente-cr').value.toLowerCase();
+        let items = contasReceber;
+        if(st!=='todos') items = items.filter(c=>c.status===st);
+        if(q) items = items.filter(c=>c.cliente.toLowerCase().includes(q));
+        const tb = document.getElementById('lista-receber');
+        const em = document.getElementById('empty-receber');
+        if(!items.length){tb.innerHTML='';em.classList.remove('hidden');return;}
+        em.classList.add('hidden');
+        tb.innerHTML = items.map((c,i) => {
+          const sC = c.status==='pago'?'bg-green-100 text-green-700':c.status==='atrasado'?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700';
+          const sL = c.status==='pago'?'Recebido':c.status==='atrasado'?'Atrasado':'Pendente';
+          const ini = c.cliente.split(' ').map(n=>n[0]).join('').slice(0,2);
+          const cores = ['bg-green-100 text-green-700','bg-blue-100 text-blue-700','bg-purple-100 text-purple-700','bg-orange-100 text-orange-700'];
+          const cc = cores[contasReceber.indexOf(c)%cores.length];
+          return `<tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+            <td class="py-3 pl-5 pr-3"><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full ${cc} flex items-center justify-center text-xs font-bold">${ini}</div><span class="font-medium text-gray-800">${c.cliente}</span></div></td>
+            <td class="py-3 px-3 text-gray-500 text-xs">${c.doc}</td>
+            <td class="py-3 px-3 text-gray-500 text-xs">${dataBR(c.vencimento)}</td>
+            <td class="py-3 px-3 font-semibold text-gray-800">R$ ${c.valor.toLocaleString('pt-BR')}</td>
+            <td class="py-3 px-3"><span class="px-2 py-0.5 rounded-full text-xs font-medium ${sC}">${sL}</span></td>
+            <td class="py-3 pr-5 pl-3">
+              ${c.status!=='pago'?`<button onclick="financeiro_marcarRecebido(${contasReceber.indexOf(c)})" class="text-xs text-marca-700 hover:text-marca-900 font-medium bg-marca-50 hover:bg-marca-100 px-3 py-1.5 rounded-lg transition-colors">Receber</button>`:'<span class="text-xs text-gray-400">—</span>'}
+            </td>
+          </tr>`;
+        }).join('');
+      }
+      function financeiro_filtrarContas(){ financeiro_renderContasReceber(); }
+
+      function financeiro_marcarRecebido(i){
+        contasReceber[i].status='pago';
+        financeiro_renderContasReceber();
+        toast(`Pagamento de ${contasReceber[i].cliente} confirmado!`,'ok');
+      }
+
+      function financeiro_renderContasPagar(){
+        const cat = document.getElementById('filtro-categoria-cp').value;
+        const q = document.getElementById('busca-fornecedor-cp').value.toLowerCase();
+        let items = contasPagar;
+        if(cat!=='todos') items = items.filter(c=>c.categoria===cat);
+        if(q) items = items.filter(c=>c.fornecedor.toLowerCase().includes(q));
+        const tb = document.getElementById('lista-pagar');
+        const em = document.getElementById('empty-pagar');
+        if(!items.length){tb.innerHTML='';em.classList.remove('hidden');return;}
+        em.classList.add('hidden');
+        tb.innerHTML = items.map((c,i) => {
+          const sC = c.status==='pago'?'bg-green-100 text-green-700':c.status==='atrasado'?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700';
+          const sL = c.status==='pago'?'Pago':c.status==='atrasado'?'Atrasado':'Pendente';
+          const ini = c.fornecedor.split(' ').slice(0,2).map(w=>w[0]).join('').slice(0,2);
+          const cores = ['bg-gray-100 text-gray-600','bg-orange-100 text-orange-600','bg-teal-100 text-teal-600','bg-indigo-100 text-indigo-600'];
+          const cc = cores[contasPagar.indexOf(c)%cores.length];
+          return `<tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
+            <td class="py-3 pl-5 pr-3"><div class="flex items-center gap-2.5"><div class="w-8 h-8 rounded-full ${cc} flex items-center justify-center text-xs font-bold">${ini}</div><span class="font-medium text-gray-800">${c.fornecedor}</span></div></td>
+            <td class="py-3 px-3 text-gray-500 text-xs">${c.categoria}</td>
+            <td class="py-3 px-3 text-gray-500 text-xs">${dataBR(c.vencimento)}</td>
+            <td class="py-3 px-3 font-semibold text-gray-800">R$ ${c.valor.toLocaleString('pt-BR')}</td>
+            <td class="py-3 px-3"><span class="px-2 py-0.5 rounded-full text-xs font-medium ${sC}">${sL}</span></td>
+            <td class="py-3 pr-5 pl-3">
+              ${c.status!=='pago'?`<button onclick="financeiro_pagarConta(${contasPagar.indexOf(c)})" class="text-xs text-marca-700 hover:text-marca-900 font-medium bg-marca-50 hover:bg-marca-100 px-3 py-1.5 rounded-lg transition-colors">Pagar</button>`:'<span class="text-xs text-gray-400">—</span>'}
+            </td>
+          </tr>`;
+        }).join('');
+      }
+      function financeiro_filtrarContasPagar(){ financeiro_renderContasPagar(); }
+
+      function financeiro_pagarConta(i){
+        contasPagar[i].status='pago';
+        financeiro_renderContasPagar();
+        toast(`Pagamento para ${contasPagar[i].fornecedor} registrado!`,'ok');
+      }
+
+      function financeiro_novaDespesa(){
+        document.getElementById('modal-nova-despesa').classList.remove('hidden');
+      }
+      function financeiro_salvarDespesa(){
+        const valor = document.querySelector('#input-valor-despesa').value||'0';
+        contasPagar.push({fornecedor:document.querySelector('#modal-nova-despesa input[type=text]').value||'Novo Fornecedor',categoria:'Fornecedor',vencimento:new Date().toISOString().slice(0,10),valor:parseInt(valor.replace(/\D/g,''))||0,status:'pendente'});
+        document.getElementById('modal-nova-despesa').classList.add('hidden');
+        financeiro_renderContasPagar();
+        toast('Despesa cadastrada com sucesso!','ok');
+      }
+
+      function financeiro_exportar(){
+        toast('Relatório CSV gerado! Verifique seus downloads.','ok');
+      }
+
+      function financeiro_mascaraMoeda(el){
+        let v = el.value.replace(/\D/g,'');
+        if(!v) return;
+        v = (parseInt(v)/100).toFixed(2);
+        el.value = v.replace('.',',');
+      }
+
+      financeiro_render();
+    })();
+    </script>
+    <style>
+    .tab-ativa{background:#14532D;color:#fff;}.tab-inativa{background:transparent;color:#14532D;}.tab-inativa:hover{background:#F0FDF4;}
+    </style>
+
     <!-- TELAS -->
     </main>
   </div>
