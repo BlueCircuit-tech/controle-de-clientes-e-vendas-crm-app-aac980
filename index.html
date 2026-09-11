@@ -368,7 +368,375 @@
 
     <!-- Conteúdo principal -->
     <main class="flex-1 p-4 lg:p-6">
-      <!-- TELAS -->
+      <section data-tela="painel" class="hidden">
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="card p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-10 h-10 rounded-lg bg-marca-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            </div>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-marca-50 text-marca-700">+3 hoje</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-1">Ordens em andamento</p>
+          <p id="kpi-ordens" class="text-2xl font-bold text-gray-900 font-display">8</p>
+        </div>
+        <div class="card p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
+            </div>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-amber-50 text-amber-700">3 vencendo hoje</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-1">Orçamentos pendentes</p>
+          <p id="kpi-orcamentos" class="text-2xl font-bold text-gray-900 font-display">12</p>
+        </div>
+        <div class="card p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">↑ 18% vs mês anterior</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-1">Faturamento do mês</p>
+          <p id="kpi-faturamento" class="text-2xl font-bold text-gray-900 font-display">R$ 28.450</p>
+        </div>
+        <div class="card p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center">
+              <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+            </div>
+            <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-blue-50 text-blue-700">↑ 8 este mês</span>
+          </div>
+          <p class="text-sm text-gray-500 mb-1">Clientes ativos</p>
+          <p id="kpi-clientes" class="text-2xl font-bold text-gray-900 font-display">156</p>
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Ações Pendentes -->
+        <div class="lg:col-span-2">
+          <div class="card">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 border-b border-gray-100 gap-3">
+              <div>
+                <h2 class="text-base font-semibold text-gray-900 font-display">Ações pendentes</h2>
+                <p class="text-xs text-gray-500 mt-0.5">8 itens precisam da sua atenção</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="relative">
+                  <svg class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                  <input id="painel-busca" type="text" placeholder="Buscar cliente ou veículo..."
+                    class="pl-9 pr-3 py-2 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-marca-500/20 focus:border-marca-500 w-56 bg-gray-50/50 transition-all">
+                </div>
+                <select id="painel-filtro"
+                  class="text-sm border border-gray-200 rounded-lg px-3 py-2 bg-gray-50/50 focus:outline-none focus:ring-2 focus:ring-marca-500/20 focus:border-marca-500 text-gray-700">
+                  <option value="todos">Todos</option>
+                  <option value="orcamento">Orçamentos</option>
+                  <option value="ordem">Ordens de Serviço</option>
+                </select>
+              </div>
+            </div>
+            <div id="painel-lista-acoes" class="p-3">
+            </div>
+            <div id="painel-lista-vazia" class="hidden p-8 text-center">
+              <svg class="w-10 h-10 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <p class="text-sm text-gray-500">Nenhum item encontrado</p>
+              <p class="text-xs text-gray-400 mt-1">Tente ajustar os filtros</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-6">
+          <!-- Faturamento Chart -->
+          <div class="card p-5">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h2 class="text-base font-semibold text-gray-900 font-display">Faturamento</h2>
+                <p class="text-xs text-gray-500 mt-0.5">Últimos 7 dias</p>
+              </div>
+              <span class="text-xs text-marca-600 font-medium">↑ 12%</span>
+            </div>
+            <svg id="painel-chart" viewBox="0 0 340 170" class="w-full" style="height:170px">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#22C55E" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#22C55E" stop-opacity="0"/>
+                </linearGradient>
+                <filter id="lineGlow">
+                  <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <g transform="translate(32, 14)">
+                <!-- Grid lines -->
+                <line x1="0" y1="0" x2="272" y2="0" stroke="#E5E7EB" stroke-width="0.5" stroke-dasharray="3,3"/>
+                <line x1="0" y1="39" x2="272" y2="39" stroke="#E5E7EB" stroke-width="0.5" stroke-dasharray="3,3"/>
+                <line x1="0" y1="78" x2="272" y2="78" stroke="#E5E7EB" stroke-width="0.5" stroke-dasharray="3,3"/>
+                <line x1="0" y1="117" x2="272" y2="117" stroke="#E5E7EB" stroke-width="0.5" stroke-dasharray="3,3"/>
+                <line x1="0" y1="156" x2="272" y2="156" stroke="#D1D5DB" stroke-width="0.75"/>
+                <!-- Y labels -->
+                <text x="-6" y="4" text-anchor="end" class="text-[9px]" fill="#9CA3AF" font-size="9">6k</text>
+                <text x="-6" y="43" text-anchor="end" class="text-[9px]" fill="#9CA3AF" font-size="9">4.5k</text>
+                <text x="-6" y="82" text-anchor="end" class="text-[9px]" fill="#9CA3AF" font-size="9">3k</text>
+                <text x="-6" y="121" text-anchor="end" class="text-[9px]" fill="#9CA3AF" font-size="9">1.5k</text>
+                <text x="-6" y="160" text-anchor="end" class="text-[9px]" fill="#9CA3AF" font-size="9">0</text>
+                <!-- X labels -->
+                <text x="13" y="170" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-size="9">15</text>
+                <text x="57" y="170" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-size="9">16</text>
+                <text x="101" y="170" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-size="9">17</text>
+                <text x="145" y="170" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-size="9">18</text>
+                <text x="189" y="170" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-size="9">19</text>
+                <text x="233" y="170" text-anchor="middle" class="text-[9px]" fill="#9CA3AF" font-size="9">20</text>
+                <text x="259" y="170" text-anchor="end" class="text-[9px]" fill="#9CA3AF" font-size="9">21</text>
+                <!-- Area -->
+                <path d="M13,107 C57,92 101,84 145,70 C189,52 233,20 259,12 L259,156 L13,156 Z" fill="url(#areaGrad)"/>
+                <!-- Line -->
+                <path d="M13,107 C57,92 101,84 145,70 C189,52 233,20 259,12" fill="none" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#lineGlow)"/>
+                <!-- Dots -->
+                <g class="chart-dots">
+                  <circle cx="13" cy="107" r="3.5" fill="#14532D" stroke="white" stroke-width="2" style="cursor:pointer" data-dia="15/04" data-valor="3.200"/>
+                  <circle cx="57" cy="92" r="3.5" fill="#14532D" stroke="white" stroke-width="2" style="cursor:pointer" data-dia="16/04" data-valor="3.800"/>
+                  <circle cx="101" cy="84" r="3.5" fill="#14532D" stroke="white" stroke-width="2" style="cursor:pointer" data-dia="17/04" data-valor="4.200"/>
+                  <circle cx="145" cy="70" r="3.5" fill="#14532D" stroke="white" stroke-width="2" style="cursor:pointer" data-dia="18/04" data-valor="4.900"/>
+                  <circle cx="189" cy="52" r="3.5" fill="#22C55E" stroke="white" stroke-width="2.5" style="cursor:pointer" data-dia="19/04" data-valor="5.600"/>
+                  <circle cx="233" cy="20" r="3.5" fill="#22C55E" stroke="white" stroke-width="2.5" style="cursor:pointer" data-dia="20/04" data-valor="5.900"/>
+                  <circle cx="259" cy="12" r="3.5" fill="#22C55E" stroke="white" stroke-width="2.5" style="cursor:pointer" data-dia="21/04" data-valor="6.400"/>
+                </g>
+              </g>
+            </svg>
+            <!-- Summary -->
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+              <div>
+                <p class="text-[11px] text-gray-500">Total no período</p>
+                <p class="text-sm font-bold text-gray-900">R$ 34.000</p>
+              </div>
+              <div class="text-right">
+                <p class="text-[11px] text-gray-500">Média diária</p>
+                <p class="text-sm font-bold text-gray-900">R$ 4.857</p>
+              </div>
+              <div class="text-right">
+                <p class="text-[11px] text-gray-500">Melhor dia</p>
+                <p class="text-sm font-bold text-marca-600">Sáb 21 — R$ 6.400</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ações Rápidas -->
+          <div class="card p-4">
+            <h3 class="text-sm font-semibold text-gray-700 mb-3">Ações rápidas</h3>
+            <div class="grid grid-cols-3 gap-2">
+              <button onclick="mostrarTela('clientes')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-gray-100 hover:border-marca-200 hover:bg-marca-50/30 transition-all active:scale-95 cursor-pointer">
+                <div class="w-9 h-9 rounded-lg bg-marca-50 flex items-center justify-center">
+                  <svg class="w-4.5 h-4.5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+                </div>
+                <span class="text-[11px] text-gray-600 text-center leading-tight">Novo<br>cliente</span>
+              </button>
+              <button onclick="mostrarTela('novo-orcamento')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-gray-100 hover:border-marca-200 hover:bg-marca-50/30 transition-all active:scale-95 cursor-pointer">
+                <div class="w-9 h-9 rounded-lg bg-marca-50 flex items-center justify-center">
+                  <svg class="w-4.5 h-4.5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M12 4v16m8-8H4"/></svg>
+                </div>
+                <span class="text-[11px] text-gray-600 text-center leading-tight">Novo<br>orçamento</span>
+              </button>
+              <button onclick="mostrarTela('agenda')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-gray-100 hover:border-marca-200 hover:bg-marca-50/30 transition-all active:scale-95 cursor-pointer">
+                <div class="w-9 h-9 rounded-lg bg-marca-50 flex items-center justify-center">
+                  <svg class="w-4.5 h-4.5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <span class="text-[11px] text-gray-600 text-center leading-tight">Ver<br>agenda</span>
+              </button>
+              <button onclick="mostrarTela('ordem-de-servico')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-gray-100 hover:border-marca-200 hover:bg-marca-50/30 transition-all active:scale-95 cursor-pointer">
+                <div class="w-9 h-9 rounded-lg bg-marca-50 flex items-center justify-center">
+                  <svg class="w-4.5 h-4.5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+                <span class="text-[11px] text-gray-600 text-center leading-tight">Ordens de<br>serviço</span>
+              </button>
+              <button onclick="mostrarTela('relatorios')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-gray-100 hover:border-marca-200 hover:bg-marca-50/30 transition-all active:scale-95 cursor-pointer">
+                <div class="w-9 h-9 rounded-lg bg-marca-50 flex items-center justify-center">
+                  <svg class="w-4.5 h-4.5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </div>
+                <span class="text-[11px] text-gray-600 text-center leading-tight">Ver<br>relatórios</span>
+              </button>
+              <button onclick="mostrarTela('financeiro')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-gray-100 hover:border-marca-200 hover:bg-marca-50/30 transition-all active:scale-95 cursor-pointer">
+                <div class="w-9 h-9 rounded-lg bg-marca-50 flex items-center justify-center">
+                  <svg class="w-4.5 h-4.5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                </div>
+                <span class="text-[11px] text-gray-600 text-center leading-tight">Financei<br>ro</span>
+              </button>
+              <button onclick="mostrarTela('chat-suporte')" class="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-gray-100 hover:border-marca-200 hover:bg-marca-50/30 transition-all active:scale-95 cursor-pointer">
+                <div class="w-9 h-9 rounded-lg bg-marca-50 flex items-center justify-center">
+                  <svg class="w-4.5 h-4.5 text-marca-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-4.272C3.512 14.319 3 12.95 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                </div>
+                <span class="text-[11px] text-gray-600 text-center leading-tight">Chat de<br>suporte</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      (function () {
+        const acoes = [
+          { id: 'ORC-2024-001', tipo: 'orcamento', cliente: 'Ana Beatriz Silva', veiculo: 'Honda Civic 2020 — Preto', servico: 'Troca de óleo + filtros', valor: 380, data: '2024-04-21', vencimento: '2024-04-21', urgencia: 'vencido', prazo: 'Vence hoje', status: 'Pendente resposta' },
+          { id: 'ORC-2024-002', tipo: 'orcamento', cliente: 'Carlos Eduardo Santos', veiculo: 'Fiat Toro 2022 — Branco', servico: 'Freios + pastilhas', valor: 1240, data: '2024-04-21', vencimento: '2024-04-21', urgencia: 'hoje', prazo: 'Expira hoje', status: 'Aguardando aprovação' },
+          { id: 'ORC-2024-003', tipo: 'orcamento', cliente: 'Mariana Costa Oliveira', veiculo: 'Toyota Corolla 2021 — Prata', servico: 'Suspensão dianteira', valor: 2100, data: '2024-04-21', vencimento: '2024-04-21', urgencia: 'hoje', prazo: 'Expira hoje', status: 'Aguardando aprovação' },
+          { id: 'OS-2048', tipo: 'ordem', cliente: 'Fernando Almeida', veiculo: 'VW Golf GTI 2019 — Azul', servico: 'Alinhamento + balanceamento', valor: 220, data: '2024-04-21', vencimento: '2024-04-21', urgencia: 'hoje', prazo: 'Aprovação pendente', status: 'Aguardando cliente' },
+          { id: 'OS-2049', tipo: 'ordem', cliente: 'Patrícia Mendes Rocha', veiculo: 'Hyundai HB20 2023 — Vermelho', servico: 'Revisão completa 30.000 km', valor: 890, data: '2024-04-20', vencimento: '2024-04-22', urgencia: 'hoje', prazo: 'Prazo: 2 dias', status: 'Aguardando cliente' },
+          { id: 'OS-2050', tipo: 'ordem', cliente: 'Ricardo Nunes Lima', veiculo: 'Chevrolet Onix 2022 — Branco', servico: 'Troca de correia dentada', valor: 1650, data: '2024-04-19', vencimento: '2024-04-22', urgencia: 'hoje', prazo: 'Prazo: 2 dias', status: 'Aguardando cliente' },
+          { id: 'OS-2051', tipo: 'ordem', cliente: 'Juliana Pereira Reis', veiculo: 'Renault Kwid 2021 — Preto', servico: 'Ar condicionado — recarga', valor: 310, data: '2024-04-18', vencimento: '2024-04-23', urgencia: 'normal', prazo: 'Prazo: 5 dias', status: 'Aguardando aprovação' },
+          { id: 'OS-2052', tipo: 'ordem', cliente: 'Roberto F. Carvalho', veiculo: 'Jeep Compass 2022 — Cinza', servico: 'Pneus + troca + alinhamento', valor: 2800, data: '2024-04-17', vencimento: '2024-04-24', urgencia: 'normal', prazo: 'Prazo: 7 dias', status: 'Aguardando cliente' },
+        ];
+
+        const urgenciaStyle = {
+          vencido: 'bg-red-50 text-red-700 border-red-200',
+          hoje: 'bg-amber-50 text-amber-700 border-amber-200',
+          normal: 'bg-blue-50 text-blue-700 border-blue-200',
+        };
+        const urgenciaLabel = { vencido: '⚠ Vencido', hoje: '🕐 Hoje', normal: '📅 Prazo' };
+        const initials = (n) => n.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+        const avatarColors = ['bg-marca-100 text-marca-700', 'bg-amber-100 text-amber-700', 'bg-blue-100 text-blue-700', 'bg-violet-100 text-violet-700', 'bg-rose-100 text-rose-700'];
+        const avatarIdx = (n) => [...n].reduce((a, c) => a + c.charCodeAt(0), 0) % avatarColors.length;
+        const tipoLabel = {orcamento: 'Orçamento', ordem: 'Ordem de Serviço'};
+        const tipoIcon = {orcamento: 'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z', ordem: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4'};
+        const tipoColor = {orcamento: 'text-amber-600 bg-amber-50', ordem: 'text-blue-600 bg-blue-50'};
+
+        function painel_render(filter) {
+          var busca = (document.getElementById('painel-busca').value || '').toLowerCase();
+          var tipo = filter || document.getElementById('painel-filtro').value;
+          var items = acoes.filter(function (a) {
+            var matchTipo = tipo === 'todos' || a.tipo === tipo;
+            var matchBusca = !busca || a.cliente.toLowerCase().includes(busca) || a.veiculo.toLowerCase().includes(busca);
+            return matchTipo && matchBusca;
+          });
+          var container = document.getElementById('painel-lista-acoes');
+          var empty = document.getElementById('painel-lista-vazia');
+          if (items.length === 0) { container.classList.add('hidden'); empty.classList.remove('hidden'); return; }
+          empty.classList.add('hidden'); container.classList.remove('hidden');
+          container.innerHTML = '<div class="space-y-2">' + items.map(function (a) {
+            var ac = avatarColors[avatarIdx(a.cliente)];
+            var us = urgenciaStyle[a.urgencia];
+            var ul = urgenciaLabel[a.urgencia];
+            var tc = tipoColor[a.tipo]; var ti = tipoIcon[a.tipo];
+            return '<div class="action-card flex items-center gap-3.5 p-3.5 rounded-xl border border-gray-100 hover:border-marca-200 hover:bg-marca-50/20 transition-all cursor-pointer group" data-id="' + a.id + '" data-tipo="' + a.tipo + '">' +
+              '<div class="w-10 h-10 rounded-full ' + ac + ' flex items-center justify-center flex-shrink-0 text-sm font-bold">' + initials(a.cliente) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<div class="flex items-center gap-2 mb-0.5">' +
+                  '<span class="text-sm font-semibold text-gray-900 truncate">' + a.cliente + '</span>' +
+                  '<span class="text-[10px] font-medium px-1.5 py-0.5 rounded ' + tc + '">' + tipoLabel[a.tipo] + '</span>' +
+                '</div>' +
+                '<p class="text-xs text-gray-500 truncate">' + a.veiculo + '</p>' +
+                '<p class="text-[11px] text-gray-400 mt-0.5">' + a.servico + '</p>' +
+              '</div>' +
+              '<div class="text-right flex-shrink-0">' +
+                '<p class="text-sm font-bold text-gray-900">R$ ' + a.valor.toLocaleString('pt-BR') + '</p>' +
+                '<span class="inline-block text-[10px] font-medium px-2 py-0.5 rounded-full border mt-1 ' + us + '">' + ul + '</span>' +
+              '</div>' +
+              '<svg class="w-4 h-4 text-gray-300 group-hover:text-marca-500 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+            '</div>';
+          }).join('') + '</div>';
+          container.querySelectorAll('.action-card').forEach(function (card) {
+            card.addEventListener('click', function () {
+              var id = card.dataset.id; var tipo = card.dataset.tipo;
+              painel_openDetail(id, tipo);
+            });
+          });
+        }
+
+        function painel_openDetail(id, tipo) {
+          var a = acoes.find(function (x) { return x.id === id; });
+          if (!a) return;
+          var isOrc = tipo === 'orcamento';
+          var titulo = isOrc ? 'Detalhes do orçamento' : 'Detalhes da ordem de serviço';
+          var ac = avatarColors[avatarIdx(a.cliente)];
+          var us = urgenciaStyle[a.urgencia]; var ul = urgenciaLabel[a.urgencia];
+          var servicosExtra = isOrc
+            ? '<li class="flex items-center gap-2 text-sm text-gray-600"><svg class="w-4 h-4 text-marca-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Troca de óleo do motor</li><li class="flex items-center gap-2 text-sm text-gray-600"><svg class="w-4 h-4 text-marca-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Filtro de óleo</li><li class="flex items-center gap-2 text-sm text-gray-600"><svg class="w-4 h-4 text-marca-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Filtro de ar</li>'
+            : '<li class="flex items-center gap-2 text-sm text-gray-600"><svg class="w-4 h-4 text-marca-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Alinhamento tridimensional</li><li class="flex items-center gap-2 text-sm text-gray-600"><svg class="w-4 h-4 text-marca-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Balanceamento 4 rodas</li><li class="flex items-center gap-2 text-sm text-gray-600"><svg class="w-4 h-4 text-marca-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Calibragem dos pneus</li>';
+          var html = '<div class="p-1">' +
+            '<div class="flex items-start gap-3.5 mb-5 pb-4 border-b border-gray-100">' +
+              '<div class="w-12 h-12 rounded-full ' + ac + ' flex items-center justify-center text-base font-bold flex-shrink-0">' + initials(a.cliente) + '</div>' +
+              '<div class="flex-1 min-w-0">' +
+                '<h3 class="text-base font-bold text-gray-900">' + a.cliente + '</h3>' +
+                '<p class="text-sm text-gray-500">' + a.veiculo + '</p>' +
+              '</div>' +
+              '<span class="text-xs font-medium px-2.5 py-1 rounded-full border ' + us + ' flex-shrink-0">' + ul + '</span>' +
+            '</div>' +
+            '<div class="grid grid-cols-2 gap-3 mb-5">' +
+              '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[11px] text-gray-500 mb-0.5">Número</p><p class="text-sm font-semibold text-gray-900">' + a.id + '</p></div>' +
+              '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[11px] text-gray-500 mb-0.5">Data solicitação</p><p class="text-sm font-semibold text-gray-900">' + dataBR(a.data) + '</p></div>' +
+              '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[11px] text-gray-500 mb-0.5">Status</p><p class="text-sm font-semibold text-gray-900">' + a.status + '</p></div>' +
+              '<div class="bg-gray-50 rounded-lg p-3"><p class="text-[11px] text-gray-500 mb-0.5">Prazo</p><p class="text-sm font-semibold text-gray-900">' + a.prazo + '</p></div>' +
+            '</div>' +
+            '<div class="mb-5">' +
+              '<h4 class="text-sm font-semibold text-gray-900 mb-2">Serviço solicitado</h4>' +
+              '<p class="text-sm text-gray-600 mb-2">' + a.servico + '</p>' +
+              '<ul class="space-y-1.5 ml-1">' + servicosExtra + '</ul>' +
+            '</div>' +
+            '<div class="flex items-center justify-between p-4 bg-marca-50 rounded-xl mb-5">' +
+              '<span class="text-sm font-medium text-gray-700">Valor total</span>' +
+              '<span class="text-xl font-bold text-marca-700 font-display">R$ ' + a.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2}) + '</span>' +
+            '</div>' +
+            '<div class="flex gap-2.5">' +
+              (isOrc
+                ? '<button onclick="painel_responderOrcamento(\'' + a.id + '\')" class="btn flex-1">Responder orçamento</button><button onclick="mostrarTela(\'ordem-de-servico\');fecharModal();" class="flex-1 py-2.5 px-4 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all active:scale-95">Ver ordem</button>'
+                : '<button onclick="painel_atenderOS(\'' + a.id + '\')" class="btn flex-1">Iniciar atendimento</button><button onclick="toast(\'Contato com ' + a.cliente.split(\' \')[0] + ' iniciado\',\'info\');fecharModal();" class="flex-1 py-2.5 px-4 text-sm font-medium rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition-all active:scale-95">Contatar cliente</button>') +
+              '<button onclick="fecharModal()" class="py-2.5 px-4 text-sm text-gray-500 hover:text-gray-700 transition-colors">Fechar</button>' +
+            '</div>' +
+          '</div>';
+          abrirModal(html, titulo);
+        }
+
+        window.painel_responderOrcamento = function (id) {
+          var idx = acoes.findIndex(function (x) { return x.id === id; });
+          if (idx >= 0) { acoes.splice(idx, 1); painel_render(); }
+          fecharModal();
+          toast('Orçamento ' + id + ' respondido com sucesso!', 'ok');
+          var ko = document.getElementById('kpi-orcamentos');
+          if (ko) ko.textContent = String(Math.max(0, parseInt(ko.textContent) - 1));
+        };
+
+        window.painel_atenderOS = function (id) {
+          fecharModal();
+          toast('Atendimento iniciado para ' + id + '. Cliente será notificado.', 'ok');
+        };
+
+        document.getElementById('painel-filtro').addEventListener('change', function () { painel_render(this.value); });
+        document.getElementById('painel-busca').addEventListener('input', function () { painel_render(); });
+
+        document.getElementById('painel-lista-acoes').addEventListener('click', function (e) {
+          var card = e.target.closest('.action-card');
+          if (!card) return;
+          painel_openDetail(card.dataset.id, card.dataset.tipo);
+        });
+
+        // Chart tooltips
+        var tooltip = null;
+        document.querySelectorAll('.chart-dots circle').forEach(function (dot) {
+          dot.addEventListener('mouseenter', function (e) {
+            var dia = dot.dataset.dia; var valor = dot.dataset.valor;
+            tooltip = document.createElement('div');
+            tooltip.className = 'fixed bg-gray-900 text-white text-xs rounded-lg px-3 py-2 pointer-events-none z-50 shadow-lg';
+            tooltip.style.left = (e.clientX + 12) + 'px';
+            tooltip.style.top = (e.clientY - 40) + 'px';
+            tooltip.innerHTML = '<p class="font-semibold">' + dia + '</p><p class="text-emerald-300">R$ ' + Number(valor).toLocaleString('pt-BR') + '</p>';
+            document.body.appendChild(tooltip);
+            dot.setAttribute('r', '5');
+          });
+          dot.addEventListener('mousemove', function (e) {
+            if (tooltip) { tooltip.style.left = (e.clientX + 12) + 'px'; tooltip.style.top = (e.clientY - 40) + 'px'; }
+          });
+          dot.addEventListener('mouseleave', function () {
+            if (tooltip) { tooltip.remove(); tooltip = null; }
+            dot.setAttribute('r', '3.5');
+          });
+        });
+
+        window.painel_init = function () { painel_render('todos'); };
+      })();
+    </script>
+
+    <!-- TELAS -->
     </main>
   </div>
 
